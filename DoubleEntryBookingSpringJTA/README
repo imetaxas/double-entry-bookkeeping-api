@@ -3,7 +3,7 @@ The code implements a Double-entry bookkeeping service using Spring 4, the Java 
 "Double-entry bookkeeping involves making at least two entries or legs for every transaction.
 A debit in one account and a corresponding credit in another account.
 The sum of all debits should always equal the sum of all credits, providing a simple way to check for errors." 
-
+ 
 Business Rules
 ---------------
 1. An account MUST NOT be overdrawn, i.e. have a negative balance.
