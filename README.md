@@ -10,7 +10,7 @@ Business Rules
 2. A monetary transaction MAY support multiple currencies as long as the total balance for the transaction legs with the same currency is zero.
 3. The concepts of debit and credit are simplified by specifying that monetary transactions towards an account can have either a positive or negative value.
 
-Run the Maven goal
+Build
 -------------------
 mvn test
 
