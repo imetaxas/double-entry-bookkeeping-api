@@ -1,5 +1,8 @@
+[![Main Site](https://img.shields.io/badge/imetaxas.github.io/double-entry-bookkeeping-spring-jta-ff55ff.png?style=flat)](http://imetaxas.github.io/double-entry-bookkeeping-spring-jta/)
 [![Build Status](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta.svg?branch=master)](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta)
 [![Coverage Status](https://coveralls.io/repos/github/imetaxas/double-entry-bookkeeping-spring-jta/badge.svg?branch=master)](https://coveralls.io/github/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Double Entry Bookkeeping
 Implementation of a Double-entry bookkeeping service using Spring 4, Java Transaction API and the H2 database in embedded mode.
 
