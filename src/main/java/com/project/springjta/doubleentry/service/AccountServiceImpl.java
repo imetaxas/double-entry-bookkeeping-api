@@ -8,7 +8,10 @@ import com.project.springjta.doubleentry.dao.AccountDao;
 import com.project.springjta.doubleentry.model.Account;
 
 /**
-* Implements the methods of the account service.
+ * Implements the methods of the account service.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
 */
 public class AccountServiceImpl implements AccountService {
 	

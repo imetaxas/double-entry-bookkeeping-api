@@ -12,10 +12,21 @@ import java.util.List;
  * <p/>
  * This class uses a nested builder state machine to provide a clear building path with
  * compile-time safety and coding guidance.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public final class TransferRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private String transactionRef;
+
+    private String transactionType;
+
+    private final List<TransactionLeg> legs = new ArrayList<>();
+
+    private TransferRequest() {
+    }
     /**
      * Returns a new builder for creating a transfer request.
      *
@@ -100,15 +111,6 @@ public final class TransferRequest implements Serializable {
             }
             return request;
         }
-    }
-
-    private String transactionRef;
-
-    private String transactionType;
-
-    private final List<TransactionLeg> legs = new ArrayList<>();
-
-    private TransferRequest() {
     }
 
     public List<TransactionLeg> getLegs() {

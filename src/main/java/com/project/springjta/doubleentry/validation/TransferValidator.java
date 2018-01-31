@@ -5,6 +5,10 @@ import com.project.springjta.doubleentry.InsufficientFundsException;
 import com.project.springjta.doubleentry.TransactionLeg;
 import com.project.springjta.doubleentry.TransferRequest;
 
+/**
+ * @author yanimetaxas
+ * @since 14-Nov-14
+ */
 public interface TransferValidator {
 
 	void validateTransferRequest(TransferRequest transferRequest);

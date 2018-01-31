@@ -1,12 +1,15 @@
 package com.project.springjta.doubleentry;
 
-import java.util.Date;
-
 import com.project.springjta.doubleentry.dao.AccountDao;
 import com.project.springjta.doubleentry.dao.ClientDao;
 import com.project.springjta.doubleentry.dao.TransactionDao;
 import com.project.springjta.doubleentry.util.BankContextUtil;
+import java.util.Date;
 
+/**
+ * @author yanimetaxas
+ * @since 14-Nov-14
+ */
 public class BankFactoryImpl implements BankFactory {
 	
 	@Override

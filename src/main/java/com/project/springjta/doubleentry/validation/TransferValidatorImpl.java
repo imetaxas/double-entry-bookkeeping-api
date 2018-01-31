@@ -1,9 +1,5 @@
 package com.project.springjta.doubleentry.validation;
 
-import java.math.BigDecimal;
-import java.util.Currency;
-import java.util.Set;
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
@@ -13,9 +9,15 @@ import com.project.springjta.doubleentry.TransactionLeg;
 import com.project.springjta.doubleentry.TransferRequest;
 import com.project.springjta.doubleentry.dao.AccountDao;
 import com.project.springjta.doubleentry.model.Account;
+import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.Set;
 
 /**
- * Provides methods for validation of the business rules
+ * Provides methods for validation of the business rules.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public class TransferValidatorImpl implements TransferValidator {
 

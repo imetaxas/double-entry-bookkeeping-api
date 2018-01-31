@@ -1,23 +1,21 @@
 package com.project.springjta.doubleentry.model;
 
+import com.project.springjta.doubleentry.Money;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-import com.project.springjta.doubleentry.Money;
-
 /**
-* Immutable value object representing an account
+ * Immutable value object representing an account
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
 */
 public class Account {
 	
 	private final String accountRef;
 	private final Money balance;
-	private final static Account NULL_ACCOUNT = new Account("", new Money(new BigDecimal("0.00"), Currency.getInstance("XXX")));
-	
-	public static Account nullAccount() {
-		return NULL_ACCOUNT;
-	}
-	
+	private static final Account NULL_ACCOUNT = new Account("", new Money(new BigDecimal("0.00"), Currency.getInstance("XXX")));
+
 	public Account(String accountRef, Money balance) {
 		if (accountRef == null) {
 			throw new NullPointerException("Argument accountRef is NULL");
@@ -27,6 +25,10 @@ public class Account {
 		}
 		this.accountRef = accountRef;
 		this.balance = balance;
+	}
+
+	public static Account nullAccount() {
+		return NULL_ACCOUNT;
 	}
 	
 	public String getAccountRef() {

@@ -5,6 +5,8 @@ import java.io.Serializable;
 /**
  * Value object representing a single monetary transaction towards an account.
  *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  * @see Transaction
  */
 public final class TransactionLeg implements Serializable {

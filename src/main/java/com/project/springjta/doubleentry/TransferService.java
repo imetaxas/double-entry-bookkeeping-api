@@ -4,6 +4,9 @@ import java.util.List;
 
 /**
  * Defines the business logic for performing monetary transactions (account transfers) between accounts.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public interface TransferService {
     /**

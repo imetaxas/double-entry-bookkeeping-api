@@ -1,22 +1,23 @@
 package com.project.springjta.doubleentry.dao;
 
+import com.project.springjta.doubleentry.Money;
+import com.project.springjta.doubleentry.TransactionLeg;
+import com.project.springjta.doubleentry.model.Account;
+import com.project.springjta.doubleentry.util.DbUtil;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Currency;
 import java.util.List;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import com.project.springjta.doubleentry.Money;
-import com.project.springjta.doubleentry.TransactionLeg;
-import com.project.springjta.doubleentry.model.Account;
-import com.project.springjta.doubleentry.util.DbUtil;
-
 /**
  * The Data Object Access support to abstract and encapsulate all access to the account table of the data source.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
 

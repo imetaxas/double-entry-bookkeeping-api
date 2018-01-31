@@ -8,44 +8,44 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Double entry book keeping</name>
+    <name>Double entry bookkeeping</name>
 
     <dependencies>
         <!-- ======================================================== -->
         <!-- Add any additional 3rd party deps below -->
         <!-- ======================================================== -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>4.1.1.RELEASE</version>
-		</dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>4.1.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jdbc</artifactId>
+          <version>4.1.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>4.1.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate-tools</artifactId>
+          <version>4.3.1.CR1</version>
+        </dependency>
+
+        <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>18.0</version>
+        </dependency>
 		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>4.1.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>4.1.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-tools</artifactId>
-			<version>4.3.1.CR1</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>18.0</version>
-		</dependency>
-		
-		<!-- ======================================================== -->
-        <!-- Supported JDBC drivers -->
+		    <!-- ======================================================== -->
+        <!-- Supported JDBC drivers                                   -->
         <!-- ======================================================== -->
 
         <dependency>
@@ -70,7 +70,7 @@
         </dependency>
 
         <!-- ======================================================== -->
-        <!-- Testing -->
+        <!-- Testing                                                  -->
         <!-- ======================================================== -->
 
         <dependency>

@@ -6,6 +6,9 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 /**
  * The Data Object Access support to abstract and encapsulate all access to the client table of the data source.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public class ClientDaoImpl extends JdbcDaoSupport implements ClientDao {
 

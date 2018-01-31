@@ -1,12 +1,5 @@
 package com.project.springjta.doubleentry.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.google.common.collect.Lists;
 import com.project.springjta.doubleentry.AccountNotFoundException;
 import com.project.springjta.doubleentry.InsufficientFundsException;
@@ -17,9 +10,17 @@ import com.project.springjta.doubleentry.TransferService;
 import com.project.springjta.doubleentry.dao.AccountDao;
 import com.project.springjta.doubleentry.dao.TransactionDao;
 import com.project.springjta.doubleentry.validation.TransferValidator;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
-* Implements the methods of the transfer service.
+ * Implements the methods of the transfer service.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
 */
 public class TransferServiceImpl implements TransferService {
 	private TransferValidator validator;

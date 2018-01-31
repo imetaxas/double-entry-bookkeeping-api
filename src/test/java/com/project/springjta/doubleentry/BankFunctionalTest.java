@@ -17,11 +17,8 @@ import com.project.springjta.doubleentry.TransferService;
 import junit.framework.Assert;
 
 /**
- * Functional test that demonstrate the key functionality of the
- * banking service and verifies that the solution works. This test must
- * pass without any failures.
- *
- * <b>Important!</b> It is not allowed to modify this test classs in any way.
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public class BankFunctionalTest {
     // There are no semantics in these constants, its just names

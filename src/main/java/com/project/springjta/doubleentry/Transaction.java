@@ -9,6 +9,8 @@ import java.util.List;
  * Value object representing a monetary transaction between two or more accounts. Each
  * account transaction is represented by a transaction leg.
  *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  * @see TransactionLeg
  */
 public final class Transaction implements Serializable {
@@ -22,8 +24,7 @@ public final class Transaction implements Serializable {
 
     private final List<TransactionLeg> legs;
 
-    public Transaction(String transactionRef, String transactionType,
-                       Date transactionDate, List<TransactionLeg> legs) {
+    public Transaction(String transactionRef, String transactionType, Date transactionDate, List<TransactionLeg> legs) {
         if (transactionRef == null) {
             throw new NullPointerException("transactionRef is null");
         }

@@ -4,6 +4,10 @@ import com.project.springjta.doubleentry.Money;
 import com.project.springjta.doubleentry.TransactionLeg;
 import com.project.springjta.doubleentry.model.Account;
 
+/**
+ * @author yanimetaxas
+ * @since 14-Nov-14
+ */
 public interface AccountDao {
 
 	boolean accountExists(String accountRef);

@@ -5,6 +5,10 @@ import java.util.Set;
 
 import com.project.springjta.doubleentry.Transaction;
 
+/**
+ * @author yanimetaxas
+ * @since 14-Nov-14
+ */
 public interface TransactionDao {
 
 	void storeTransaction(Transaction transaction);

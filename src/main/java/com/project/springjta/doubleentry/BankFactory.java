@@ -2,6 +2,9 @@ package com.project.springjta.doubleentry;
 
 /**
  * Factory interface for creating instances of central business services.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public interface BankFactory {
     /**

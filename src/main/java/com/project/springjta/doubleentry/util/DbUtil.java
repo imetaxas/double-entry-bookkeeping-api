@@ -1,11 +1,14 @@
 package com.project.springjta.doubleentry.util;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
 
 /**
-* Utility class for the data base operations
+* Utility class for the data base operations.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
 */
 public class DbUtil {
 	

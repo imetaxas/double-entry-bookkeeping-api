@@ -5,6 +5,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
 * Utility class for getting the beans from the application context
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
 */
 public class BankContextUtil {
 	private static ApplicationContext context;

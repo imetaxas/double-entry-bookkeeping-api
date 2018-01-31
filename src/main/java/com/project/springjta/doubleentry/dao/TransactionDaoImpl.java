@@ -22,6 +22,9 @@ import com.project.springjta.doubleentry.util.DbUtil;
 
 /**
  * The Data Object Access support to abstract and encapsulate all access to the transaction_history and transaction_leg tables of the data source.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public class TransactionDaoImpl extends JdbcDaoSupport implements TransactionDao {
 	
@@ -60,6 +63,7 @@ public class TransactionDaoImpl extends JdbcDaoSupport implements TransactionDao
 		return getJdbcTemplate().query(sql.toString(), new TransactionMapper(), transactionRefs.toArray());
 	}
 	
+	@Override
 	public Transaction getTransactionByRef(String transactionRef) {
 		List<String> transactionRefList = Lists.newArrayList();
 		transactionRefList.add(transactionRef);
@@ -100,7 +104,7 @@ public class TransactionDaoImpl extends JdbcDaoSupport implements TransactionDao
 	public String getClientRef() {
 		return this.clientRef;
 	}
-	
+
 	public void setDbUtil(DbUtil dbUtil) {
 		this.dbUtil = dbUtil;
 	}

@@ -62,6 +62,7 @@ public final class Money implements Serializable, Comparable<Money> {
      * <p/>
      * {@inheritDoc}
      */
+    @Override
     public int compareTo(Money o) {
         return getAmount().compareTo(o.getAmount());
     }

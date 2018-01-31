@@ -2,6 +2,9 @@ package com.project.springjta.doubleentry;
 
 /**
  * Defines the business logic for managing monetary accounts.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
  */
 public interface AccountService {
     /**
