@@ -1,17 +1,18 @@
 [![Build Status](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta.svg?branch=master)](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta)
-
+[![Coverage Status](https://coveralls.io/repos/github/imetaxas/double-entry-bookkeeping-spring-jta/badge.svg?branch=master)](https://coveralls.io/github/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
 # Double Entry Bookkeeping
-The code implements a Double-entry bookkeeping service using Spring 4, the Java Transaction API and the H2 database in embedded mode.
+Implementation of a Double-entry bookkeeping service using Spring 4, Java Transaction API and the H2 database in embedded mode.
 
 Concept description
 --------------------
-```
-Double-entry bookkeeping involves making at least two entries or legs for every transaction.
+
+**Double-entry bookkeeping** involves making at least two entries or legs for every transaction.
 A debit in one account and a corresponding credit in another account.
 The sum of all debits should always equal the sum of all credits, providing a simple way to check for errors.
-```
-  * An account MUST NOT be overdrawn, i.e. have a negative balance.
-  * A monetary transaction MAY support multiple currencies as long as the total balance for the transaction legs with the same currency is zero.
+The following rules **MUST** apply:
+
+  * An account **MUST NOT** be overdrawn, i.e. have a negative balance.
+  * A monetary transaction **MAY** support multiple currencies as long as the total balance for the transaction legs with the same currency is zero.
   * The concepts of debit and credit are simplified by specifying that monetary transactions towards an account can have either a positive or negative value.
 
 
