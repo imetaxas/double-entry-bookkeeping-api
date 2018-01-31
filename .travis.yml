@@ -1,6 +1,10 @@
 language: java
 sudo: false # faster builds
 
+# Undo _JAVA_OPTIONS environment variable
+before_script:
+  - _JAVA_OPTIONS=
+
 script: "mvn cobertura:cobertura coveralls:report"
 
 notifications:

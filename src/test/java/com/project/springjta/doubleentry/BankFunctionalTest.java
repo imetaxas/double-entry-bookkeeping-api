@@ -3,18 +3,9 @@ package com.project.springjta.doubleentry;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.project.springjta.doubleentry.AccountService;
-import com.project.springjta.doubleentry.BankFactory;
-import com.project.springjta.doubleentry.Money;
-import com.project.springjta.doubleentry.Transaction;
-import com.project.springjta.doubleentry.TransferRequest;
-import com.project.springjta.doubleentry.TransferService;
-
-import junit.framework.Assert;
 
 /**
  * @author yanimetaxas
