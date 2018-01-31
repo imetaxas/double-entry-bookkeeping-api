@@ -4,9 +4,14 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.project.springjta.doubleentry</groupId>
-    <artifactId>com.project.springjta.doubleentry</artifactId>
+    <artifactId>doubleentry</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <github.global.server>github</github.global.server>
+    </properties>
 
     <name>Double entry bookkeeping</name>
 
