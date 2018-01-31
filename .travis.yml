@@ -1,0 +1,10 @@
+language: java
+sudo: false # faster builds
+
+script: "mvn cobertura:cobertura coveralls:report"
+
+notifications:
+  email: false
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
