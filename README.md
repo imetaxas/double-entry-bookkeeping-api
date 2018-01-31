@@ -12,7 +12,7 @@ Business Rules
 
 Build
 -------------------
-mvn test
+mvn package
 
 License
 ---------------
