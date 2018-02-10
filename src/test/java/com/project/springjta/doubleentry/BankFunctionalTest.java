@@ -68,7 +68,7 @@ public class BankFunctionalTest {
     }
 
     @Test
-    public void accountBalancesUpdatedAfterMultileggedTransfer() {
+    public void accountBalancesUpdatedAfterMultiLeggedTransfer() {
         accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
         accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
@@ -91,7 +91,7 @@ public class BankFunctionalTest {
     }
 
     @Test
-    public void accountBalancesUpdatedAfterMultileggedMulticurrencyTransfer() {
+    public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransfer() {
         accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
         accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
         accountService.createAccount(CASH_ACCOUNT_2, toMoney("1000.00", "SEK"));
