@@ -40,6 +40,17 @@ public final class Money implements Serializable, Comparable<Money> {
         this.currency = currency;
     }
 
+    public Money(String amount, String currency) {
+        if (amount == null) {
+            throw new NullPointerException("value is null");
+        }
+        if (currency == null) {
+            throw new NullPointerException("currency is null");
+        }
+        this.amount = new BigDecimal(amount);
+        this.currency = Currency.getInstance(currency);
+    }
+
     protected Money() {
     }
 

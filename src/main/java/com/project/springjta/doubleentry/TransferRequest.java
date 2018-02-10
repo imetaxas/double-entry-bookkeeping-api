@@ -36,6 +36,7 @@ public final class TransferRequest implements Serializable {
         return new Builder();
     }
 
+    @FunctionalInterface
     public interface ReferenceStep {
         /**
          * @param transactionRef client defined transaction reference
@@ -44,6 +45,7 @@ public final class TransferRequest implements Serializable {
         TypeStep reference(String transactionRef);
     }
 
+    @FunctionalInterface
     public interface TypeStep {
         /**
          * @param transactionType the transaction type for grouping transactions or other purposes
@@ -52,6 +54,7 @@ public final class TransferRequest implements Serializable {
         AccountStep type(String transactionType);
     }
 
+    @FunctionalInterface
     public interface AccountStep {
         /**
          * @param accountRef the client defined account reference
@@ -66,6 +69,7 @@ public final class TransferRequest implements Serializable {
          * @return the final build step
          */
         BuildStep amount(Money money);
+        BuildStep amount(String amount, String currency);
     }
 
     public interface BuildStep {
@@ -100,6 +104,13 @@ public final class TransferRequest implements Serializable {
         @Override
         public BuildStep amount(Money money) {
             request.legs.add(new TransactionLeg(accountRef, money));
+            accountRef = null;
+            return this;
+        }
+
+        @Override
+        public BuildStep amount(String amount, String currency) {
+            request.legs.add(new TransactionLeg(accountRef, new Money(amount, currency)));
             accountRef = null;
             return this;
         }
