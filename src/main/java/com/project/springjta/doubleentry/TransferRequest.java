@@ -69,7 +69,6 @@ public final class TransferRequest implements Serializable {
          * @return the final build step
          */
         BuildStep amount(Money money);
-        BuildStep amount(String amount, String currency);
         BuildStep debit(String amount, String currency);
         BuildStep credit(String amount, String currency);
     }
@@ -106,13 +105,6 @@ public final class TransferRequest implements Serializable {
         @Override
         public BuildStep amount(Money money) {
             request.legs.add(new TransactionLeg(accountRef, money));
-            accountRef = null;
-            return this;
-        }
-
-        @Override
-        public BuildStep amount(String amount, String currency) {
-            request.legs.add(new TransactionLeg(accountRef, new Money(amount, currency)));
             accountRef = null;
             return this;
         }
