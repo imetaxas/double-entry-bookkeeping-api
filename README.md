@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta.svg?branch=master)](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta)
-[![Coverage Status](https://coveralls.io/repos/github/imetaxas/double-entry-bookkeeping-spring-jta/badge.svg?branch=master)](https://coveralls.io/github/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
+[![Coveralls Coverage](https://coveralls.io/repos/github/imetaxas/double-entry-bookkeeping-spring-jta/badge.svg?branch=master)](https://coveralls.io/github/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
+[![CodeCov Coverage](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta/graph/badge.svg?branch=master)](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Double Entry Bookkeeping
