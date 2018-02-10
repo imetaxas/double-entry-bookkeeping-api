@@ -33,8 +33,8 @@ public class LedgerTest {
     TransferRequest transferRequest1 = ledger.createTransferRequest()
         .reference("T1")
         .type("testing1")
-        .account(CASH_ACCOUNT_1).amount("-5.00", "EUR")
-        .account(REVENUE_ACCOUNT_1).amount("5.00", "EUR")
+        .account(CASH_ACCOUNT_1).debit("5.00", "EUR")
+        .account(REVENUE_ACCOUNT_1).credit("5.00", "EUR")
         .build();
 
     ledger.commitTransaction(transferRequest1);
@@ -42,8 +42,8 @@ public class LedgerTest {
     TransferRequest transferRequest2 = ledger.createTransferRequest()
         .reference("T2")
         .type("testing2")
-        .account(CASH_ACCOUNT_1).amount("-10.50", "EUR")
-        .account(REVENUE_ACCOUNT_1).amount("10.50", "EUR")
+        .account(CASH_ACCOUNT_1).debit("10.50", "EUR")
+        .account(REVENUE_ACCOUNT_1).credit("10.50", "EUR")
         .build();
 
     ledger.commitTransaction(transferRequest2);
