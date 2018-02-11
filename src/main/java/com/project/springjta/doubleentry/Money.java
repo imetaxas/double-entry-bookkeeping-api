@@ -3,6 +3,7 @@ package com.project.springjta.doubleentry;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
+import javax.annotation.Nonnull;
 
 /**
  * Immutable monetary money class that couples an amount with a currency.
@@ -44,11 +45,6 @@ public final class Money implements Serializable, Comparable<Money> {
         return currency;
     }
 
-    /**
-     * Return the underlying monetary value as BigDecimal.
-     *
-     * @return the monetary value
-     */
     public BigDecimal getAmount() {
         return amount;
     }
@@ -63,7 +59,7 @@ public final class Money implements Serializable, Comparable<Money> {
      * {@inheritDoc}
      */
     @Override
-    public int compareTo(Money obj) {
+    public int compareTo(@Nonnull Money obj) {
         return getAmount().compareTo(obj.getAmount());
     }
 
@@ -81,17 +77,9 @@ public final class Money implements Serializable, Comparable<Money> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Money money = (Money) o;
 
-        if (!amount.equals(money.amount)) {
-            return false;
-        }
-        if (!currency.equals(money.currency)) {
-            return false;
-        }
-
-        return true;
+        return amount.equals(money.amount) && currency.equals(money.currency);
     }
 
     @Override

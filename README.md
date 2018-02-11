@@ -37,7 +37,7 @@ TransferRequest transferRequest1 = ledger.createTransferRequest()
     .account(REVENUE_ACCOUNT_1).credit("5.00", "EUR")
     .build();
     
-ledger.commitTransaction(transferRequest1);
+ledger.commit(transferRequest1);
   
 TransferRequest transferRequest2 = ledger.createTransferRequest()
     .reference("T2")
@@ -46,12 +46,12 @@ TransferRequest transferRequest2 = ledger.createTransferRequest()
     .account(REVENUE_ACCOUNT_1).credit("10.50", "EUR")
     .build();
   
-ledger.commitTransaction(transferRequest2);
+ledger.commit(transferRequest2);
   
-List<Transaction> cashAccountTransactionList = ledger.findTransactionsByAccountRef(CASH_ACCOUNT_1);
-List<Transaction> revenueAccountTransactionList = ledger.findTransactionsByAccountRef(REVENUE_ACCOUNT_1);
+List<Transaction> cashAccountTransactionList = ledger.findTransactions(CASH_ACCOUNT_1);
+List<Transaction> revenueAccountTransactionList = ledger.findTransactions(REVENUE_ACCOUNT_1);
   
-System.out.println(ledger.printHistoryLog());
+ledger.printHistoryLog();
 ```
 Build
 -------

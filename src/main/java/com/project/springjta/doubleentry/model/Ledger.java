@@ -22,7 +22,7 @@ public class Ledger extends AbstractAccountingConcept {
     createAccounts();
   }
 
-  public void commitTransaction(TransferRequest transferRequest) {
+  public void commit(TransferRequest transferRequest) {
     getTransferService().transferFunds(transferRequest);
   }
 
@@ -30,7 +30,7 @@ public class Ledger extends AbstractAccountingConcept {
     return TransferRequest.builder();
   }
 
-  public List<Transaction> findTransactionsByAccountRef(String accountRef) {
+  public List<Transaction> findTransactions(String accountRef) {
     return getTransferService().findTransactionsByAccountRef(accountRef);
   }
 
@@ -44,11 +44,11 @@ public class Ledger extends AbstractAccountingConcept {
             .createAccount(accountRef, account.getBalance()));
   }
 
-  public String printHistoryLog() {
-    return toString();
+  public void printHistoryLog() {
+    System.out.println(toString());
   }
 
-  public String printAccounts() {
+  private String formatAccounts() {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("%20s %20s %10s %15s %10s %10s", "Account", "|", "Amount", "|", "Currency", "|"));
     sb.append(String.format("%s", "\n------------------------------------------------------------------------------------------"));
@@ -60,7 +60,7 @@ public class Ledger extends AbstractAccountingConcept {
     return sb.toString();
   }
 
-  public String printTransactionLog() {
+  private String formatTransactionLog() {
     StringBuilder sb = new StringBuilder();
     sb.append(String.format("%20s %20s %15s %10s %10s %10s %10s", "Account", "|", "Transaction", "|", "Type", "|", "Date"));
     sb.append(String.format("%s", "\n-------------------------------------------------------------------------------------------------------------------------"));
@@ -84,6 +84,6 @@ public class Ledger extends AbstractAccountingConcept {
 
   @Override
   public String toString() {
-    return printAccounts() + "\n\n" + printTransactionLog();
+    return formatAccounts() + "\n\n" + formatTransactionLog();
   }
 }
