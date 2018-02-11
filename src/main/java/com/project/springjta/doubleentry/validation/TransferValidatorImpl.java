@@ -7,6 +7,7 @@ import com.project.springjta.doubleentry.AccountNotFoundException;
 import com.project.springjta.doubleentry.InsufficientFundsException;
 import com.project.springjta.doubleentry.TransactionLeg;
 import com.project.springjta.doubleentry.TransferRequest;
+import com.project.springjta.doubleentry.UnbalancedLegsException;
 import com.project.springjta.doubleentry.dao.AccountDao;
 import com.project.springjta.doubleentry.model.Account;
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class TransferValidatorImpl implements TransferValidator {
     }
 
     @Override
-    public void isTransactionBalanced(Iterable<TransactionLeg> legs) throws TransferValidationException {
+    public void isTransactionBalanced(Iterable<TransactionLeg> legs) throws UnbalancedLegsException {
         Multimap<Currency, TransactionLeg> legsByCurrency = sortByCurrency(legs);
         for (Currency currency : legsByCurrency.keySet()) {
         	checkTransactionLegsBalanced(legsByCurrency.get(currency));
@@ -61,13 +62,13 @@ public class TransferValidatorImpl implements TransferValidator {
         }
     }
 
-    private void checkTransactionLegsBalanced(Iterable<TransactionLeg> legs) throws TransferValidationException {
+    private void checkTransactionLegsBalanced(Iterable<TransactionLeg> legs) throws UnbalancedLegsException {
         BigDecimal sum = BigDecimal.ZERO;
         for (TransactionLeg leg : legs) {
             sum = sum.add(leg.getAmount().getAmount());
         }
         if (!sum.equals(new BigDecimal("0.00"))) {
-            throw new TransferValidationException("Transaction legs not balanced");
+            throw new UnbalancedLegsException("Transaction legs not balanced");
         }
     }
 

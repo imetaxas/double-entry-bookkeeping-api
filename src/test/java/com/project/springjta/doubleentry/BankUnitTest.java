@@ -1,8 +1,8 @@
 package com.project.springjta.doubleentry;
 
-import java.math.BigDecimal;
+import static com.project.springjta.doubleentry.Money.toMoney;
+
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import org.junit.Assert;
@@ -89,9 +89,5 @@ public class BankUnitTest {
 
     List<Transaction> t2 = transferServiceMock.findTransactionsByAccountRef(REVENUE_ACCOUNT);
     Assert.assertEquals(2, t2.size());
-  }
-
-  private static Money toMoney(String amount, String currency) {
-    return new Money(new BigDecimal(amount), Currency.getInstance(currency));
   }
 }

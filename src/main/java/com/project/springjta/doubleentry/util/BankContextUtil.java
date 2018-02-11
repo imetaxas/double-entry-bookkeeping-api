@@ -11,7 +11,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 */
 public class BankContextUtil {
 	private static ApplicationContext context;
-	
+
+	private BankContextUtil() {
+	}
+
 	private static void init() {
 		context = new ClassPathXmlApplicationContext("applicationContext.xml");
 	}

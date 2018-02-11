@@ -1,15 +1,13 @@
 package com.project.springjta.doubleentry.model;
 
+import static com.project.springjta.doubleentry.Money.toMoney;
 import static org.junit.Assert.assertEquals;
 
-import com.project.springjta.doubleentry.Money;
+import com.project.springjta.doubleentry.InfrastructureException;
 import com.project.springjta.doubleentry.Transaction;
 import com.project.springjta.doubleentry.TransferRequest;
-import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.List;
 import org.junit.Test;
-
 /**
  * @author yanimetaxas
  * @since 03-Feb-18
@@ -33,8 +31,8 @@ public class LedgerTest {
     TransferRequest transferRequest1 = ledger.createTransferRequest()
         .reference("T1")
         .type("testing1")
-        .account(CASH_ACCOUNT_1).amount("-5.00", "EUR")
-        .account(REVENUE_ACCOUNT_1).amount("5.00", "EUR")
+        .account(CASH_ACCOUNT_1).debit("5.00", "EUR")
+        .account(REVENUE_ACCOUNT_1).credit("5.00", "EUR")
         .build();
 
     ledger.commitTransaction(transferRequest1);
@@ -42,8 +40,8 @@ public class LedgerTest {
     TransferRequest transferRequest2 = ledger.createTransferRequest()
         .reference("T2")
         .type("testing2")
-        .account(CASH_ACCOUNT_1).amount("-10.50", "EUR")
-        .account(REVENUE_ACCOUNT_1).amount("10.50", "EUR")
+        .account(CASH_ACCOUNT_1).debit("10.50", "EUR")
+        .account(REVENUE_ACCOUNT_1).credit("10.50", "EUR")
         .build();
 
     ledger.commitTransaction(transferRequest2);
@@ -60,7 +58,8 @@ public class LedgerTest {
     System.out.println(ledger.printHistoryLog());
   }
 
-  private static Money toMoney(String amount, String currency) {
-    return new Money(new BigDecimal(amount), Currency.getInstance(currency));
+  @Test(expected = InfrastructureException.class)
+  public void createLedger_WhenIsInvalidAccountingImplementation() {
+    new LedgerMock();
   }
 }

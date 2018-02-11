@@ -3,10 +3,10 @@
 [![CodeCov Coverage](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta/graph/badge.svg?branch=master)](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Double Entry Bookkeeping
-Implementation of a Double-entry bookkeeping service using Spring 4, Java Transaction API and the H2 database in embedded mode.
+# Double Entry Bookkeeping API
+Implementation of a Double-entry bookkeeping service using Spring 5, Java Transaction API and the H2 database in embedded mode.
 
-Concept description
+Description
 --------------------
 
 **Double-entry bookkeeping** involves making at least two entries or legs for every transaction.
@@ -19,6 +19,40 @@ The following rules **MUST** apply:
   * The concepts of debit and credit are simplified by specifying that monetary transactions towards an account can have either a positive or negative value.
 
 
+API
+----
+```
+ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
+              .account(CASH_ACCOUNT_1, "1000.00", "EUR")
+              .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+              .build();
+      
+Ledger ledger = new Ledger(chartOfAccounts);
+
+  
+TransferRequest transferRequest1 = ledger.createTransferRequest()
+    .reference("T1")
+    .type("testing1")
+    .account(CASH_ACCOUNT_1).debit("5.00", "EUR")
+    .account(REVENUE_ACCOUNT_1).credit("5.00", "EUR")
+    .build();
+    
+ledger.commitTransaction(transferRequest1);
+  
+TransferRequest transferRequest2 = ledger.createTransferRequest()
+    .reference("T2")
+    .type("testing2")
+    .account(CASH_ACCOUNT_1).debit("10.50", "EUR")
+    .account(REVENUE_ACCOUNT_1).credit("10.50", "EUR")
+    .build();
+  
+ledger.commitTransaction(transferRequest2);
+  
+List<Transaction> cashAccountTransactionList = ledger.findTransactionsByAccountRef(CASH_ACCOUNT_1);
+List<Transaction> revenueAccountTransactionList = ledger.findTransactionsByAccountRef(REVENUE_ACCOUNT_1);
+  
+System.out.println(ledger.printHistoryLog());
+```
 Build
 -------
 mvn package

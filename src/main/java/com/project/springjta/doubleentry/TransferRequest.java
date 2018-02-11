@@ -1,5 +1,7 @@
 package com.project.springjta.doubleentry;
 
+import static com.project.springjta.doubleentry.Money.toMoney;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,7 +71,8 @@ public final class TransferRequest implements Serializable {
          * @return the final build step
          */
         BuildStep amount(Money money);
-        BuildStep amount(String amount, String currency);
+        BuildStep debit(String amount, String currency);
+        BuildStep credit(String amount, String currency);
     }
 
     public interface BuildStep {
@@ -109,8 +112,16 @@ public final class TransferRequest implements Serializable {
         }
 
         @Override
-        public BuildStep amount(String amount, String currency) {
-            request.legs.add(new TransactionLeg(accountRef, new Money(amount, currency)));
+        public BuildStep debit(String amount, String currency) {
+            String debitAmount = "-" + amount;
+            request.legs.add(new TransactionLeg(accountRef, toMoney(debitAmount, currency)));
+            accountRef = null;
+            return this;
+        }
+
+        @Override
+        public BuildStep credit(String amount, String currency) {
+            request.legs.add(new TransactionLeg(accountRef, toMoney(amount, currency)));
             accountRef = null;
             return this;
         }
