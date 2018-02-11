@@ -1,7 +1,6 @@
 package com.project.springjta.doubleentry.dao;
 
 import java.util.Date;
-
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 /**
