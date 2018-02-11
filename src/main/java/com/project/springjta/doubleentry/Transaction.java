@@ -38,7 +38,7 @@ public final class Transaction implements Serializable {
     public String getTransactionType() {
         return transactionType;
     }
-
+    
     public List<TransactionLeg> getLegs() {
         return Collections.unmodifiableList(legs);
     }

@@ -1,9 +1,8 @@
 package com.project.springjta.doubleentry.dao;
 
+import com.project.springjta.doubleentry.Transaction;
 import java.util.List;
 import java.util.Set;
-
-import com.project.springjta.doubleentry.Transaction;
 
 /**
  * @author yanimetaxas

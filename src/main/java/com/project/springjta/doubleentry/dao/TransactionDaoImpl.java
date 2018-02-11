@@ -1,4 +1,11 @@
 package com.project.springjta.doubleentry.dao;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import com.project.springjta.doubleentry.Money;
+import com.project.springjta.doubleentry.Transaction;
+import com.project.springjta.doubleentry.TransactionLeg;
+import com.project.springjta.doubleentry.util.DbUtil;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,17 +15,9 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.project.springjta.doubleentry.Money;
-import com.project.springjta.doubleentry.Transaction;
-import com.project.springjta.doubleentry.TransactionLeg;
-import com.project.springjta.doubleentry.util.DbUtil;
 
 /**
  * The Data Object Access support to abstract and encapsulate all access to the transaction_history and transaction_leg tables of the data source.
