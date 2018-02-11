@@ -1,5 +1,6 @@
 package com.project.springjta.doubleentry;
 
+import com.project.springjta.doubleentry.validation.TransferValidationException;
 import java.io.Serializable;
 
 /**
@@ -18,10 +19,10 @@ public final class TransactionLeg implements Serializable {
 
     public TransactionLeg(String accountRef, Money amount) {
         if (accountRef == null) {
-            throw new NullPointerException("accountRef is null");
+            throw new TransferValidationException("accountRef is null");
         }
         if (amount == null) {
-            throw new NullPointerException("amount is null");
+            throw new TransferValidationException("amount is null");
         }
         this.accountRef = accountRef;
         this.amount = amount;

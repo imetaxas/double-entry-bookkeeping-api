@@ -50,37 +50,5 @@ public class Account {
 	public boolean isNullAccount() {
 		return this.equals(NULL_ACCOUNT);
 	}
-	
-	@Override
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof Account)) {
-			return false;
-		}
-		Account account = (Account) other;
-		if (!accountRef.equals(account.accountRef)) {
-			return false;
-		}
-		if (!balance.equals(account.balance)) {
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-	public int hashCode() {
-		int result = accountRef.hashCode();
-		result = 31 * result + balance.hashCode();
-		return result;
-	}
-	
-	@Override
-	public String toString() {
-		return "Account{" +
-				"accountRef='" + accountRef + '\'' +
-				", balance=" + balance +
-				'}';
-	}
+
 }

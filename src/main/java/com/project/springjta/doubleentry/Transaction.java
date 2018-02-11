@@ -25,18 +25,6 @@ public final class Transaction implements Serializable {
     private final List<TransactionLeg> legs;
 
     public Transaction(String transactionRef, String transactionType, Date transactionDate, List<TransactionLeg> legs) {
-        if (transactionRef == null) {
-            throw new NullPointerException("transactionRef is null");
-        }
-        if (transactionType == null) {
-            throw new NullPointerException("transactionType is null");
-        }
-        if (transactionDate == null) {
-            throw new NullPointerException("bookingDate is null");
-        }
-        if (legs == null) {
-            throw new NullPointerException("legs is null");
-        }
         this.transactionRef = transactionRef;
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;

@@ -4,6 +4,7 @@ import com.project.springjta.doubleentry.AccountNotFoundException;
 import com.project.springjta.doubleentry.InsufficientFundsException;
 import com.project.springjta.doubleentry.TransactionLeg;
 import com.project.springjta.doubleentry.TransferRequest;
+import com.project.springjta.doubleentry.UnbalancedLegsException;
 
 /**
  * @author yanimetaxas
@@ -13,7 +14,7 @@ public interface TransferValidator {
 
 	void validateTransferRequest(TransferRequest transferRequest);
 
-	void isTransactionBalanced(Iterable<TransactionLeg> legs) throws TransferValidationException;
+	void isTransactionBalanced(Iterable<TransactionLeg> legs) throws UnbalancedLegsException;
 
 	void currenciesMatch(Iterable<TransactionLeg> legs) throws TransferValidationException, AccountNotFoundException;
 

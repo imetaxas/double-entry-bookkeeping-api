@@ -40,20 +40,6 @@ public final class Money implements Serializable, Comparable<Money> {
         this.currency = currency;
     }
 
-    public Money(String amount, String currency) {
-        if (amount == null) {
-            throw new NullPointerException("value is null");
-        }
-        if (currency == null) {
-            throw new NullPointerException("currency is null");
-        }
-        this.amount = new BigDecimal(amount);
-        this.currency = Currency.getInstance(currency);
-    }
-
-    protected Money() {
-    }
-
     public Currency getCurrency() {
         return currency;
     }
@@ -67,6 +53,9 @@ public final class Money implements Serializable, Comparable<Money> {
         return amount;
     }
 
+    public static Money toMoney(String amount, String currency) {
+        return new Money(new BigDecimal(amount), Currency.getInstance(currency));
+    }
     /**
      * Compares this money object with another instance. The money objects are
      * compared by their underlying long value.
@@ -74,13 +63,13 @@ public final class Money implements Serializable, Comparable<Money> {
      * {@inheritDoc}
      */
     @Override
-    public int compareTo(Money o) {
-        return getAmount().compareTo(o.getAmount());
+    public int compareTo(Money obj) {
+        return getAmount().compareTo(obj.getAmount());
     }
 
     /**
      * Compares two money objects for equality. The money objects are
-     * compared by their underlying bigdecimal value and currency ISO code.
+     * compared by their underlying bigDecimal value and currency ISO code.
      * <p/>
      * {@inheritDoc}
      */
@@ -110,15 +99,5 @@ public final class Money implements Serializable, Comparable<Money> {
         int result = amount.hashCode();
         result = 31 * result + currency.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Money");
-        sb.append("{amount=").append(amount);
-        sb.append(", currency=").append(currency);
-        sb.append('}');
-        return sb.toString();
     }
 }

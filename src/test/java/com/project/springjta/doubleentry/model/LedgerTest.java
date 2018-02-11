@@ -1,15 +1,13 @@
 package com.project.springjta.doubleentry.model;
 
+import static com.project.springjta.doubleentry.Money.toMoney;
 import static org.junit.Assert.assertEquals;
 
-import com.project.springjta.doubleentry.Money;
+import com.project.springjta.doubleentry.InfrastructureException;
 import com.project.springjta.doubleentry.Transaction;
 import com.project.springjta.doubleentry.TransferRequest;
-import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.List;
 import org.junit.Test;
-
 /**
  * @author yanimetaxas
  * @since 03-Feb-18
@@ -60,7 +58,8 @@ public class LedgerTest {
     System.out.println(ledger.printHistoryLog());
   }
 
-  private static Money toMoney(String amount, String currency) {
-    return new Money(new BigDecimal(amount), Currency.getInstance(currency));
+  @Test(expected = InfrastructureException.class)
+  public void createLedger_WhenIsInvalidAccountingImplementation() {
+    new LedgerMock();
   }
 }
