@@ -58,6 +58,11 @@ public class LedgerTest {
     ledger.printHistoryLog();
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void buildChartOfAccounts_WhenHavingNoAccounts() {
+    ChartOfAccountsBuilder.create().build();
+  }
+
   @Test(expected = InfrastructureException.class)
   public void createLedger_WhenIsInvalidAccountingImplementation() {
     new LedgerMock();

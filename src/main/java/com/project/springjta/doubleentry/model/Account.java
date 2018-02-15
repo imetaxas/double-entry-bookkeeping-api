@@ -17,12 +17,6 @@ public class Account {
 	private static final Account NULL_ACCOUNT = new Account("", new Money(new BigDecimal("0.00"), Currency.getInstance("XXX")));
 
 	public Account(String accountRef, Money balance) {
-		if (accountRef == null) {
-			throw new NullPointerException("Argument accountRef is NULL");
-		}
-		if (balance == null) {
-			throw new NullPointerException("Argument balance is NULL");
-		}
 		this.accountRef = accountRef;
 		this.balance = balance;
 	}

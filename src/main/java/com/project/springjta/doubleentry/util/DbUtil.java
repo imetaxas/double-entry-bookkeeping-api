@@ -36,14 +36,10 @@ public class DbUtil {
 	
 	public String commaSeparatedQuestionMarks(int count) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i<count; i++) {
+		for (int i = 0; i < count; i++) {
 			sb.append("?,");
 		}
-		String s = sb.toString();
-		if (s.isEmpty()) {
-			return "";
-		}
-		return s.substring(0, s.length() - 1);
+		return sb.toString().substring(0, sb.toString().length() - 1);
 	}
 }
 

@@ -24,7 +24,7 @@ public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
     private DbUtil dbUtil;
     private String clientRef;
     
-	@Override
+	  @Override
     public boolean accountExists(String accountRef) {
         String sql = "SELECT id FROM account WHERE account_ref = ?";
     	List<Long> accountIds = getJdbcTemplate().query(sql, dbUtil.longRowMapper(), accountRef);

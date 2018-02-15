@@ -267,6 +267,34 @@ public class BankFunctionalTest {
         accountService.getAccountBalance(null);
     }
 
+    @Test(expected = AccountNotFoundException.class)
+    public void findTransactionsByAccountRef_WhenAccountNotExists() {
+       transferService.findTransactionsByAccountRef("");
+    }
+
+    @Test
+    public void findTransactionsByAccountRef_WhenTransactionForAccountNotExists() {
+        accountService.createAccount(CASH_ACCOUNT_1, toMoney("10.00", "EUR"));
+        List<Transaction> transactions = transferService.findTransactionsByAccountRef(CASH_ACCOUNT_1);
+
+        Assert.assertEquals(0, transactions.size());
+    }
+
+    @Test
+    public void getTransactionByRef_WhenRefNotExists() {
+        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+
+        transferService.transferFunds(TransferRequest.builder()
+            .reference("T2").type("testing")
+            .account(CASH_ACCOUNT_1).amount(toMoney("-10.50", "EUR"))
+            .account(REVENUE_ACCOUNT_1).amount(toMoney("10.50", "EUR"))
+            .build());
+
+        Transaction transaction = transferService.getTransactionByRef("");
+        Assert.assertNull(transaction);
+    }
+
     @After
     public void tearDown() throws Exception {
         CoverageTool.testPrivateConstructor(BankContextUtil.class);
