@@ -1,6 +1,7 @@
 package com.project.springjta.doubleentry;
 
 import static com.project.springjta.doubleentry.Money.toMoney;
+import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
 import com.project.springjta.doubleentry.tools.CoverageTool;
 import com.project.springjta.doubleentry.util.BankContextUtil;
@@ -18,285 +19,291 @@ import org.junit.Test;
  * @since 14-Nov-14
  */
 public class BankFunctionalTest {
-    // There are no semantics in these constants, its just names
 
-    private static final String CASH_ACCOUNT_1 = "cash_1_EUR";
+  private static final String FACTORY_CLASS_NAME = "com.project.springjta.doubleentry.BankFactoryImpl";
 
-    private static final String CASH_ACCOUNT_2 = "cash_2_SEK";
+  private static final String CASH_ACCOUNT_1 = "cash_1_EUR";
+  private static final String CASH_ACCOUNT_2 = "cash_2_SEK";
+  private static final String REVENUE_ACCOUNT_1 = "revenue_1_EUR";
+  private static final String REVENUE_ACCOUNT_2 = "revenue_2_SEK";
 
-    private static final String REVENUE_ACCOUNT_1 = "revenue_1_EUR";
+  private AccountService accountService;
+  private TransferService transferService;
 
-    private static final String REVENUE_ACCOUNT_2 = "revenue_2_SEK";
+  @Before
+  public void setupSystemStateBeforeEachTest() throws Exception {
+    BankFactory bankFactory = (BankFactory) Class.forName(FACTORY_CLASS_NAME).newInstance();
 
-    private AccountService accountService;
+    accountService = bankFactory.getAccountService();
+    transferService = bankFactory.getTransferService();
 
-    private TransferService transferService;
+    bankFactory.setupInitialData();
+  }
 
-    @Before
-    public void setupSystemStateBeforeEachTest() throws Exception {
-        BankFactory bankFactory = (BankFactory) Class.forName(
-                "com.project.springjta.doubleentry.BankFactoryImpl").newInstance();
+  @Test
+  public void accountBalancesUpdatedAfterTransfer() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-        accountService = bankFactory.getAccountService();
-        transferService = bankFactory.getTransferService();
+    checkThat(toMoney("1000.00", "EUR"))
+        .isEqualTo(accountService.getAccountBalance(CASH_ACCOUNT_1));
+    checkThat(toMoney("0.00", "EUR"))
+        .isEqualTo(accountService.getAccountBalance(REVENUE_ACCOUNT_1));
 
-        bankFactory.setupInitialData();
-    }
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1").type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .build());
 
-    @Test
-    public void accountBalancesUpdatedAfterTransfer() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T2").type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-10.50", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("10.50", "EUR"))
+        .build());
 
-        Assert.assertEquals(toMoney("1000.00", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
-        Assert.assertEquals(toMoney("0.00", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
+    checkThat(toMoney("984.50", "EUR")).isEqualTo(accountService.getAccountBalance(CASH_ACCOUNT_1));
+    checkThat(toMoney("15.50", "EUR"))
+        .isEqualTo(accountService.getAccountBalance(REVENUE_ACCOUNT_1));
 
-        transferService.transferFunds(TransferRequest.builder()
-                .reference("T1").type("testing")
-                .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-                .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-                .build());
+    List<Transaction> t1 = transferService.findTransactionsByAccountRef(CASH_ACCOUNT_1);
+    checkThat(t1.size()).isEqualTo(2);
 
-        transferService.transferFunds(TransferRequest.builder()
-                .reference("T2").type("testing")
-                .account(CASH_ACCOUNT_1).amount(toMoney("-10.50", "EUR"))
-                .account(REVENUE_ACCOUNT_1).amount(toMoney("10.50", "EUR"))
-                .build());
+    Transaction transaction = transferService.getTransactionByRef("T1");
+    checkThat(transaction.getTransactionRef()).isEqualTo("T1");
 
-        Assert.assertEquals(toMoney("984.50", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
-        Assert.assertEquals(toMoney("15.50", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
+    transaction = transferService.getTransactionByRef("T2");
+    checkThat(transaction.getTransactionRef()).isEqualTo("T2");
 
-        List<Transaction> t1 = transferService.findTransactionsByAccountRef(CASH_ACCOUNT_1);
-        Assert.assertEquals(2, t1.size());
+    List<Transaction> t2 = transferService.findTransactionsByAccountRef(REVENUE_ACCOUNT_1);
+    checkThat(t2.size()).isEqualTo(2);
+  }
 
-        Transaction transaction = transferService.getTransactionByRef("T1");
-        Assert.assertEquals("T1", transaction.getTransactionRef());
+  @Test
+  public void accountBalancesUpdatedAfterMultiLeggedTransfer() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-        transaction = transferService.getTransactionByRef("T2");
-        Assert.assertEquals("T2", transaction.getTransactionRef());
+    Assert
+        .assertEquals(toMoney("1000.00", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
+    Assert
+        .assertEquals(toMoney("0.00", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
 
-        List<Transaction> t2 = transferService.findTransactionsByAccountRef(REVENUE_ACCOUNT_1);
-        Assert.assertEquals(2, t2.size());
-    }
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1").type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .account(CASH_ACCOUNT_1).amount(toMoney("-10.50", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("10.50", "EUR"))
+        .account(CASH_ACCOUNT_1).amount(toMoney("-2.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("1.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("1.00", "EUR"))
+        .build());
 
-    @Test
-    public void accountBalancesUpdatedAfterMultiLeggedTransfer() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    Assert.assertEquals(toMoney("982.50", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
+    Assert
+        .assertEquals(toMoney("17.50", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
+  }
 
-        Assert.assertEquals(toMoney("1000.00", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
-        Assert.assertEquals(toMoney("0.00", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
+  @Test
+  public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransfer() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    accountService.createAccount(CASH_ACCOUNT_2, toMoney("1000.00", "SEK"));
+    accountService.createAccount(REVENUE_ACCOUNT_2, toMoney("0.00", "SEK"));
 
-        transferService.transferFunds(TransferRequest.builder()
-                .reference("T1").type("testing")
-                .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-                .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-                .account(CASH_ACCOUNT_1).amount(toMoney("-10.50", "EUR"))
-                .account(REVENUE_ACCOUNT_1).amount(toMoney("10.50", "EUR"))
-                .account(CASH_ACCOUNT_1).amount(toMoney("-2.00", "EUR"))
-                .account(REVENUE_ACCOUNT_1).amount(toMoney("1.00", "EUR"))
-                .account(REVENUE_ACCOUNT_1).amount(toMoney("1.00", "EUR"))
-                .build());
+    Assert
+        .assertEquals(toMoney("1000.00", "SEK"), accountService.getAccountBalance(CASH_ACCOUNT_2));
+    Assert
+        .assertEquals(toMoney("0.00", "SEK"), accountService.getAccountBalance(REVENUE_ACCOUNT_2));
 
-        Assert.assertEquals(toMoney("982.50", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
-        Assert.assertEquals(toMoney("17.50", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
-    }
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1").type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .account(CASH_ACCOUNT_2).amount(toMoney("-10.50", "SEK"))
+        .account(REVENUE_ACCOUNT_2).amount(toMoney("10.50", "SEK"))
+        .build());
 
-    @Test
-    public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransfer() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
-        accountService.createAccount(CASH_ACCOUNT_2, toMoney("1000.00", "SEK"));
-        accountService.createAccount(REVENUE_ACCOUNT_2, toMoney("0.00", "SEK"));
+    Assert.assertEquals(toMoney("995.00", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
+    Assert
+        .assertEquals(toMoney("5.00", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
+    Assert.assertEquals(toMoney("989.50", "SEK"), accountService.getAccountBalance(CASH_ACCOUNT_2));
+    Assert
+        .assertEquals(toMoney("10.50", "SEK"), accountService.getAccountBalance(REVENUE_ACCOUNT_2));
+  }
 
-        Assert.assertEquals(toMoney("1000.00", "SEK"), accountService.getAccountBalance(CASH_ACCOUNT_2));
-        Assert.assertEquals(toMoney("0.00", "SEK"), accountService.getAccountBalance(REVENUE_ACCOUNT_2));
+  @Test(expected = IllegalStateException.class)
+  public void transferFunds_WhenTransferHasOneLeg() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-        transferService.transferFunds(TransferRequest.builder()
-                .reference("T1").type("testing")
-                .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-                .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-                .account(CASH_ACCOUNT_2).amount(toMoney("-10.50", "SEK"))
-                .account(REVENUE_ACCOUNT_2).amount(toMoney("10.50", "SEK"))
-                .build());
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .build());
+  }
 
-        Assert.assertEquals(toMoney("995.00", "EUR"), accountService.getAccountBalance(CASH_ACCOUNT_1));
-        Assert.assertEquals(toMoney("5.00", "EUR"), accountService.getAccountBalance(REVENUE_ACCOUNT_1));
-        Assert.assertEquals(toMoney("989.50", "SEK"), accountService.getAccountBalance(CASH_ACCOUNT_2));
-        Assert.assertEquals(toMoney("10.50", "SEK"), accountService.getAccountBalance(REVENUE_ACCOUNT_2));
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void transferFunds_WhenTransferReferenceIsNull() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-    @Test(expected = IllegalStateException.class)
-    public void transferFunds_WhenTransferHasOneLeg() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference(null)
+        .type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1")
-            .type("testing")
-            .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-            .build());
-    }
+  @Test(expected = IllegalArgumentException.class)
+  public void transferFunds_WhenTransferTypeIsNull() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-    @Test(expected = IllegalArgumentException.class)
-    public void transferFunds_WhenTransferReferenceIsNull() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type(null)
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference(null)
-            .type("testing")
-            .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-            .build());
-    }
+  @Test(expected = TransferValidationException.class)
+  public void transferFunds_WhenTransferLegAccountRefIsNull() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-    @Test(expected = IllegalArgumentException.class)
-    public void transferFunds_WhenTransferTypeIsNull() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account(null).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1")
-            .type(null)
-            .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-            .build());
-    }
+  @Test(expected = TransferValidationException.class)
+  public void transferFunds_WhenTransferLegAmountIsNull() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-    @Test(expected = TransferValidationException.class)
-    public void transferFunds_WhenTransferLegAccountRefIsNull() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(null)
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1")
-            .type("testing")
-            .account(null).amount(toMoney("-5.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-            .build());
-    }
+  @Test(expected = UnbalancedLegsException.class)
+  public void transferFunds_WhenTransactionLegsAreUnbalanced() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-    @Test(expected = TransferValidationException.class)
-    public void transferFunds_WhenTransferLegAmountIsNull() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-10.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1")
-            .type("testing")
-            .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(null)
-            .build());
-    }
+  @Test(expected = TransferValidationException.class)
+  public void transferFunds_WhenAccountCurrencyNotMatchTransferCurrency() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "SEK"));
 
-    @Test(expected = UnbalancedLegsException.class)
-    public void transferFunds_WhenTransactionLegsAreUnbalanced() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1")
-            .type("testing")
-            .account(CASH_ACCOUNT_1).amount(toMoney("-10.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-            .build());
-    }
+  @Test(expected = AccountNotFoundException.class)
+  public void transferFunds_WhenAccountNotFound() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "SEK"));
 
-    @Test(expected = TransferValidationException.class)
-    public void transferFunds_WhenAccountCurrencyNotMatchTransferCurrency() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "SEK"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account("wrong_account").amount(toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1")
-            .type("testing")
-            .account(CASH_ACCOUNT_1).amount(toMoney("-5.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-            .build());
-    }
+  @Test(expected = InsufficientFundsException.class)
+  public void transferFunds_WhenAccountIsOverdrawn() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("10.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-    @Test(expected = AccountNotFoundException.class)
-    public void transferFunds_WhenAccountNotFound() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "SEK"));
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1").type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-20.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("20.00", "EUR"))
+        .build());
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1")
-            .type("testing")
-            .account("wrong_account").amount(toMoney("-5.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("5.00", "EUR"))
-            .build());
-    }
+  @Test(expected = InfrastructureException.class)
+  public void account_AlreadyExists() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+  }
 
-    @Test(expected = InsufficientFundsException.class)
-    public void transferFunds_WhenAccountIsOverdrawn() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("10.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
+  @Test(expected = NullPointerException.class)
+  public void createAccount_WhenMoneyAmountIsNull() {
+    accountService.createAccount(CASH_ACCOUNT_1, new Money(null, Currency.getInstance("EUR")));
+  }
 
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T1").type("testing")
-            .account(CASH_ACCOUNT_1).amount(toMoney("-20.00", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("20.00", "EUR"))
-            .build());
-    }
+  @Test(expected = NullPointerException.class)
+  public void createAccount_WhenMoneyCurrencyIsNull() {
+    accountService.createAccount(CASH_ACCOUNT_1, new Money(new BigDecimal("1000.00"), null));
+  }
 
-    @Test(expected = InfrastructureException.class)
-    public void account_AlreadyExists() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-    }
+  @Test(expected = AccountNotFoundException.class)
+  public void accountBalance_NotExists() {
+    accountService.getAccountBalance(CASH_ACCOUNT_1);
+  }
 
-    @Test(expected = NullPointerException.class)
-    public void createAccount_WhenMoneyAmountIsNull() {
-        accountService.createAccount(CASH_ACCOUNT_1, new Money(null, Currency.getInstance("EUR")));
-    }
+  @Test(expected = AccountNotFoundException.class)
+  public void accountBalance_isNull() {
+    accountService.getAccountBalance(null);
+  }
 
-    @Test(expected = NullPointerException.class)
-    public void createAccount_WhenMoneyCurrencyIsNull() {
-        accountService.createAccount(CASH_ACCOUNT_1, new Money(new BigDecimal("1000.00"), null));
-    }
+  @Test(expected = AccountNotFoundException.class)
+  public void findTransactionsByAccountRef_WhenAccountNotExists() {
+    transferService.findTransactionsByAccountRef("");
+  }
 
-    @Test(expected = AccountNotFoundException.class)
-    public void accountBalance_NotExists() {
-        accountService.getAccountBalance(CASH_ACCOUNT_1);
-    }
+  @Test
+  public void findTransactionsByAccountRef_WhenTransactionForAccountNotExists() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("10.00", "EUR"));
+    List<Transaction> transactions = transferService.findTransactionsByAccountRef(CASH_ACCOUNT_1);
 
-    @Test(expected = AccountNotFoundException.class)
-    public void accountBalance_isNull() {
-        accountService.getAccountBalance(null);
-    }
+    Assert.assertEquals(0, transactions.size());
+  }
 
-    @Test(expected = AccountNotFoundException.class)
-    public void findTransactionsByAccountRef_WhenAccountNotExists() {
-       transferService.findTransactionsByAccountRef("");
-    }
+  @Test
+  public void getTransactionByRef_WhenRefNotExists() {
+    accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
 
-    @Test
-    public void findTransactionsByAccountRef_WhenTransactionForAccountNotExists() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("10.00", "EUR"));
-        List<Transaction> transactions = transferService.findTransactionsByAccountRef(CASH_ACCOUNT_1);
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T2").type("testing")
+        .account(CASH_ACCOUNT_1).amount(toMoney("-10.50", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(toMoney("10.50", "EUR"))
+        .build());
 
-        Assert.assertEquals(0, transactions.size());
-    }
+    Transaction transaction = transferService.getTransactionByRef("");
+    Assert.assertNull(transaction);
+  }
 
-    @Test
-    public void getTransactionByRef_WhenRefNotExists() {
-        accountService.createAccount(CASH_ACCOUNT_1, toMoney("1000.00", "EUR"));
-        accountService.createAccount(REVENUE_ACCOUNT_1, toMoney("0.00", "EUR"));
-
-        transferService.transferFunds(TransferRequest.builder()
-            .reference("T2").type("testing")
-            .account(CASH_ACCOUNT_1).amount(toMoney("-10.50", "EUR"))
-            .account(REVENUE_ACCOUNT_1).amount(toMoney("10.50", "EUR"))
-            .build());
-
-        Transaction transaction = transferService.getTransactionByRef("");
-        Assert.assertNull(transaction);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        CoverageTool.testPrivateConstructor(BankContextUtil.class);
-    }
+  @After
+  public void tearDown() throws Exception {
+    CoverageTool.testPrivateConstructor(BankContextUtil.class);
+  }
 }

@@ -1,7 +1,7 @@
 package com.project.springjta.doubleentry.model;
 
 import static com.project.springjta.doubleentry.Money.toMoney;
-import static org.junit.Assert.assertEquals;
+import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
 import com.project.springjta.doubleentry.InfrastructureException;
 import com.project.springjta.doubleentry.Transaction;
@@ -15,9 +15,7 @@ import org.junit.Test;
 public class LedgerTest {
 
   private static final String CASH_ACCOUNT_1 = "cash_1_EUR   ";
-  private static final String CASH_ACCOUNT_2 = "cash_2_SEK   ";
   private static final String REVENUE_ACCOUNT_1 = "revenue_1_EUR";
-  private static final String REVENUE_ACCOUNT_2 = "revenue_2_SEK";
 
   @Test
   public void accountBalancesUpdatedAfterTransfer() {
@@ -46,14 +44,14 @@ public class LedgerTest {
 
     ledger.commit(transferRequest2);
 
-    assertEquals(toMoney("984.50", "EUR"), ledger.getAccountBalance(CASH_ACCOUNT_1));
-    assertEquals(toMoney("15.50", "EUR"), ledger.getAccountBalance(REVENUE_ACCOUNT_1));
+    checkThat(toMoney("984.50", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
+    checkThat(toMoney("15.50", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
 
     List<Transaction> cashAccountTransactionList = ledger.findTransactions(CASH_ACCOUNT_1);
     List<Transaction> revenueAccountTransactionList = ledger.findTransactions(REVENUE_ACCOUNT_1);
 
-    assertEquals(2, cashAccountTransactionList.size());
-    assertEquals(2, revenueAccountTransactionList.size());
+    checkThat(cashAccountTransactionList.size()).isEqualTo(2);
+    checkThat(revenueAccountTransactionList.size()).isEqualTo(2);
 
     ledger.printHistoryLog();
   }

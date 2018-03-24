@@ -1,7 +1,7 @@
 package com.project.springjta.doubleentry;
 
 import static com.project.springjta.doubleentry.Money.toMoney;
-import static org.junit.Assert.*;
+import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
 import org.junit.Test;
 
@@ -16,21 +16,21 @@ public class MoneyTest {
     Money money1 = toMoney("1000", "SEK");
     Money money2 = toMoney("1000", "SEK");
 
-    assertEquals(0, money1.compareTo(money2));
-    assertEquals(0, money2.compareTo(money1));
+    checkThat(money1.compareTo(money2)).isEqualTo(0);
+    checkThat(money2.compareTo(money1)).isEqualTo(0);
   }
 
   @Test
   public void compareTo_WhenAmountIsDifferent() throws Exception {
-    assertEquals(-1, toMoney("1", "SEK").compareTo(toMoney("1000", "SEK")));
+    checkThat(toMoney("1", "SEK").compareTo(toMoney("1000", "SEK"))).isEqualTo(-1);
   }
 
   @Test
   public void equals_WhenMoneyIsSame() throws Exception {
     Money money1 = toMoney("1000", "SEK");
 
-    assertTrue(money1.equals(money1) && money1.equals(money1));
-    assertTrue(money1.hashCode() == money1.hashCode());
+    checkThat(money1.equals(money1) && money1.equals(money1)).isTrue();
+    checkThat(money1.hashCode() == money1.hashCode()).isTrue();
   }
 
   @Test
@@ -38,27 +38,27 @@ public class MoneyTest {
     Money money1 = toMoney("1000", "SEK");
     Money money2 = toMoney("1000", "SEK");
 
-    assertTrue(money1.equals(money2) && money2.equals(money1));
-    assertTrue(money1.hashCode() == money2.hashCode());
+    checkThat(money1.equals(money2) && money2.equals(money1)).isTrue();
+    checkThat(money1.hashCode() == money2.hashCode()).isTrue();
   }
 
   @Test
   public void equals_WhenAmountIsDifferent() throws Exception {
-    assertFalse(toMoney("1", "SEK").equals(toMoney("1000", "SEK")));
+    checkThat(toMoney("1", "SEK").equals(toMoney("1000", "SEK"))).isFalse();
   }
 
   @Test
   public void equals_WhenCurrencyIsDifferent() throws Exception {
-    assertFalse(toMoney("1000", "SEK").equals(toMoney("1000", "EUR")));
+    checkThat(toMoney("1000", "SEK").equals(toMoney("1000", "EUR"))).isFalse();
   }
 
   @Test
   public void equals_WhenAmountAndCurrencyAreDifferent() throws Exception {
-    assertFalse(toMoney("1", "SEK").equals(toMoney("1000", "EUR")));
+    checkThat(toMoney("1", "SEK").equals(toMoney("1000", "EUR"))).isFalse();
   }
 
   @Test
   public void equals_WhenMoneyIsNull() throws Exception {
-    assertFalse(toMoney("1", "SEK").equals(null));
+    checkThat(toMoney("1", "SEK").equals(null)).isFalse();
   }
 }

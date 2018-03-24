@@ -1,11 +1,11 @@
 package com.project.springjta.doubleentry;
 
 import static com.project.springjta.doubleentry.Money.toMoney;
+import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -60,13 +60,12 @@ public class BankUnitTest {
 
   @Test
   public void accountBalancesUpdatedAfterTransfer() {
-    Assert.assertEquals(toMoney("1000.00", "EUR"),
-        accountServiceMock.getAccountBalance(CASH_ACCOUNT));
-    Assert.assertEquals(toMoney("0.00", "EUR"),
-        accountServiceMock.getAccountBalance(REVENUE_ACCOUNT));
+    checkThat(toMoney("1000.00", "EUR"))
+        .isEqualTo(accountServiceMock.getAccountBalance(CASH_ACCOUNT));
+    checkThat(toMoney("0.00", "EUR"))
+        .isEqualTo(accountServiceMock.getAccountBalance(REVENUE_ACCOUNT));
 
     // Create two distinct transactions with two legs each
-
     transferServiceMock.transferFunds(TransferRequest.builder()
         .reference("T1").type("testing")
         .account(CASH_ACCOUNT).amount(toMoney("-5.00", "EUR"))
@@ -79,15 +78,15 @@ public class BankUnitTest {
         .account(CASH_ACCOUNT).amount(toMoney("-10.50", "EUR"))
         .build());
 
-    Assert.assertEquals(toMoney("984.50", "EUR"),
-        accountServiceMock.getAccountBalance(CASH_ACCOUNT));
-    Assert.assertEquals(toMoney("15.50", "EUR"),
-        accountServiceMock.getAccountBalance(REVENUE_ACCOUNT));
+    checkThat(toMoney("984.50", "EUR"))
+        .isEqualTo(accountServiceMock.getAccountBalance(CASH_ACCOUNT));
+    checkThat(toMoney("15.50", "EUR"))
+        .isEqualTo(accountServiceMock.getAccountBalance(REVENUE_ACCOUNT));
 
     List<Transaction> t1 = transferServiceMock.findTransactionsByAccountRef(CASH_ACCOUNT);
-    Assert.assertEquals(2, t1.size());
+    checkThat(t1.size()).isEqualTo(2);
 
     List<Transaction> t2 = transferServiceMock.findTransactionsByAccountRef(REVENUE_ACCOUNT);
-    Assert.assertEquals(2, t2.size());
+    checkThat(t2.size()).isEqualTo(2);
   }
 }
