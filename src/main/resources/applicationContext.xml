@@ -27,14 +27,14 @@
    </jdbc:initialize-database> -->
 
   <!-- Create the ClientDao bean -->
-  <bean id="clientDao" class="com.project.springjta.doubleentry.dao.ClientDaoImpl">
+  <bean id="clientDao" class="com.yanimetaxas.doubleentry.dao.ClientDaoImpl">
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
   </bean>
 
   <!-- Create the AccountDao bean -->
-  <bean id="accountDao" class="com.project.springjta.doubleentry.dao.AccountDaoImpl">
+  <bean id="accountDao" class="com.yanimetaxas.doubleentry.dao.AccountDaoImpl">
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
@@ -44,10 +44,10 @@
   </bean>
 
   <!-- Create the DbUtil bean -->
-  <bean id="dbUtil" class="com.project.springjta.doubleentry.util.DbUtil"/>
+  <bean id="dbUtil" class="com.yanimetaxas.doubleentry.util.DbUtil"/>
 
   <!-- Create the TransactionDao bean -->
-  <bean id="transactionDao" class="com.project.springjta.doubleentry.dao.TransactionDaoImpl">
+  <bean id="transactionDao" class="com.yanimetaxas.doubleentry.dao.TransactionDaoImpl">
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
@@ -57,21 +57,21 @@
   </bean>
 
   <!-- Create the TransferValidator bean -->
-  <bean id="validator" class="com.project.springjta.doubleentry.validation.TransferValidatorImpl">
+  <bean id="validator" class="com.yanimetaxas.doubleentry.validation.TransferValidatorImpl">
     <property name="accountDao">
       <ref bean="accountDao"/>
     </property>
   </bean>
 
   <!-- Create the AccountService bean -->
-  <bean id="accountService" class="com.project.springjta.doubleentry.service.AccountServiceImpl">
+  <bean id="accountService" class="com.yanimetaxas.doubleentry.service.AccountServiceImpl">
     <property name="accountDao">
       <ref bean="accountDao"/>
     </property>
   </bean>
 
   <!-- Create the TransferService bean -->
-  <bean id="transferService" class="com.project.springjta.doubleentry.service.TransferServiceImpl">
+  <bean id="transferService" class="com.yanimetaxas.doubleentry.service.TransferServiceImpl">
     <property name="accountDao">
       <ref bean="accountDao"/>
     </property>
