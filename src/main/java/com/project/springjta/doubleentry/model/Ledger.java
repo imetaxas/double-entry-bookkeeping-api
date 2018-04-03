@@ -17,7 +17,13 @@ public class Ledger extends AbstractAccountingConcept {
   private ChartOfAccounts chartOfAccounts;
 
   public Ledger(ChartOfAccounts chartOfAccounts) throws InfrastructureException {
-    super("com.project.springjta.doubleentry.BankFactoryImpl");
+    super("com.project.springjta.doubleentry.BankFactoryImpl", ConnectionOptions.NO_CONNECTION);
+    this.chartOfAccounts = chartOfAccounts;
+    createAccounts();
+  }
+
+  public Ledger(ChartOfAccounts chartOfAccounts, ConnectionOptions options) throws InfrastructureException {
+    super("com.project.springjta.doubleentry.BankFactoryImpl", options);
     this.chartOfAccounts = chartOfAccounts;
     createAccounts();
   }

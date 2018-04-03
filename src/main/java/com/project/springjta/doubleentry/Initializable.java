@@ -1,5 +1,7 @@
 package com.project.springjta.doubleentry;
 
+import com.project.springjta.doubleentry.model.ConnectionOptions;
+
 /**
  * @author yanimetaxas
  * @since 03-Feb-18
@@ -7,5 +9,5 @@ package com.project.springjta.doubleentry;
 @FunctionalInterface
 public interface Initializable {
 
-  void init(String className) throws Exception;
+  void init(String className, ConnectionOptions options) throws Exception;
 }
