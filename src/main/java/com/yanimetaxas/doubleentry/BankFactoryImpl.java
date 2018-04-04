@@ -27,12 +27,8 @@ public class BankFactoryImpl implements BankFactory {
 
   @Override
   public void configureDataSource(ConnectionOptions options) throws Exception {
-    if (options == ConnectionOptions.NO_CONNECTION) {
-      return;
-    }
     SimpleDriverDataSource dataSource = BankContextUtil.getBean("dataSource");
-    dataSource.setDriver(
-        (Driver) Class.forName(options.getDriver().getDriverClassName()).newInstance());
+    dataSource.setDriver((Driver) Class.forName(options.getDriver().getDriverClassName()).newInstance());
     dataSource.setUrl(options.getUrl());
     dataSource.setUsername(options.getUsername());
     dataSource.setPassword(options.getPassword());

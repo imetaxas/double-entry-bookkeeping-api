@@ -29,7 +29,7 @@ public class LedgerTest {
   @Test
   public void accountBalancesUpdatedAfterTransfer_UsingH2() {
     ConnectionOptions options = new ConnectionOptions(
-        DataSourceDriver.H2_EMBEDDED,
+        DataSourceDriver.JDBC_H2,
         URL,
         USERNAME,
         PASSWORD);

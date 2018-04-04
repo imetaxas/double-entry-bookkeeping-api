@@ -9,7 +9,8 @@ import com.yanimetaxas.doubleentry.DataSourceDriver;
 public class ConnectionOptions {
 
   public static final ConnectionOptions NO_CONNECTION = new ConnectionOptions(
-      DataSourceDriver.IN_MEMORY, "", "", "");
+      DataSourceDriver.EMBEDDED_H2, DataSourceDriver.EMBEDDED_H2.getUrl(),
+      DataSourceDriver.EMBEDDED_H2.getUsername(), DataSourceDriver.EMBEDDED_H2.getPassword());
 
   private DataSourceDriver driver;
   private String url;
