@@ -12,9 +12,9 @@
   Check https://www.mkyong.com/spring/spring-embedded-database-examples/ -->
 
   <!-- Enable if no persistent data is required after the execution -->
-  <jdbc:embedded-database id="dataSource" type="H2">
+  <!--<jdbc:embedded-database id="dataSource" type="H2">
     <jdbc:script location="classpath:db/schema.sql"/>
-  </jdbc:embedded-database>
+  </jdbc:embedded-database>-->
 
   <!-- Disable if no persistent data is required after the execution
   <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource">
@@ -23,9 +23,10 @@
       <property name="password" value=""/>
   </bean> -->
 
-  <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 
-  </bean>-->
+  </bean>
+
   <!-- Disable if no persistent data is required after the execution
    <jdbc:initialize-database>
        <jdbc:script location="classpath:db/schema.sql"/>

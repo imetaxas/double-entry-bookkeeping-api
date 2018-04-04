@@ -7,7 +7,11 @@ import com.yanimetaxas.doubleentry.model.ConnectionOptions;
 import com.yanimetaxas.doubleentry.util.BankContextUtil;
 import java.sql.Driver;
 import java.util.Date;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 /**
  * @author yanimetaxas
@@ -32,6 +36,15 @@ public class BankFactoryImpl implements BankFactory {
     dataSource.setUrl(options.getUrl());
     dataSource.setUsername(options.getUsername());
     dataSource.setPassword(options.getPassword());
+
+    DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
+  }
+
+  private DatabasePopulator createDatabasePopulator() {
+    ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+    databasePopulator.setContinueOnError(true);
+    databasePopulator.addScript(new ClassPathResource("db/schema.sql"));
+    return databasePopulator;
   }
 
   @Override
