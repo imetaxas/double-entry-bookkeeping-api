@@ -36,19 +36,24 @@ public class BankFactoryImpl implements BankFactory {
 
   @Override
   public void setupInitialData() {
+    String clientRef = "Client_" + System.currentTimeMillis();
 
     ClientDao clientDao = BankContextUtil.getBean("clientDao");
-    clientDao.truncateTables();
-    String clientRef = "Client_" + System.currentTimeMillis();
     clientDao.createClient(clientRef, new Date());
 
     AccountDao accountDao = BankContextUtil.getBean("accountDao");
-    accountDao.truncateTables();
     accountDao.setClientRef(clientRef);
 
     TransactionDao transactionDao = BankContextUtil.getBean("transactionDao");
-    transactionDao.truncateTables();
     transactionDao.setClientRef(clientRef);
+
+    try {
+      clientDao.truncateTables();
+      accountDao.truncateTables();
+      transactionDao.truncateTables();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
 }
