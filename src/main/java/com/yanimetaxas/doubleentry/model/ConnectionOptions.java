@@ -1,6 +1,6 @@
 package com.yanimetaxas.doubleentry.model;
 
-import com.yanimetaxas.doubleentry.DataSourceDriver;
+import static com.yanimetaxas.doubleentry.DataSourceDriver.EMBEDDED_H2;
 
 /**
  * @author yanimetaxas
@@ -9,34 +9,36 @@ import com.yanimetaxas.doubleentry.DataSourceDriver;
 public class ConnectionOptions {
 
   public static final ConnectionOptions NO_CONNECTION = new ConnectionOptions(
-      DataSourceDriver.EMBEDDED_H2, DataSourceDriver.EMBEDDED_H2.getUrl(),
-      DataSourceDriver.EMBEDDED_H2.getUsername(), DataSourceDriver.EMBEDDED_H2.getPassword());
+      EMBEDDED_H2.getDriverClassName(),
+      EMBEDDED_H2.getUrl(),
+      EMBEDDED_H2.getUsername(),
+      EMBEDDED_H2.getPassword());
 
-  private DataSourceDriver driver;
+  private String driverClassName;
   private String url;
   private String username;
   private String password;
 
-  public ConnectionOptions(DataSourceDriver driver, String url, String username, String password) {
-    this.driver = driver;
+  public ConnectionOptions(String driverClassName, String url, String username, String password) {
+    this.driverClassName = driverClassName;
     this.url = url;
     this.username = username;
     this.password = password;
   }
 
-  public DataSourceDriver getDriver() {
-    return driver;
+  public String getDriverClassName() {
+    return this.driverClassName;
   }
 
   public String getUrl() {
-    return url;
+    return this.url;
   }
 
   public String getUsername() {
-    return username;
+    return this.username;
   }
 
   public String getPassword() {
-    return password;
+    return this.password;
   }
 }

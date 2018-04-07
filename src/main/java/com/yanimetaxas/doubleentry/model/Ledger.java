@@ -41,6 +41,10 @@ public class Ledger extends AbstractAccountingConcept {
     return getTransferService().findTransactionsByAccountRef(accountRef);
   }
 
+  public Transaction getTransactionByRef(String accountRef) {
+    return getTransferService().getTransactionByRef(accountRef);
+  }
+
   public Money getAccountBalance(String accountRef) {
     return getAccountService().getAccountBalance(accountRef);
   }

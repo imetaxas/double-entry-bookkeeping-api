@@ -1,5 +1,6 @@
 package com.yanimetaxas.doubleentry.model;
 
+import static com.yanimetaxas.doubleentry.DataSourceDriver.JDBC_H2;
 import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
 import com.yanimetaxas.doubleentry.DataSourceDriver;
@@ -29,7 +30,7 @@ public class LedgerTest {
   @Test
   public void accountBalancesUpdatedAfterTransfer_UsingH2() {
     ConnectionOptions options = new ConnectionOptions(
-        DataSourceDriver.JDBC_H2,
+        JDBC_H2.getDriverClassName(),
         URL,
         USERNAME,
         PASSWORD);
@@ -67,9 +68,13 @@ public class LedgerTest {
 
     List<Transaction> cashAccountTransactionList = ledger.findTransactions(CASH_ACCOUNT_1);
     List<Transaction> revenueAccountTransactionList = ledger.findTransactions(REVENUE_ACCOUNT_1);
+    Transaction transaction1 = ledger.getTransactionByRef("T1");
+    Transaction transaction2 = ledger.getTransactionByRef("T2");
 
     checkThat(cashAccountTransactionList.size()).isEqualTo(2);
     checkThat(revenueAccountTransactionList.size()).isEqualTo(2);
+    checkThat(transaction1).isNotNull();
+    checkThat(transaction2).isNotNull();
 
     ledger.printHistoryLog();
   }

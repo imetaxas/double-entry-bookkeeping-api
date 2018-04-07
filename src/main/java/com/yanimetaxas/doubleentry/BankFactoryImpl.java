@@ -30,14 +30,19 @@ public class BankFactoryImpl implements BankFactory {
   }
 
   @Override
-  public void configureDataSource(ConnectionOptions options) throws Exception {
-    SimpleDriverDataSource dataSource = BankContextUtil.getBean("dataSource");
-    dataSource.setDriver((Driver) Class.forName(options.getDriver().getDriverClassName()).newInstance());
-    dataSource.setUrl(options.getUrl());
-    dataSource.setUsername(options.getUsername());
-    dataSource.setPassword(options.getPassword());
+  public void configureDataSource(ConnectionOptions options) {
+    try {
+      SimpleDriverDataSource dataSource = BankContextUtil.getBean("dataSource");
+      dataSource.setDriver(
+          (Driver) Class.forName(options.getDriverClassName()).newInstance());
+      dataSource.setUrl(options.getUrl());
+      dataSource.setUsername(options.getUsername());
+      dataSource.setPassword(options.getPassword());
 
-    DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
+      DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
+    } catch (Exception e) {
+      throw new InfrastructureException(e);
+    }
   }
 
   private DatabasePopulator createDatabasePopulator() {
@@ -49,24 +54,21 @@ public class BankFactoryImpl implements BankFactory {
 
   @Override
   public void setupInitialData() {
+    configureDataSource(ConnectionOptions.NO_CONNECTION);
+
     String clientRef = "Client_" + System.currentTimeMillis();
 
     ClientDao clientDao = BankContextUtil.getBean("clientDao");
+    clientDao.truncateTables();
     clientDao.createClient(clientRef, new Date());
 
     AccountDao accountDao = BankContextUtil.getBean("accountDao");
+    accountDao.truncateTables();
     accountDao.setClientRef(clientRef);
 
     TransactionDao transactionDao = BankContextUtil.getBean("transactionDao");
+    transactionDao.truncateTables();
     transactionDao.setClientRef(clientRef);
-
-    try {
-      clientDao.truncateTables();
-      accountDao.truncateTables();
-      transactionDao.truncateTables();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
 }

@@ -50,7 +50,8 @@ public class BankFunctionalTest {
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
     transferService.transferFunds(TransferRequest.builder()
-        .reference("T2").type("testing")
+        .reference("T2")
+        .type("testing")
         .account(CASH_ACCOUNT_1).amount(Money.toMoney("-10.50", "EUR"))
         .account(REVENUE_ACCOUNT_1).amount(Money.toMoney("10.50", "EUR"))
         .build());
