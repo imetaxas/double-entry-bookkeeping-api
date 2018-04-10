@@ -1,7 +1,5 @@
 package com.yanimetaxas.doubleentry;
 
-import static org.junit.Assert.*;
-
 import com.yanimetaxas.doubleentry.model.ConnectionOptions;
 import org.junit.Test;
 
@@ -15,7 +13,8 @@ public class BankFactoryImplTest {
   public void testConfigureDataSourceWhenDriverIsIllegal() throws Exception {
     BankFactory bankFactory = new BankFactoryImpl();
 
-    ConnectionOptions options = new ConnectionOptions("myDriver", "myUrl", "myUsername", "myPassword");
+    ConnectionOptions options = new ConnectionOptions("myDriver", "myUrl", "myUsername",
+        "myPassword");
     bankFactory.configureDataSource(options);
   }
 

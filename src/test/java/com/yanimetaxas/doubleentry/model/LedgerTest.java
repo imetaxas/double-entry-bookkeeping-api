@@ -26,7 +26,7 @@ public class LedgerTest {
   private static final String PASSWORD = "";
 
   @Test
-  public void accountBalancesUpdatedAfterTransfer_UsingH2() {
+  public void accountBalancesUpdatedAfterTransferUsingH2() {
     ConnectionOptions options = new ConnectionOptions(
         JDBC_H2.getDriverClassName(),
         URL,
@@ -78,7 +78,7 @@ public class LedgerTest {
   }
 
   @Test
-  public void accountBalancesUpdatedAfterMultiLeggedTransfer_InMemory() {
+  public void accountBalancesUpdatedAfterMultiLeggedTransferInMemory() {
     ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(CASH_ACCOUNT_1, "1000.00", "EUR")
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
@@ -108,7 +108,7 @@ public class LedgerTest {
   }
 
   @Test
-  public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransfer_InMemory() {
+  public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransferInMemory() {
     ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(CASH_ACCOUNT_1, "1000.00", "EUR")
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")

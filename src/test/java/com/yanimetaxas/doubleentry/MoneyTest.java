@@ -22,7 +22,7 @@ public class MoneyTest {
 
   @Test
   public void compareToWhenAmountIsDifferent() throws Exception {
-    Reality.checkThat(Money.toMoney("1", "SEK").compareTo(Money.toMoney("1000", "SEK"))).isEqualTo(-1);
+    checkThat(Money.toMoney("1", "SEK").compareTo(Money.toMoney("1000", "SEK"))).isEqualTo(-1);
   }
 
   @Test
