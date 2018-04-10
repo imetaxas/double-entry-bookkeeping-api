@@ -3,12 +3,10 @@ package com.yanimetaxas.doubleentry.model;
 import static com.yanimetaxas.doubleentry.DataSourceDriver.JDBC_H2;
 import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
-import com.yanimetaxas.doubleentry.DataSourceDriver;
 import com.yanimetaxas.doubleentry.InfrastructureException;
+import com.yanimetaxas.doubleentry.Money;
 import com.yanimetaxas.doubleentry.Transaction;
 import com.yanimetaxas.doubleentry.TransferRequest;
-import com.yanimetaxas.doubleentry.Money;
-import com.yanimetaxas.realitycheck.Reality;
 import java.util.List;
 import org.junit.Test;
 
@@ -63,8 +61,8 @@ public class LedgerTest {
 
     ledger.commit(transferRequest2);
 
-    Reality.checkThat(Money.toMoney("984.50", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
-    Reality.checkThat(Money.toMoney("15.50", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
+    checkThat(Money.toMoney("984.50", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
+    checkThat(Money.toMoney("15.50", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
 
     List<Transaction> cashAccountTransactionList = ledger.findTransactions(CASH_ACCOUNT_1);
     List<Transaction> revenueAccountTransactionList = ledger.findTransactions(REVENUE_ACCOUNT_1);
@@ -105,8 +103,8 @@ public class LedgerTest {
 
     ledger.commit(transferRequest);
 
-    Reality.checkThat(Money.toMoney("982.50", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
-    Reality.checkThat(Money.toMoney("17.50", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
+    checkThat(Money.toMoney("982.50", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
+    checkThat(Money.toMoney("17.50", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
   }
 
   @Test
@@ -136,19 +134,19 @@ public class LedgerTest {
 
     ledger.commit(transferRequest);
 
-    Reality.checkThat(Money.toMoney("995.00", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
-    Reality.checkThat(Money.toMoney("5.00", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
-    Reality.checkThat(Money.toMoney("989.50", "SEK")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_2));
-    Reality.checkThat(Money.toMoney("10.50", "SEK")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_2));
+    checkThat(Money.toMoney("995.00", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
+    checkThat(Money.toMoney("5.00", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
+    checkThat(Money.toMoney("989.50", "SEK")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_2));
+    checkThat(Money.toMoney("10.50", "SEK")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_2));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void buildChartOfAccounts_WhenHavingNoAccounts() {
+  public void buildChartOfAccountsWhenHavingNoAccounts() {
     ChartOfAccountsBuilder.create().build();
   }
 
   @Test(expected = InfrastructureException.class)
-  public void createLedger_WhenIsInvalidAccountingImplementation() {
+  public void createLedgerWhenIsInvalidAccountingImplementation() {
     new LedgerMock();
   }
 

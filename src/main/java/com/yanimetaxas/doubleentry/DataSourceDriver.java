@@ -1,7 +1,5 @@
 package com.yanimetaxas.doubleentry;
 
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-
 /**
  * @author yanimetaxas
  * @since 24-Mar-18

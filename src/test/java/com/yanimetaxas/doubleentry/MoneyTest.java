@@ -12,7 +12,7 @@ import org.junit.Test;
 public class MoneyTest {
 
   @Test
-  public void compareTo_WhenAmountIsSame() throws Exception {
+  public void compareToWhenAmountIsSame() throws Exception {
     Money money1 = Money.toMoney("1000", "SEK");
     Money money2 = Money.toMoney("1000", "SEK");
 
@@ -21,12 +21,12 @@ public class MoneyTest {
   }
 
   @Test
-  public void compareTo_WhenAmountIsDifferent() throws Exception {
+  public void compareToWhenAmountIsDifferent() throws Exception {
     Reality.checkThat(Money.toMoney("1", "SEK").compareTo(Money.toMoney("1000", "SEK"))).isEqualTo(-1);
   }
 
   @Test
-  public void equals_WhenMoneyIsSame() throws Exception {
+  public void equalsWhenMoneyIsSame() throws Exception {
     Money money1 = Money.toMoney("1000", "SEK");
 
     checkThat(money1.equals(money1) && money1.equals(money1)).isTrue();
@@ -34,7 +34,7 @@ public class MoneyTest {
   }
 
   @Test
-  public void equals_WhenAmountAndCurrencyAreSame() throws Exception {
+  public void equalsWhenAmountAndCurrencyAreSame() throws Exception {
     Money money1 = Money.toMoney("1000", "SEK");
     Money money2 = Money.toMoney("1000", "SEK");
 
@@ -43,22 +43,22 @@ public class MoneyTest {
   }
 
   @Test
-  public void equals_WhenAmountIsDifferent() throws Exception {
-    Reality.checkThat(Money.toMoney("1", "SEK").equals(Money.toMoney("1000", "SEK"))).isFalse();
+  public void equalsWhenAmountIsDifferent() throws Exception {
+    checkThat(Money.toMoney("1", "SEK").equals(Money.toMoney("1000", "SEK"))).isFalse();
   }
 
   @Test
-  public void equals_WhenCurrencyIsDifferent() throws Exception {
-    Reality.checkThat(Money.toMoney("1000", "SEK").equals(Money.toMoney("1000", "EUR"))).isFalse();
+  public void equalsWhenCurrencyIsDifferent() throws Exception {
+    checkThat(Money.toMoney("1000", "SEK").equals(Money.toMoney("1000", "EUR"))).isFalse();
   }
 
   @Test
-  public void equals_WhenAmountAndCurrencyAreDifferent() throws Exception {
-    Reality.checkThat(Money.toMoney("1", "SEK").equals(Money.toMoney("1000", "EUR"))).isFalse();
+  public void equalsWhenAmountAndCurrencyAreDifferent() throws Exception {
+    checkThat(Money.toMoney("1", "SEK").equals(Money.toMoney("1000", "EUR"))).isFalse();
   }
 
   @Test
-  public void equals_WhenMoneyIsNull() throws Exception {
-    Reality.checkThat(Money.toMoney("1", "SEK").equals(null)).isFalse();
+  public void equalsWhenMoneyIsNull() throws Exception {
+    checkThat(Money.toMoney("1", "SEK").equals(null)).isFalse();
   }
 }

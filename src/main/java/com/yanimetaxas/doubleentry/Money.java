@@ -29,14 +29,14 @@ public final class Money implements Serializable, Comparable<Money> {
    *
    * @param amount the decimal amount
    * @param currency the currency
-   * @throws NullPointerException if value or currency are null
+   * @throws IllegalArgumentException if value or currency are null
    */
   public Money(BigDecimal amount, Currency currency) {
     if (amount == null) {
-      throw new NullPointerException("value is null");
+      throw new IllegalArgumentException("Amount is null");
     }
     if (currency == null) {
-      throw new NullPointerException("currency is null");
+      throw new IllegalArgumentException("Currency is null");
     }
     this.amount = amount;
     this.currency = currency;

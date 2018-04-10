@@ -12,7 +12,7 @@ import org.junit.Test;
 public class BankFactoryImplTest {
 
   @Test(expected = InfrastructureException.class)
-  public void testConfigureDataSource_WhenDriverIsIllegal() throws Exception {
+  public void testConfigureDataSourceWhenDriverIsIllegal() throws Exception {
     BankFactory bankFactory = new BankFactoryImpl();
 
     ConnectionOptions options = new ConnectionOptions("myDriver", "myUrl", "myUsername", "myPassword");
