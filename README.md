@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1bdf1605f01d4cd4833bdc13690fbfcb)](https://app.codacy.com/app/imetaxas/double-entry-bookkeeping-spring-jta?utm_source=github.com&utm_medium=referral&utm_content=imetaxas/double-entry-bookkeeping-spring-jta&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta.svg?branch=master)](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta)
 [![CodeCov Coverage](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta/graph/badge.svg?branch=master)](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
