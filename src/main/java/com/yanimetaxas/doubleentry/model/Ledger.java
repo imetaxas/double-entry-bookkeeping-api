@@ -84,47 +84,46 @@ public class Ledger extends AbstractAccountingConcept {
   private String formatTransactionLog() {
     StringBuilder sb = new StringBuilder();
 
-    if (!chartOfAccounts.getAccountRefToAccountsMap().isEmpty()) {
-      sb.append(String
-          .format("%20s %20s %15s %10s %10s %10s %10s", "Account", "|", "Transaction", "|", "Type",
-              "|", "Date"));
-      sb.append(String.format("%s",
-          "\n-------------------------------------------------------------------------------------------------------------------------"));
+    sb.append(String
+        .format("%20s %20s %15s %10s %10s %10s %10s", "Account", "|", "Transaction", "|", "Type",
+            "|", "Date"));
+    sb.append(String.format("%s",
+        "\n-------------------------------------------------------------------------------------------------------------------------"));
 
-      chartOfAccounts.getAccountRefToAccountsMap().forEach(
-          (accountRef, account) -> {
-            List<Transaction> transactions = getTransferService()
-                .findTransactionsByAccountRef(accountRef);
-            if (!transactions.isEmpty()) {
-              transactions.forEach(transaction -> sb.append("\n" + String
-                  .format("%20s %20s %10s %15s %10s %10s %10s %1s", accountRef, "|",
-                      transaction.getTransactionRef(), "|", transaction.getTransactionType(), "|",
-                      transaction.getTransactionDate(), "|")));
-            } else {
-              sb.append("\n" + String
-                  .format("%20s %20s %10s %15s %10s %10s %10s %1s", accountRef, "|",
-                      "N/A", "|", "N/A", "|",
-                      "N/A", "|"));
-            }
-          });
-      chartOfAccounts.getAccountRefToAccountsMap().forEach(
-          (accountRef, account) -> {
-            List<Transaction> transactions = getTransferService()
-                .findTransactionsByAccountRef(accountRef);
-            if (!transactions.isEmpty()) {
-              sb.append(
-                  "\n\n" + String.format("%20s %20s %15s %4s %10s %10s %15s %5s", "Account", "|",
-                      "Transaction Leg Ref", "|", "Amount", "|", "Currency", "|"));
-              sb.append(String.format("%s",
-                  "\n-------------------------------------------------------------------------------------------------------------------------"));
-              transactions.forEach(transaction ->
-                  transaction.getLegs().forEach(leg -> sb.append("\n" + String
-                      .format("%20s %20s %10s %10s %10s %10s %10s %10s", accountRef, "|",
-                          leg.getAccountRef(), "|", leg.getAmount().getAmount(), "|",
-                          leg.getAmount().getCurrency(), "|"))));
-            }
-          });
-    }
+    chartOfAccounts.getAccountRefToAccountsMap().forEach(
+        (accountRef, account) -> {
+          List<Transaction> transactions = getTransferService()
+              .findTransactionsByAccountRef(accountRef);
+          if (!transactions.isEmpty()) {
+            transactions.forEach(transaction -> sb.append("\n" + String
+                .format("%20s %20s %10s %15s %10s %10s %10s %1s", accountRef, "|",
+                    transaction.getTransactionRef(), "|", transaction.getTransactionType(), "|",
+                    transaction.getTransactionDate(), "|")));
+          } else {
+            sb.append("\n" + String
+                .format("%20s %20s %10s %15s %10s %10s %10s %1s", accountRef, "|",
+                    "N/A", "|", "N/A", "|",
+                    "N/A", "|"));
+          }
+        });
+    chartOfAccounts.getAccountRefToAccountsMap().forEach(
+        (accountRef, account) -> {
+          List<Transaction> transactions = getTransferService()
+              .findTransactionsByAccountRef(accountRef);
+          if (!transactions.isEmpty()) {
+            sb.append(
+                "\n\n" + String.format("%20s %20s %15s %4s %10s %10s %15s %5s", "Account", "|",
+                    "Transaction Leg Ref", "|", "Amount", "|", "Currency", "|"));
+            sb.append(String.format("%s",
+                "\n-------------------------------------------------------------------------------------------------------------------------"));
+            transactions.forEach(transaction ->
+                transaction.getLegs().forEach(leg -> sb.append("\n" + String
+                    .format("%20s %20s %10s %10s %10s %10s %10s %10s", accountRef, "|",
+                        leg.getAccountRef(), "|", leg.getAmount().getAmount(), "|",
+                        leg.getAmount().getCurrency(), "|"))));
+          }
+        });
+
     return sb.toString();
   }
 
