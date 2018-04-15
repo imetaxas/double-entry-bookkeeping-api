@@ -137,9 +137,6 @@ public final class TransferRequest implements Serializable {
 
     @Override
     public TransferRequest build() {
-      if (request.legs.size() < 2) {
-        throw new IllegalStateException("Expected at least 2 legs");
-      }
       return request;
     }
   }

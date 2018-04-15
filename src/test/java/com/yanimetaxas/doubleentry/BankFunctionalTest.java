@@ -61,7 +61,7 @@ public class BankFunctionalTest {
     checkThat(transaction).isNull();
   }
 
-  @Test(expected = IllegalStateException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void assertThatTransferFundsWhenTransferHasOneLegThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
