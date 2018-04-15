@@ -28,7 +28,7 @@ ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
               .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
               .build();
 
-Ledger ledger = new Ledger("My Ledger", chartOfAccounts);
+Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts);
 ```
 
 **Using Embedded HSQL**
@@ -38,7 +38,7 @@ ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-Ledger ledger = new Ledger("My Ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
+Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
 ```
 
 **Using Embedded Derby**
@@ -48,18 +48,18 @@ ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-Ledger ledger = new Ledger("My Ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
+Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
 ```
 
 **Using JDBC H2**
 ```                        
 ConnectionOptions options = new ConnectionOptions(
-        JDBC_H2.getDriverClassName(),
+        JDBC_H2,
         URL,
         USERNAME,
         PASSWORD);
 
-Ledger ledger = new Ledger("My Ledger", chartOfAccounts, options);
+Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts, options);
 ``` 
 
 **Commit Transfer Requests**

@@ -4,6 +4,8 @@ import static com.yanimetaxas.doubleentry.DataSourceDriver.EMBEDDED_DERBY;
 import static com.yanimetaxas.doubleentry.DataSourceDriver.EMBEDDED_H2;
 import static com.yanimetaxas.doubleentry.DataSourceDriver.EMBEDDED_HSQL;
 
+import com.yanimetaxas.doubleentry.DataSourceDriver;
+
 /**
  * @author yanimetaxas
  * @since 24-Mar-18
@@ -36,6 +38,15 @@ public class ConnectionOptions {
   private String username;
   private String password;
   private String schema;
+
+  public ConnectionOptions(DataSourceDriver dataSourceDriver, String url, String username,
+      String password) {
+    this.driverClassName = dataSourceDriver.getDriverClassName();
+    this.url = url;
+    this.username = username;
+    this.password = password;
+    this.schema = dataSourceDriver.getSchema();
+  }
 
   public ConnectionOptions(String driverClassName, String url, String username, String password,
       String schema) {

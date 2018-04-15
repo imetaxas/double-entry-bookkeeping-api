@@ -37,7 +37,7 @@ public class BankFunctionalTest {
   }
 
   @Test
-  public void findTransactionsByAccountRefWhenTransactionForAccountNotExists() {
+  public void assertThatFindTransactionsByAccountRefWhenTransactionForAccountNotExistsAreZero() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("10.00", "EUR"));
     List<Transaction> transactions = transferService.findTransactionsByAccountRef(CASH_ACCOUNT_1);
 
@@ -45,7 +45,7 @@ public class BankFunctionalTest {
   }
 
   @Test
-  public void getTransactionByRefWhenRefNotExists() {
+  public void assertThatGetTransactionByRefWhenRefNotExistsReturnsNull() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -62,7 +62,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = IllegalStateException.class)
-  public void transferFundsWhenTransferHasOneLeg() {
+  public void assertThatTransferFundsWhenTransferHasOneLegThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -74,7 +74,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void transferFundsWhenTransferReferenceIsNull() {
+  public void assertThatTransferFundsWhenTransferReferenceIsNullThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -87,7 +87,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void transferFundsWhenTransferTypeIsNull() {
+  public void assertThatTransferFundsWhenTransferTypeIsNullThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -100,7 +100,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = TransferValidationException.class)
-  public void transferFundsWhenTransferLegAccountRefIsNull() {
+  public void assertThatTransferFundsWhenTransferLegAccountRefIsNullThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -113,7 +113,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = TransferValidationException.class)
-  public void transferFundsWhenTransferLegAmountIsNull() {
+  public void assertThatTransferFundsWhenTransferLegAmountIsNullThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -126,7 +126,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = UnbalancedLegsException.class)
-  public void transferFundsWhenTransactionLegsAreUnbalanced() {
+  public void assertThatTransferFundsWhenTransactionLegsAreUnbalancedThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -139,7 +139,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = TransferValidationException.class)
-  public void transferFundsWhenAccountCurrencyNotMatchTransferCurrency() {
+  public void assertThatTransferFundsWhenAccountCurrencyNotMatchTransferCurrencyThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "SEK"));
 
@@ -152,7 +152,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = AccountNotFoundException.class)
-  public void transferFundsWhenAccountNotFound() {
+  public void assertThatTransferFundsWhenAccountNotFoundThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "SEK"));
 
@@ -165,7 +165,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = InsufficientFundsException.class)
-  public void transferFundsWhenAccountIsOverdrawn() {
+  public void assertThatTransferFundsWhenAccountIsOverdrawnThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("10.00", "EUR"));
     accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
@@ -177,33 +177,33 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = InfrastructureException.class)
-  public void accountAlreadyExists() {
+  public void accountAlreadyExistsThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void createAccountWhenMoneyAmountIsNull() {
+  public void assertThatCreateAccountWhenMoneyAmountIsNullThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, new Money(null, Currency.getInstance("EUR")));
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void createAccountWhenMoneyCurrencyIsNull() {
+  public void assertThatCreateAccountWhenMoneyCurrencyIsNullThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, new Money(new BigDecimal("1000.00"), null));
   }
 
   @Test(expected = AccountNotFoundException.class)
-  public void accountBalanceNotExists() {
+  public void assertThatGetAccountBalanceWhenNotExistsThrowsException() {
     accountService.getAccountBalance(CASH_ACCOUNT_1);
   }
 
   @Test(expected = AccountNotFoundException.class)
-  public void accountBalanceIsNull() {
+  public void assertThatGetAccountBalanceWhenAccountRefIsNullThrowsException() {
     accountService.getAccountBalance(null);
   }
 
   @Test(expected = AccountNotFoundException.class)
-  public void findTransactionsByAccountRefWhenAccountNotExists() {
+  public void assertThatFindTransactionsByAccountRefWhenAccountNotExistsThrowsException() {
     transferService.findTransactionsByAccountRef("");
   }
 

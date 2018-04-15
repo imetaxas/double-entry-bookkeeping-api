@@ -28,7 +28,8 @@ public class LedgerTest {
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger("Embedded HSQL", chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
+    Ledger ledger = new Ledger("Embedded HSQL", chartOfAccounts,
+        ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -43,7 +44,8 @@ public class LedgerTest {
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger("Embedded Derby", chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
+    Ledger ledger = new Ledger("Embedded Derby", chartOfAccounts,
+        ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -54,11 +56,10 @@ public class LedgerTest {
   @Test
   public void accountBalancesUpdatedAfterTransferUsingH2() {
     ConnectionOptions options = new ConnectionOptions(
-        JDBC_H2.getDriverClassName(),
+        JDBC_H2,
         "jdbc:h2:~/test",
         "",
-        "",
-        JDBC_H2.getSchema());
+        "");
 
     ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(CASH_ACCOUNT_1, "1000.00", "EUR")

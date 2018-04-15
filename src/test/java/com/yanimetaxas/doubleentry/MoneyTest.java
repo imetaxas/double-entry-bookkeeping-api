@@ -2,7 +2,6 @@ package com.yanimetaxas.doubleentry;
 
 import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
-import com.yanimetaxas.realitycheck.Reality;
 import org.junit.Test;
 
 /**

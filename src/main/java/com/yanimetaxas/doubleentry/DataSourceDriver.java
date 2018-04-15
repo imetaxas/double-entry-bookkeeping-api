@@ -50,5 +50,10 @@ public enum DataSourceDriver {
   public String getSchema() {
     return schema;
   }
+
+  @Override
+  public String toString() {
+    return driverClassName;
+  }
 }
 
