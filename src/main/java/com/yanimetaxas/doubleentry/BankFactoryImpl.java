@@ -39,22 +39,22 @@ public class BankFactoryImpl implements BankFactory {
       dataSource.setUsername(options.getUsername());
       dataSource.setPassword(options.getPassword());
 
-      DatabasePopulatorUtils.execute(createDatabasePopulator(), dataSource);
+      DatabasePopulatorUtils.execute(createDatabasePopulator(options.getSchema()), dataSource);
     } catch (Exception e) {
       throw new InfrastructureException(e);
     }
   }
 
-  private DatabasePopulator createDatabasePopulator() {
+  private DatabasePopulator createDatabasePopulator(String schema) {
     ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
     databasePopulator.setContinueOnError(true);
-    databasePopulator.addScript(new ClassPathResource("db/schema.sql"));
+    databasePopulator.addScript(new ClassPathResource("db/" + schema));
     return databasePopulator;
   }
 
   @Override
   public void setupInitialData() {
-    configureDataSource(ConnectionOptions.NO_CONNECTION);
+    configureDataSource(ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
 
     String clientRef = "Client_" + System.currentTimeMillis();
 

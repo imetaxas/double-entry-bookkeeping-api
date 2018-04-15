@@ -21,24 +21,51 @@ public class LedgerTest {
   private static final String REVENUE_ACCOUNT_1 = "revenue_1_EUR";
   private static final String REVENUE_ACCOUNT_2 = "revenue_2_SEK";
 
-  private static final String URL = "jdbc:h2:~/test";
-  private static final String USERNAME = "";
-  private static final String PASSWORD = "";
+  @Test
+  public void accountBalancesUpdatedAfterTransferUsingEmbeddedHSQL() {
+    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
+        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .build();
+
+    Ledger ledger = new Ledger("Embedded HSQL", chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
+
+    checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
+    checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
+
+    ledger.printHistoryLog();
+  }
+
+  @Test
+  public void accountBalancesUpdatedAfterTransferUsingEmbeddedDerby() {
+    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
+        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .build();
+
+    Ledger ledger = new Ledger("Embedded Derby", chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
+
+    checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
+    checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
+
+    ledger.printHistoryLog();
+  }
 
   @Test
   public void accountBalancesUpdatedAfterTransferUsingH2() {
     ConnectionOptions options = new ConnectionOptions(
         JDBC_H2.getDriverClassName(),
-        URL,
-        USERNAME,
-        PASSWORD);
+        "jdbc:h2:~/test",
+        "",
+        "",
+        JDBC_H2.getSchema());
 
     ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(CASH_ACCOUNT_1, "1000.00", "EUR")
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger(chartOfAccounts, options);
+    Ledger ledger = new Ledger("JDBC H2", chartOfAccounts, options);
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -78,13 +105,13 @@ public class LedgerTest {
   }
 
   @Test
-  public void accountBalancesUpdatedAfterMultiLeggedTransferInMemory() {
+  public void accountBalancesUpdatedAfterMultiLeggedTransferUsingEmbeddedH2() {
     ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(CASH_ACCOUNT_1, "1000.00", "EUR")
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger(chartOfAccounts);
+    Ledger ledger = new Ledger("Embedded H2", chartOfAccounts);
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -105,10 +132,12 @@ public class LedgerTest {
 
     checkThat(Money.toMoney("982.50", "EUR")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_1));
     checkThat(Money.toMoney("17.50", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
+
+    ledger.printHistoryLog();
   }
 
   @Test
-  public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransferInMemory() {
+  public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransferUsingEmbeddedH2() {
     ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(CASH_ACCOUNT_1, "1000.00", "EUR")
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
@@ -116,7 +145,7 @@ public class LedgerTest {
         .account(REVENUE_ACCOUNT_2, "0.00", "SEK")
         .build();
 
-    Ledger ledger = new Ledger(chartOfAccounts);
+    Ledger ledger = new Ledger("Embedded H2", chartOfAccounts);
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -138,6 +167,8 @@ public class LedgerTest {
     checkThat(Money.toMoney("5.00", "EUR")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_1));
     checkThat(Money.toMoney("989.50", "SEK")).isEqualTo(ledger.getAccountBalance(CASH_ACCOUNT_2));
     checkThat(Money.toMoney("10.50", "SEK")).isEqualTo(ledger.getAccountBalance(REVENUE_ACCOUNT_2));
+
+    ledger.printHistoryLog();
   }
 
   @Test(expected = IllegalArgumentException.class)

@@ -1,6 +1,6 @@
 package com.yanimetaxas.doubleentry;
 
-import static com.yanimetaxas.doubleentry.model.ConnectionOptions.NO_CONNECTION;
+import static com.yanimetaxas.doubleentry.model.ConnectionOptions.EMBEDDED_H2_CONNECTION;
 
 import com.yanimetaxas.doubleentry.model.ConnectionOptions;
 
@@ -14,7 +14,7 @@ public abstract class AbstractAccountingConcept implements Initializable {
   private AccountService accountService;
 
   public AbstractAccountingConcept(String className) throws InfrastructureException {
-    init(className, NO_CONNECTION);
+    init(className, EMBEDDED_H2_CONNECTION);
   }
 
   public AbstractAccountingConcept(String className, ConnectionOptions options)

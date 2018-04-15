@@ -203,7 +203,7 @@ public class BankFunctionalTest {
   }
 
   @Test(expected = AccountNotFoundException.class)
-  public void findTransactionsByAccountRef_WhenAccountNotExists() {
+  public void findTransactionsByAccountRefWhenAccountNotExists() {
     transferService.findTransactionsByAccountRef("");
   }
 

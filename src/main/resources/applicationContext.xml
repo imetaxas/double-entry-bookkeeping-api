@@ -13,7 +13,7 @@
 
   <!-- Enable if no persistent data is required after the execution -->
   <!--<jdbc:embedded-database id="dataSource" type="H2">
-    <jdbc:script location="classpath:db/schema.sql"/>
+    <jdbc:script location="classpath:db/h2-schema.sql"/>
   </jdbc:embedded-database>-->
 
   <!-- Disable if no persistent data is required after the execution
@@ -27,9 +27,13 @@
 
   </bean>
 
+  <!--<jdbc:embedded-database id="dataSource" type="DERBY">
+    <jdbc:script location="classpath:db/derby-schema.sql" />
+  </jdbc:embedded-database>-->
+
   <!-- Disable if no persistent data is required after the execution
    <jdbc:initialize-database>
-       <jdbc:script location="classpath:db/schema.sql"/>
+       <jdbc:script location="classpath:db/h2-h2-schema.sql"/>
    </jdbc:initialize-database> -->
 
   <!-- Create the ClientDao bean -->

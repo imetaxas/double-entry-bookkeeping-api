@@ -14,7 +14,7 @@ public class BankFactoryImplTest {
     BankFactory bankFactory = new BankFactoryImpl();
 
     ConnectionOptions options = new ConnectionOptions("myDriver", "myUrl", "myUsername",
-        "myPassword");
+        "myPassword", "myschema");
     bankFactory.configureDataSource(options);
   }
 

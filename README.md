@@ -21,15 +21,49 @@ The following rules **MUST** apply:
 
 API
 ----
+**Using embedded H2**
 ```
 ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
               .account(CASH_ACCOUNT_1, "1000.00", "EUR")
               .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
               .build();
-      
-Ledger ledger = new Ledger(chartOfAccounts);
 
-  
+Ledger ledger = new Ledger("My Ledger", chartOfAccounts);
+```
+
+**Using Embedded HSQL**
+```
+ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
+        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .build();
+
+Ledger ledger = new Ledger("My Ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
+```
+
+**Using Embedded Derby**
+```
+ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
+        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .build();
+
+Ledger ledger = new Ledger("My Ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
+```
+
+**Using JDBC H2**
+```                        
+ConnectionOptions options = new ConnectionOptions(
+        JDBC_H2.getDriverClassName(),
+        URL,
+        USERNAME,
+        PASSWORD);
+
+Ledger ledger = new Ledger("My Ledger", chartOfAccounts, options);
+``` 
+
+**Commit Transfer Requests**
+``` 
 TransferRequest transferRequest1 = ledger.createTransferRequest()
     .reference("T1")
     .type("testing1")
@@ -47,12 +81,20 @@ TransferRequest transferRequest2 = ledger.createTransferRequest()
     .build();
   
 ledger.commit(transferRequest2);
-  
+```
+**Search the Ledger for commited Transactions**
+```
 List<Transaction> cashAccountTransactionList = ledger.findTransactions(CASH_ACCOUNT_1);
 List<Transaction> revenueAccountTransactionList = ledger.findTransactions(REVENUE_ACCOUNT_1);
-  
+
+Transaction transaction1 = ledger.getTransactionByRef("T1");
+Transaction transaction2 = ledger.getTransactionByRef("T2");
+```
+**Print the Ledger's history of operations**
+```
 ledger.printHistoryLog();
 ```
+
 Build
 -------
 mvn package
