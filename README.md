@@ -4,7 +4,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Double Entry Bookkeeping API
-Implementation of a Double-entry bookkeeping service using Spring 5, Java Transaction API and the H2 database in embedded mode.
+A library of a Double-entry bookkeeping service which is downloadable from the [Central Repository](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.yanimetaxas%22). 
+It uses Spring 5 and the Java Transaction API.
+It supports H2, HSQL and Derby databases in embedded mode.
+And H2, MySQL and Postgres in JDBC mode.
 
 Description
 --------------------
@@ -28,7 +31,7 @@ ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
               .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
               .build();
 
-Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts);
+Ledger ledger = new Ledger("My embedded H2 ledger", chartOfAccounts);
 ```
 
 **Using Embedded HSQL**
@@ -38,7 +41,7 @@ ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
+Ledger ledger = new Ledger("My embedded HSQL ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
 ```
 
 **Using Embedded Derby**
@@ -48,7 +51,7 @@ ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
         .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
+Ledger ledger = new Ledger("My embedded Derby ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
 ```
 
 **Using JDBC H2**
@@ -59,7 +62,29 @@ ConnectionOptions options = new ConnectionOptions(
         USERNAME,
         PASSWORD);
 
-Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts, options);
+Ledger ledger = new Ledger("My JDBC H2 ledger", chartOfAccounts, options);
+``` 
+
+**Using JDBC MYSQL**
+```                        
+ConnectionOptions options = new ConnectionOptions(
+        JDBC_MYSQL,
+        URL,
+        USERNAME,
+        PASSWORD);
+
+Ledger ledger = new Ledger("My JDBC MySQL ledger", chartOfAccounts, options);
+``` 
+
+**Using JDBC POSTGRES**
+```                        
+ConnectionOptions options = new ConnectionOptions(
+        JDBC_POSTGRES,
+        URL,
+        USERNAME,
+        PASSWORD);
+
+Ledger ledger = new Ledger("My JDBC Postgres ledger", chartOfAccounts, options);
 ``` 
 
 **Commit Transfer Requests**
@@ -67,8 +92,8 @@ Ledger ledger = new Ledger(MY_LEDGER, chartOfAccounts, options);
 TransferRequest transferRequest1 = ledger.createTransferRequest()
     .reference("T1")
     .type("testing1")
-    .account(CASH_ACCOUNT_1).debit("5.00", "EUR")
-    .account(REVENUE_ACCOUNT_1).credit("5.00", "EUR")
+    .account("CASH_ACCOUNT_1").debit("5.00", "EUR")
+    .account("REVENUE_ACCOUNT_1").credit("5.00", "EUR")
     .build();
     
 ledger.commit(transferRequest1);
@@ -76,16 +101,16 @@ ledger.commit(transferRequest1);
 TransferRequest transferRequest2 = ledger.createTransferRequest()
     .reference("T2")
     .type("testing2")
-    .account(CASH_ACCOUNT_1).debit("10.50", "EUR")
-    .account(REVENUE_ACCOUNT_1).credit("10.50", "EUR")
+    .account("CASH_ACCOUNT_1").debit("10.50", "EUR")
+    .account("REVENUE_ACCOUNT_1").credit("10.50", "EUR")
     .build();
   
 ledger.commit(transferRequest2);
 ```
-**Search the Ledger for commited Transactions**
+**Search the Ledger for committed Transactions**
 ```
-List<Transaction> cashAccountTransactionList = ledger.findTransactions(CASH_ACCOUNT_1);
-List<Transaction> revenueAccountTransactionList = ledger.findTransactions(REVENUE_ACCOUNT_1);
+List<Transaction> cashAccountTransactionList = ledger.findTransactions("CASH_ACCOUNT_1");
+List<Transaction> revenueAccountTransactionList = ledger.findTransactions("REVENUE_ACCOUNT_1");
 
 Transaction transaction1 = ledger.getTransactionByRef("T1");
 Transaction transaction2 = ledger.getTransactionByRef("T2");

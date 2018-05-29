@@ -1,50 +1,36 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:tx="http://www.springframework.org/schema/tx"
-  xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
-  xsi:schemaLocation="
-   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
-   http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd">
-
-  <!--
-  Check https://www.mkyong.com/spring/spring-embedded-database-examples/ -->
-
-  <!-- Enable if no persistent data is required after the execution -->
-  <!--<jdbc:embedded-database id="dataSource" type="H2">
-    <jdbc:script location="classpath:db/h2-schema.sql"/>
-  </jdbc:embedded-database>-->
-
-  <!-- Disable if no persistent data is required after the execution
-  <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource">
-    <property name="URL" value="jdbc:h2:~/test"/>
-      <property name="user" value=""/>
-      <property name="password" value=""/>
-  </bean> -->
-
-  <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
   </bean>
 
-  <!--<jdbc:embedded-database id="dataSource" type="DERBY">
-    <jdbc:script location="classpath:db/derby-schema.sql" />
-  </jdbc:embedded-database>-->
+  <!-- Create the Hibernate Transaction manager bean -->
+  <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
 
-  <!-- Disable if no persistent data is required after the execution
-   <jdbc:initialize-database>
-       <jdbc:script location="classpath:db/h2-h2-schema.sql"/>
-   </jdbc:initialize-database> -->
+  <!-- Create the LocalSessionFactoryBean and set the Hibernate properties -->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="hibernateProperties">
+      <value>
+        hibernate.dialect=org.hibernate.dialect.MySQL55Dialect
+        hibernate.show_sql=true
+      </value>
+    </property>
+  </bean>
 
-  <!-- Create the ClientDao bean -->
-  <bean id="clientDao" class="com.yanimetaxas.doubleentry.dao.ClientDaoImpl">
+<!-- Create the ClientDao bean -->
+  <bean id="clientDao" class="com.yanimetaxas.bookkeeping.dao.ClientDaoImpl">
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
   </bean>
 
   <!-- Create the AccountDao bean -->
-  <bean id="accountDao" class="com.yanimetaxas.doubleentry.dao.AccountDaoImpl">
+  <bean id="accountDao" class="com.yanimetaxas.bookkeeping.dao.AccountDaoImpl">
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
@@ -54,10 +40,10 @@
   </bean>
 
   <!-- Create the DbUtil bean -->
-  <bean id="dbUtil" class="com.yanimetaxas.doubleentry.util.DbUtil"/>
+  <bean id="dbUtil" class="com.yanimetaxas.bookkeeping.util.DbUtil"/>
 
   <!-- Create the TransactionDao bean -->
-  <bean id="transactionDao" class="com.yanimetaxas.doubleentry.dao.TransactionDaoImpl">
+  <bean id="transactionDao" class="com.yanimetaxas.bookkeeping.dao.TransactionDaoImpl">
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
@@ -67,21 +53,21 @@
   </bean>
 
   <!-- Create the TransferValidator bean -->
-  <bean id="validator" class="com.yanimetaxas.doubleentry.validation.TransferValidatorImpl">
+  <bean id="validator" class="com.yanimetaxas.bookkeeping.validation.TransferValidatorImpl">
     <property name="accountDao">
       <ref bean="accountDao"/>
     </property>
   </bean>
 
   <!-- Create the AccountService bean -->
-  <bean id="accountService" class="com.yanimetaxas.doubleentry.service.AccountServiceImpl">
+  <bean id="accountService" class="com.yanimetaxas.bookkeeping.service.AccountServiceImpl">
     <property name="accountDao">
       <ref bean="accountDao"/>
     </property>
   </bean>
 
   <!-- Create the TransferService bean -->
-  <bean id="transferService" class="com.yanimetaxas.doubleentry.service.TransferServiceImpl">
+  <bean id="transferService" class="com.yanimetaxas.bookkeeping.service.TransferServiceImpl">
     <property name="accountDao">
       <ref bean="accountDao"/>
     </property>
@@ -90,28 +76,6 @@
     </property>
     <property name="validator">
       <ref bean="validator"/>
-    </property>
-  </bean>
-
-  <!-- Configure the transaction manager as annotation driven -->
-  <tx:annotation-driven transaction-manager="transactionManager"/>
-
-  <!-- Create the Hibernate Transaction manager bean -->
-  <bean id="transactionManager"
-    class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-    <property name="sessionFactory" ref="sessionFactory"/>
-  </bean>
-
-  <!-- Create the LocalSessionFactoryBean and set the Hibernate properties -->
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-    <property name="dataSource" ref="dataSource"/>
-    <property name="hibernateProperties">
-      <value>
-        hibernate.dialect=org.hibernate.dialect.H2Dialect
-        hibernate.format_sql=true
-        hibernate.show_sql=true
-        hibernate.hbm2ddl.auto=create
-      </value>
     </property>
   </bean>
 
