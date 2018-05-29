@@ -1,12 +1,17 @@
-[![Build Status](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta.svg?branch=master)](https://travis-ci.org/imetaxas/double-entry-bookkeeping-spring-jta)
-[![CodeCov Coverage](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta/graph/badge.svg?branch=master)](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-spring-jta?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cda7f1bf964e4fde9015e0e9d708b7f1)](https://www.codacy.com/app/imetaxas/double-entry-bookkeeping-spring-jta?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imetaxas/double-entry-bookkeeping-spring-jta&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/imetaxas/double-entry-bookkeeping-api.svg?branch=master)](https://travis-ci.org/imetaxas/double-entry-bookkeeping-api)
+[![CodeCov Coverage](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-api/graph/badge.svg?branch=master)](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-api?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cda7f1bf964e4fde9015e0e9d708b7f1)](https://www.codacy.com/app/imetaxas/double-entry-bookkeeping-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imetaxas/double-entry-bookkeeping-api&amp;utm_campaign=Badge_Grade)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.yanimetaxas/bookkeeping/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.yanimetaxas/bookkeeping/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Double Entry Bookkeeping API
-A library of a Double-entry bookkeeping service which is downloadable from the [Central Repository](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.yanimetaxas%22). 
+A library of the Double-entry bookkeeping concept which is downloadable from the [Central Repository](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.yanimetaxas%22). 
+
 It uses Spring 5 and the Java Transaction API.
+
 It supports H2, HSQL and Derby databases in embedded mode.
+
 And H2, MySQL and Postgres in JDBC mode.
 
 Description
@@ -20,7 +25,6 @@ The following rules **MUST** apply:
   * An account **MUST NOT** be overdrawn, i.e. have a negative balance.
   * A monetary transaction **MAY** support multiple currencies as long as the total balance for the transaction legs with the same currency is zero.
   * The concepts of debit and credit are simplified by specifying that monetary transactions towards an account can have either a positive or negative value.
-
 
 API
 ----
@@ -65,7 +69,7 @@ ConnectionOptions options = new ConnectionOptions(
 Ledger ledger = new Ledger("My JDBC H2 ledger", chartOfAccounts, options);
 ``` 
 
-**Using JDBC MYSQL**
+**Using JDBC MySQL**
 ```                        
 ConnectionOptions options = new ConnectionOptions(
         JDBC_MYSQL,
@@ -76,7 +80,7 @@ ConnectionOptions options = new ConnectionOptions(
 Ledger ledger = new Ledger("My JDBC MySQL ledger", chartOfAccounts, options);
 ``` 
 
-**Using JDBC POSTGRES**
+**Using JDBC Postgres**
 ```                        
 ConnectionOptions options = new ConnectionOptions(
         JDBC_POSTGRES,
