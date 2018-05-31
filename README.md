@@ -7,11 +7,11 @@
 # Double Entry Bookkeeping API
 A library of the Double-entry bookkeeping concept which is downloadable from the [Central Repository](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.yanimetaxas%22). 
 
-It uses Spring 5 and the Java Transaction API.
+It uses Spring 5 and the Java Transaction API internally.
 
 It supports H2, HSQL and Derby databases in embedded mode.
 
-And H2, MySQL and Postgres in JDBC mode.
+And H2, MySQL and Postgres using JDBC.
 
 Description
 --------------------
@@ -30,8 +30,8 @@ API
 **Using embedded H2**
 ```
 ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-              .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-              .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+              .account("CASH_ACCOUNT_1", "1000.00", "EUR")
+              .account("REVENUE_ACCOUNT_1", "0.00", "EUR")
               .build();
 
 Ledger ledger = new Ledger("My embedded H2 ledger", chartOfAccounts);
@@ -40,8 +40,8 @@ Ledger ledger = new Ledger("My embedded H2 ledger", chartOfAccounts);
 **Using Embedded HSQL**
 ```
 ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .account("CASH_ACCOUNT_1", "1000.00", "EUR")
+        .account("REVENUE_ACCOUNT_1", "0.00", "EUR")
         .build();
 
 Ledger ledger = new Ledger("My embedded HSQL ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
@@ -50,8 +50,8 @@ Ledger ledger = new Ledger("My embedded HSQL ledger", chartOfAccounts, Connectio
 **Using Embedded Derby**
 ```
 ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .account("CASH_ACCOUNT_1", "1000.00", "EUR")
+        .account("REVENUE_ACCOUNT_1", "0.00", "EUR")
         .build();
 
 Ledger ledger = new Ledger("My embedded Derby ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
@@ -60,10 +60,10 @@ Ledger ledger = new Ledger("My embedded Derby ledger", chartOfAccounts, Connecti
 **Using JDBC H2**
 ```                        
 ConnectionOptions options = new ConnectionOptions(
-        JDBC_H2,
-        URL,
-        USERNAME,
-        PASSWORD);
+        DataSourceDriver.JDBC_H2,
+        "URL",
+        "USERNAME",
+        "PASSWORD");
 
 Ledger ledger = new Ledger("My JDBC H2 ledger", chartOfAccounts, options);
 ``` 
@@ -71,10 +71,10 @@ Ledger ledger = new Ledger("My JDBC H2 ledger", chartOfAccounts, options);
 **Using JDBC MySQL**
 ```                        
 ConnectionOptions options = new ConnectionOptions(
-        JDBC_MYSQL,
-        URL,
-        USERNAME,
-        PASSWORD);
+        DataSourceDriver.JDBC_MYSQL,
+        "URL",
+        "USERNAME",
+        "PASSWORD");
 
 Ledger ledger = new Ledger("My JDBC MySQL ledger", chartOfAccounts, options);
 ``` 
@@ -82,10 +82,10 @@ Ledger ledger = new Ledger("My JDBC MySQL ledger", chartOfAccounts, options);
 **Using JDBC Postgres**
 ```                        
 ConnectionOptions options = new ConnectionOptions(
-        JDBC_POSTGRES,
-        URL,
-        USERNAME,
-        PASSWORD);
+        DataSourceDriver.JDBC_POSTGRES,
+        "URL",
+        "USERNAME",
+        "PASSWORD");
 
 Ledger ledger = new Ledger("My JDBC Postgres ledger", chartOfAccounts, options);
 ``` 
