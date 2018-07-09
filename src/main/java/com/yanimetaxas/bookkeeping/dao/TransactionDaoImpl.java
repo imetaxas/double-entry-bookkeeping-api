@@ -95,12 +95,6 @@ public class TransactionDaoImpl extends JdbcDaoSupport implements TransactionDao
   }
 
   @Override
-  public void truncateTables() {
-    getJdbcTemplate().execute("TRUNCATE TABLE transaction_history");
-    getJdbcTemplate().execute("TRUNCATE TABLE transaction_leg");
-  }
-
-  @Override
   public void setClientRef(String clientRef) {
     this.clientRef = clientRef;
   }

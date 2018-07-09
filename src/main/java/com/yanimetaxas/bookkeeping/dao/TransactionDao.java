@@ -18,8 +18,6 @@ public interface TransactionDao {
 
   Transaction getTransactionByRef(String transactionRef);
 
-  void truncateTables();
-
   void setClientRef(String clientRef);
 
   String getClientRef();

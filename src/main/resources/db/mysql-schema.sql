@@ -1,8 +1,3 @@
-DROP table client IF EXISTS;
-DROP table account IF EXISTS;
-DROP table transaction_history IF EXISTS;
-DROP table transaction_leg IF EXISTS;
-
 CREATE TABLE client (
    ref VARCHAR(100) NOT NULL,
    creation_date DATE NOT NULL,

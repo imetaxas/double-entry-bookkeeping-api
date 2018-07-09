@@ -7,8 +7,10 @@ import com.yanimetaxas.bookkeeping.AccountNotFoundException;
 import com.yanimetaxas.bookkeeping.InsufficientFundsException;
 import com.yanimetaxas.bookkeeping.TransactionLeg;
 import com.yanimetaxas.bookkeeping.TransferRequest;
+import com.yanimetaxas.bookkeeping.TransferRequestExistsException;
 import com.yanimetaxas.bookkeeping.UnbalancedLegsException;
 import com.yanimetaxas.bookkeeping.dao.AccountDao;
+import com.yanimetaxas.bookkeeping.dao.TransactionDao;
 import com.yanimetaxas.bookkeeping.model.Account;
 import java.math.BigDecimal;
 import java.util.Currency;
@@ -23,12 +25,23 @@ import java.util.Set;
 public class TransferValidatorImpl implements TransferValidator {
 
   private AccountDao accountDao;
+  private TransactionDao transactionDao;
 
   @Override
   public void validateTransferRequest(TransferRequest transferRequest) {
-    if (transferRequest.getTransactionRef() == null || transferRequest.getTransactionType() == null
-        || transferRequest.getLegs().size() < 2) {
+    if (transferRequest.getTransactionRef() == null
+        ||
+        transferRequest.getTransactionType() == null
+        ||
+        transferRequest.getLegs().size() < 2) {
       throw new IllegalArgumentException("Incomplete transaction request");
+    }
+  }
+
+  @Override
+  public void transferRequestExists(String transactionRef) {
+    if (transactionDao.getTransactionByRef(transactionRef) != null) {
+      throw new TransferRequestExistsException(transactionRef);
     }
   }
 
@@ -94,5 +107,9 @@ public class TransferValidatorImpl implements TransferValidator {
 
   public void setAccountDao(AccountDao accountDao) {
     this.accountDao = accountDao;
+  }
+
+  public void setTransactionDao(TransactionDao transactionDao) {
+    this.transactionDao = transactionDao;
   }
 }

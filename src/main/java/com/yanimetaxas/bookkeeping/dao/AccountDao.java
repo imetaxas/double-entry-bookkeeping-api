@@ -16,8 +16,6 @@ public interface AccountDao {
 
   Account getAccount(String accountRef);
 
-  void truncateTables();
-
   void updateBalance(TransactionLeg leg);
 
   void setClientRef(String clientRef);

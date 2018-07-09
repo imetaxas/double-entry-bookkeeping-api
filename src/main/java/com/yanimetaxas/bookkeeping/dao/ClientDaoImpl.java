@@ -17,9 +17,4 @@ public class ClientDaoImpl extends JdbcDaoSupport implements ClientDao {
     String sql = "INSERT INTO client (ref, creation_date) VALUES (?, ?)";
     getJdbcTemplate().update(sql, clientRef, creationDate);
   }
-
-  @Override
-  public void truncateTables() {
-    getJdbcTemplate().execute("TRUNCATE TABLE client");
-  }
 }

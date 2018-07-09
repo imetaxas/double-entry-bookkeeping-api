@@ -155,12 +155,32 @@ public class BankFunctionalTest {
   @Test(expected = AccountNotFoundException.class)
   public void assertThatTransferFundsWhenAccountNotFoundThrowsException() {
     accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
-    accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "SEK"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
 
     transferService.transferFunds(TransferRequest.builder()
         .reference("T1")
         .type("testing")
         .account("wrong_account").amount(Money.toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(Money.toMoney("5.00", "EUR"))
+        .build());
+  }
+
+  @Test(expected = TransferRequestExistsException.class)
+  public void assertThatTransferFundsWhenTransferRequestExistsThrowsException() {
+    accountService.createAccount(CASH_ACCOUNT_1, Money.toMoney("1000.00", "EUR"));
+    accountService.createAccount(REVENUE_ACCOUNT_1, Money.toMoney("0.00", "EUR"));
+
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account(CASH_ACCOUNT_1).amount(Money.toMoney("-5.00", "EUR"))
+        .account(REVENUE_ACCOUNT_1).amount(Money.toMoney("5.00", "EUR"))
+        .build());
+
+    transferService.transferFunds(TransferRequest.builder()
+        .reference("T1")
+        .type("testing")
+        .account(CASH_ACCOUNT_1).amount(Money.toMoney("-5.00", "EUR"))
         .account(REVENUE_ACCOUNT_1).amount(Money.toMoney("5.00", "EUR"))
         .build());
   }

@@ -48,11 +48,6 @@ public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
   }
 
   @Override
-  public void truncateTables() {
-    getJdbcTemplate().execute("TRUNCATE TABLE account");
-  }
-
-  @Override
   public void updateBalance(TransactionLeg leg) {
     String sql = "UPDATE account SET amount = amount + ? WHERE account_ref = ?";
     getJdbcTemplate().update(sql, leg.getAmount().getAmount().doubleValue(), leg.getAccountRef());

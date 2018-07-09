@@ -14,6 +14,8 @@ public interface TransferValidator {
 
   void validateTransferRequest(TransferRequest transferRequest);
 
+  void transferRequestExists(String transactionRef);
+
   void isTransactionBalanced(Iterable<TransactionLeg> legs) throws UnbalancedLegsException;
 
   void currenciesMatch(Iterable<TransactionLeg> legs)

@@ -57,6 +57,9 @@
     <property name="accountDao">
       <ref bean="accountDao"/>
     </property>
+    <property name="transactionDao">
+      <ref bean="transactionDao"/>
+    </property>
   </bean>
 
   <!-- Create the AccountService bean -->

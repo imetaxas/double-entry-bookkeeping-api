@@ -53,15 +53,12 @@ public class BankFactoryImpl implements BankFactory {
     String clientRef = "Client_" + System.currentTimeMillis();
 
     ClientDao clientDao = BankContextUtil.getBean("clientDao");
-    clientDao.truncateTables();
     clientDao.createClient(clientRef, new Date());
 
     AccountDao accountDao = BankContextUtil.getBean("accountDao");
-    accountDao.truncateTables();
     accountDao.setClientRef(clientRef);
 
     TransactionDao transactionDao = BankContextUtil.getBean("transactionDao");
-    transactionDao.truncateTables();
     transactionDao.setClientRef(clientRef);
   }
 

@@ -32,6 +32,7 @@ public class TransferServiceImpl implements TransferService {
   @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
   public void transferFunds(TransferRequest transferRequest)
       throws InsufficientFundsException, AccountNotFoundException {
+
     validateRequest(transferRequest);
     for (TransactionLeg leg : transferRequest.getLegs()) {
       accountDao.updateBalance(leg);
@@ -43,6 +44,7 @@ public class TransferServiceImpl implements TransferService {
   private void validateRequest(TransferRequest request) {
     validator.validateTransferRequest(request);
     validator.isTransactionBalanced(request.getLegs());
+    validator.transferRequestExists(request.getTransactionRef());
     validator.currenciesMatch(request.getLegs());
   }
 

@@ -12,11 +12,11 @@
         <github.global.server>github</github.global.server>
     </properties>
 
-    <name>Double-Entry Bookkeeping</name>
+    <name>Double-Entry Bookkeeping API</name>
 
     <dependencies>
         <!-- ======================================================== -->
-        <!-- Add any additional 3rd party deps below -->
+        <!-- Add any additional 3rd party dependencies below          -->
         <!-- ======================================================== -->
         <dependency>
           <groupId>org.springframework</groupId>
