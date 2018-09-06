@@ -9,7 +9,7 @@ import java.util.List;
  * Request object describing a balanced, multi-legged monetary transaction between two
  * or more accounts. A request must have at least two legs. Different money currencies
  * are allowed as long as the total balance for the legs with the same currency is zero.
- * <p/>
+ * <p>
  * This class uses a nested builder state machine to provide a clear building path with
  * compile-time safety and coding guidance.
  *

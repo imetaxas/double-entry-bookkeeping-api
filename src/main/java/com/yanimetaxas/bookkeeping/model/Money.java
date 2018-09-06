@@ -64,7 +64,7 @@ public final class Money implements Serializable, Comparable<Money> {
   /**
    * Compares this money object with another instance. The money objects are
    * compared by their underlying long value.
-   * <p/>
+   * <p>
    * {@inheritDoc}
    */
   @Override
@@ -75,7 +75,7 @@ public final class Money implements Serializable, Comparable<Money> {
   /**
    * Compares two money objects for equality. The money objects are
    * compared by their underlying bigDecimal value and currency ISO code.
-   * <p/>
+   * <p>
    * {@inheritDoc}
    */
   @Override
