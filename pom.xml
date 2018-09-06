@@ -1,147 +1,319 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.yanimetaxas</groupId>
-    <artifactId>bookkeeping</artifactId>
-    <version>1.0.0</version>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.yanimetaxas</groupId>
+  <artifactId>bookkeeping</artifactId>
+  <version>0.1.0</version>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <github.global.server>github</github.global.server>
-    </properties>
+  <properties>
+    <java.version>1.8</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <github.global.server>github</github.global.server>
+  </properties>
 
-    <name>Double-Entry Bookkeeping API</name>
+  <name>Double-Entry Bookkeeping API</name>
+  <url>https://github.com/imetaxas/double-entry-bookkeeping-api.git</url>
+  <description>A library of the Double-entry bookkeeping concept.</description>
 
-    <dependencies>
-        <!-- ======================================================== -->
-        <!-- Add any additional 3rd party dependencies below          -->
-        <!-- ======================================================== -->
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-context</artifactId>
-          <version>5.0.3.RELEASE</version>
-        </dependency>
+  <scm>
+    <url>https://github.com/imetaxas/double-entry-bookkeeping-api.git</url>
+    <connection>scm:git:git@github.com:imetaxas/double-entry-bookkeeping-api.git</connection>
+    <developerConnection>scm:git:git@github.com:imetaxas/double-entry-bookkeeping-api.git</developerConnection>
+    <tag>double-entry-bookkeeping-api-0.1.0</tag>
+  </scm>
 
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-jdbc</artifactId>
-          <version>5.0.3.RELEASE</version>
-        </dependency>
+  <issueManagement>
+    <url>https://github.com/imetaxas/double-entry-bookkeeping-api</url>
+  </issueManagement>
 
-        <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-orm</artifactId>
-          <version>5.0.3.RELEASE</version>
-        </dependency>
+  <ciManagement>
+    <system>Jenkins</system>
+    <url>https://travis-ci.org/imetaxas/double-entry-bookkeeping-api</url>
+  </ciManagement>
 
-        <dependency>
-          <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-tools</artifactId>
-          <version>5.2.8.Final</version>
-        </dependency>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>9</version>
+  </parent>
 
-        <dependency>
-          <groupId>com.google.guava</groupId>
-          <artifactId>guava</artifactId>
-          <version>24.0-jre</version>
-        </dependency>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-		    <!-- ======================================================== -->
-        <!-- Supported JDBC drivers                                   -->
-        <!-- ======================================================== -->
+  <organization>
+    <name>Yani (Ioannis) Metaxas</name>
+    <url>http://yanimetaxas.com</url>
+  </organization>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.1</version>
-        </dependency>
+  <developers>
+    <developer>
+      <id>imetaxas</id>
+      <name>Yani (Ioannis) Metaxas</name>
+      <email>imetaxas@gmail.com</email>
+      <url>http://yanimetaxas.com</url>
+      <roles>
+        <role>creator</role>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+      <organization>Yani (Ioannis) Metaxas</organization>
+      <organizationUrl>http://yanimetaxas.com</organizationUrl>
+    </developer>
+  </developers>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.31</version>
-        </dependency>
+  <!-- Deploy Tutorial: http://www.debonair.io/post/maven-cd -->
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
 
-        <!-- HyperSQL DB -->
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.4.0</version>
-        </dependency>
-
-        <!-- H2 DB -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.197</version>
-        </dependency>
-
-        <!-- Derby DB -->
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>10.14.1.0</version>
-        </dependency>
-
-        <!-- ======================================================== -->
-        <!-- Testing                                                  -->
-        <!-- ======================================================== -->
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.19</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.yanimetaxas</groupId>
-            <artifactId>realitycheck</artifactId>
-            <version>0.5.9</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
+  <profiles>
+    <profile>
+      <id>sign</id>
+      <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <formats>
-                        <format>html</format>
-                        <format>xml</format>
-                    </formats>
-                    <check />
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>4.3.0</version>
-                <configuration>
-                    <repoToken>usFqezHEhRvYOWB5zK9AxPLqsnmtZdteK</repoToken>
-                </configuration>
-            </plugin>
+          <!-- Tutorial: http://central.sonatype.org/pages/working-with-pgp-signatures.html -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
-    </build>
+      </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.3</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <dependencies>
+    <!-- ======================================================== -->
+    <!-- Add any additional 3rd party dependencies below          -->
+    <!-- ======================================================== -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>5.0.3.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>5.0.3.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>5.0.3.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-tools</artifactId>
+      <version>5.2.8.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>24.0-jre</version>
+    </dependency>
+
+    <!-- ======================================================== -->
+    <!-- Supported JDBC drivers                                   -->
+    <!-- ======================================================== -->
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.31</version>
+    </dependency>
+
+    <!-- HyperSQL DB -->
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>2.4.0</version>
+    </dependency>
+
+    <!-- H2 DB -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.197</version>
+    </dependency>
+
+    <!-- Derby DB -->
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.14.1.0</version>
+    </dependency>
+
+    <!-- ======================================================== -->
+    <!-- Testing                                                  -->
+    <!-- ======================================================== -->
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.10.19</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.yanimetaxas</groupId>
+      <artifactId>realitycheck</artifactId>
+      <version>0.5.9</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <extensions>
+      <!-- Enabling the use of SSH -->
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh-external</artifactId>
+        <version>1.0-beta-6</version>
+      </extension>
+    </extensions>
+
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.6</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          <skipStaging>true</skipStaging>
+        </configuration>
+        <executions>
+          <execution>
+            <id>deploy-to-sonatype</id>
+            <phase>deploy</phase>
+            <!--<goals>
+              <goal>deploy</goal>
+              <goal>release</goal>
+            </goals>-->
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Release Tutorial: http://www.sonatype.org/nexus/2014/10/08/distribute-project-artifacts-in-maven-central-with-nexus-oss -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <formats>
+            <format>html</format>
+            <format>xml</format>
+          </formats>
+          <check/>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eluder.coveralls</groupId>
+        <artifactId>coveralls-maven-plugin</artifactId>
+        <version>4.3.0</version>
+        <configuration>
+          <repoToken>usFqezHEhRvYOWB5zK9AxPLqsnmtZdteK</repoToken>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
 
