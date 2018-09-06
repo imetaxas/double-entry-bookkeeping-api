@@ -1,7 +1,7 @@
 package com.yanimetaxas.bookkeeping.model;
 
 import com.yanimetaxas.bookkeeping.AbstractAccountingConcept;
-import com.yanimetaxas.bookkeeping.InfrastructureException;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
 
 /**
  * @author yanimetaxas

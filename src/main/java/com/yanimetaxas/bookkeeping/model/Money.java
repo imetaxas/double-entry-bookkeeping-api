@@ -1,4 +1,4 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,6 +13,9 @@ import javax.annotation.Nonnull;
 public final class Money implements Serializable, Comparable<Money> {
 
   private static final long serialVersionUID = 1L;
+
+  public static final Money NULL_MONEY = new Money(new BigDecimal("0.00"),
+      Currency.getInstance("XXX"));
 
   /**
    * The monetary amount.
@@ -52,6 +55,10 @@ public final class Money implements Serializable, Comparable<Money> {
 
   public static Money toMoney(String amount, String currency) {
     return new Money(new BigDecimal(amount), Currency.getInstance(currency));
+  }
+
+  public boolean isNullMoney() {
+    return this.equals(NULL_MONEY);
   }
 
   /**

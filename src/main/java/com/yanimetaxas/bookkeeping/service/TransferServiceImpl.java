@@ -1,14 +1,13 @@
 package com.yanimetaxas.bookkeeping.service;
 
 import com.google.common.collect.Lists;
-import com.yanimetaxas.bookkeeping.AccountNotFoundException;
-import com.yanimetaxas.bookkeeping.InsufficientFundsException;
-import com.yanimetaxas.bookkeeping.Transaction;
-import com.yanimetaxas.bookkeeping.TransactionLeg;
-import com.yanimetaxas.bookkeeping.TransferRequest;
-import com.yanimetaxas.bookkeeping.TransferService;
 import com.yanimetaxas.bookkeeping.dao.AccountDao;
 import com.yanimetaxas.bookkeeping.dao.TransactionDao;
+import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
+import com.yanimetaxas.bookkeeping.exception.InsufficientFundsException;
+import com.yanimetaxas.bookkeeping.model.Transaction;
+import com.yanimetaxas.bookkeeping.model.TransactionLeg;
+import com.yanimetaxas.bookkeeping.model.TransferRequest;
 import com.yanimetaxas.bookkeeping.validation.TransferValidator;
 import java.util.Date;
 import java.util.List;

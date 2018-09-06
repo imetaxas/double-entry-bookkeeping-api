@@ -1,6 +1,5 @@
 package com.yanimetaxas.bookkeeping.model;
 
-import com.yanimetaxas.bookkeeping.Money;
 import java.math.BigDecimal;
 import java.util.Currency;
 

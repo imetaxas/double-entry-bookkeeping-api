@@ -3,7 +3,9 @@ package com.yanimetaxas.bookkeeping;
 import com.yanimetaxas.bookkeeping.dao.AccountDao;
 import com.yanimetaxas.bookkeeping.dao.ClientDao;
 import com.yanimetaxas.bookkeeping.dao.TransactionDao;
-import com.yanimetaxas.bookkeeping.model.ConnectionOptions;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
+import com.yanimetaxas.bookkeeping.service.AccountService;
+import com.yanimetaxas.bookkeeping.service.TransferService;
 import com.yanimetaxas.bookkeeping.util.BankContextUtil;
 import java.util.Date;
 import org.springframework.core.io.ClassPathResource;
@@ -31,14 +33,14 @@ public class BankFactoryImpl implements BankFactory {
   public void configureDataSource(ConnectionOptions options) {
     try {
       DriverManagerDataSource dataSource = BankContextUtil.getBean("dataSource");
-      dataSource.setDriverClassName(options.getDriverClassName());
-      dataSource.setUrl(options.getUrl());
-      dataSource.setUsername(options.getUsername());
-      dataSource.setPassword(options.getPassword());
+      dataSource.setDriverClassName(options.driverClassName());
+      dataSource.setUrl(options.url());
+      dataSource.setUsername(options.username());
+      dataSource.setPassword(options.password());
 
       ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
       databasePopulator.setContinueOnError(true);
-      databasePopulator.addScript(new ClassPathResource("db/" + options.getSchema()));
+      databasePopulator.addScript(new ClassPathResource("db/" + options.schema()));
 
       DatabasePopulatorUtils.execute(databasePopulator, dataSource);
     } catch (Exception e) {

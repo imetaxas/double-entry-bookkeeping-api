@@ -1,4 +1,7 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.service;
+
+import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
+import com.yanimetaxas.bookkeeping.model.Money;
 
 /**
  * Defines the business logic for managing monetary accounts.

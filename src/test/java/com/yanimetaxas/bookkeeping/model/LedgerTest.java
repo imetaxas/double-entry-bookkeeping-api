@@ -1,12 +1,17 @@
 package com.yanimetaxas.bookkeeping.model;
 
+import static com.yanimetaxas.bookkeeping.ConnectionOptions.EMBEDDED_DERBY_CONNECTION;
+import static com.yanimetaxas.bookkeeping.ConnectionOptions.EMBEDDED_HSQL_CONNECTION;
 import static com.yanimetaxas.bookkeeping.DataSourceDriver.JDBC_H2;
 import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
-import com.yanimetaxas.bookkeeping.InfrastructureException;
-import com.yanimetaxas.bookkeeping.Money;
-import com.yanimetaxas.bookkeeping.Transaction;
-import com.yanimetaxas.bookkeeping.TransferRequest;
+import com.yanimetaxas.bookkeeping.ChartOfAccounts;
+import com.yanimetaxas.bookkeeping.ChartOfAccounts.ChartOfAccountsBuilder;
+import com.yanimetaxas.bookkeeping.ConnectionOptions;
+import com.yanimetaxas.bookkeeping.Ledger;
+import com.yanimetaxas.bookkeeping.Ledger.LedgerBuilder;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
+import com.yanimetaxas.bookkeeping.exception.LedgerAccountException;
 import java.util.List;
 import org.junit.Test;
 
@@ -23,13 +28,16 @@ public class LedgerTest {
 
   @Test
   public void accountBalancesUpdatedAfterTransferUsingEmbeddedHSQL() {
-    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger("Embedded HSQL", chartOfAccounts,
-        ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("Embedded HSQL")
+        .options(EMBEDDED_HSQL_CONNECTION)
+        .build()
+        .init();
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -39,13 +47,16 @@ public class LedgerTest {
 
   @Test
   public void accountBalancesUpdatedAfterTransferUsingEmbeddedDerby() {
-    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger("Embedded Derby", chartOfAccounts,
-        ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("Embedded Derby")
+        .options(EMBEDDED_DERBY_CONNECTION)
+        .build()
+        .init();
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -55,18 +66,21 @@ public class LedgerTest {
 
   @Test
   public void accountBalancesUpdatedAfterTransferUsingH2() {
-    ConnectionOptions options = new ConnectionOptions(
-        JDBC_H2,
-        "jdbc:h2:~/test",
-        "",
-        "");
+    ConnectionOptions options = new ConnectionOptions(JDBC_H2)
+        .url("jdbc:h2:~/test")
+        .username("")
+        .password("");
 
-    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger("JDBC H2", chartOfAccounts, options);
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("JDBC H2")
+        .options(options)
+        .build()
+        .init();
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -107,12 +121,15 @@ public class LedgerTest {
 
   @Test
   public void accountBalancesUpdatedAfterMultiLeggedTransferUsingEmbeddedH2() {
-    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger("Embedded H2", chartOfAccounts);
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("Embedded H2")
+        .build()
+        .init();
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -139,14 +156,17 @@ public class LedgerTest {
 
   @Test
   public void accountBalancesUpdatedAfterMultiLeggedMultiCurrencyTransferUsingEmbeddedH2() {
-    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
-        .account(CASH_ACCOUNT_2, "1000.00", "SEK")
-        .account(REVENUE_ACCOUNT_2, "0.00", "SEK")
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .create(CASH_ACCOUNT_2, "1000.00", "SEK")
+        .create(REVENUE_ACCOUNT_2, "0.00", "SEK")
         .build();
 
-    Ledger ledger = new Ledger("Embedded H2", chartOfAccounts);
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("Embedded H2")
+        .build()
+        .init();
 
     checkThat(ledger.getAccountBalance(CASH_ACCOUNT_1)).isEqualTo(Money.toMoney("1000.00", "EUR"));
     checkThat(ledger.getAccountBalance(REVENUE_ACCOUNT_1)).isEqualTo(Money.toMoney("0.00", "EUR"));
@@ -172,45 +192,163 @@ public class LedgerTest {
     ledger.printHistoryLog();
   }
 
-  /*@Test
-  public void accountBalancesUpdatedAfterTransferUsingJdbcMysql() {
-    ConnectionOptions options = new ConnectionOptions(
-        JDBC_MYSQL,
-        "jdbc:mysql://localhost:3306/test?createDatabaseIfNotExist=true",
-        "root",
-        "");
-
-    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+  @Test
+  public void includeAlreadyExistedAccountBalanceUsingEmbeddedH2() {
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .includeExisted(CASH_ACCOUNT_1)
         .build();
 
-    Ledger ledger = new Ledger("JDBC MYSQL", chartOfAccounts, options);
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("Embedded H2")
+        .build()
+        .init();
+
+    TransferRequest transferRequest1 = ledger.createTransferRequest()
+        .reference("TR")
+        .type("testing1")
+        .account(CASH_ACCOUNT_1).debit("5.00", "EUR")
+        .account(REVENUE_ACCOUNT_1).credit("5.00", "EUR")
+        .build();
+
+    ledger.commit(transferRequest1);
+
+    ledger.findTransactions(CASH_ACCOUNT_1);
+    ledger.findTransactions(REVENUE_ACCOUNT_1);
+
+    ledger.getTransactionByRef("TR");
 
     ledger.printHistoryLog();
+
+  }
+
+  @Test(expected = LedgerAccountException.class)
+  public void commitWhenAccountNotExistsInLedgerUsingEmbeddedH2() {
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
+        .build();
+
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("Embedded H2")
+        .build()
+        .init();
+
+    TransferRequest transferRequest1 = ledger.createTransferRequest()
+        .reference("TR")
+        .type("testing1")
+        .account("account11").debit("5.00", "EUR")
+        .account(REVENUE_ACCOUNT_1).credit("5.00", "EUR")
+        .build();
+
+    ledger.commit(transferRequest1);
+  }
+
+  /*@Test
+  public void accountBalancesUpdatedAfterTransferUsingJdbcMysql() {
+    try {
+      ConnectionOptions options = new ConnectionOptions(JDBC_MYSQL)
+          .url("jdbc:mysql://localhost:3306/test?createDatabaseIfNotExist=true")
+          .username("root")
+          .password("");
+
+      ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+          .create("account1", "1000.00", "EUR")
+          .create("account2", "0.00", "EUR")
+          .create("account3", "0.00", "EUR")
+          .build();
+
+      Ledger ledger = new LedgerBuilder(chartOfAccounts)
+          .name("JDBC MYSQL")
+          .options(options)
+          .build()
+          .init();
+
+      TransferRequest transferRequest1 = ledger.createTransferRequest()
+          .reference("TR")
+          .type("testing1")
+          .account("account1").debit("5.00", "EUR")
+          .account("account2").credit("5.00", "EUR")
+          .build();
+
+      ledger.commit(transferRequest1);
+
+      ledger.findTransactions("account1");
+      ledger.findTransactions("account2");
+
+      ledger.getTransactionByRef("TR");
+
+      ledger.printHistoryLog();
+
+      TransferRequest transferRequest2 = ledger.createTransferRequest()
+          .reference("TR2")
+          .type("testing1")
+          .account("account1").debit("5.00", "EUR")
+          .account("account3").credit("5.00", "EUR")
+          .build();
+
+      ledger.commit(transferRequest2);
+
+      ledger.findTransactions("account1");
+      ledger.findTransactions("account3");
+
+      ledger.getTransactionByRef("TR2");
+
+      ledger.printHistoryLog();
+
+
+      ChartOfAccounts chartOfAccounts2 = new ChartOfAccountsBuilder()
+          .includeExisted("account1")
+          .includeExisted("account2")
+          .includeExisted("account3")
+          .build();
+
+      ledger = new LedgerBuilder(chartOfAccounts2)
+          .name("JDBC MYSQL")
+          .options(options)
+          .build()
+          .init();
+
+      TransferRequest transferRequest3 = ledger.createTransferRequest()
+          .reference("TR3")
+          .type("testing1")
+          .account("account2").debit("5.00", "EUR")
+          .account("account3").credit("5.00", "EUR")
+          .build();
+      ledger.commit(transferRequest3);
+
+      ledger.printHistoryLog();
+
+    } catch (Exception e) {
+      System.out.println("\nCaught: " + e.getMessage());
+    }
   }*/
 
   /*@Test
   public void accountBalancesUpdatedAfterTransferUsingJdbcPostgres() {
-    ConnectionOptions options = new ConnectionOptions(
-        JDBC_POSTGRES,
-        "jdbc:postgresql://localhost:5432/test",
-        "postgres",
-        "pass");
+    ConnectionOptions options = new ConnectionOptions(JDBC_POSTGRES)
+        .url("jdbc:postgresql://localhost:5432/test")
+        .username("postgres")
+        .password("pass");
 
-    ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account(CASH_ACCOUNT_1, "1000.00", "EUR")
-        .account(REVENUE_ACCOUNT_1, "0.00", "EUR")
+    ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create(CASH_ACCOUNT_1, "1000.00", "EUR")
+        .create(REVENUE_ACCOUNT_1, "0.00", "EUR")
         .build();
 
-    Ledger ledger = new Ledger("JDBC POSTGRES", chartOfAccounts, options);
+    Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("JDBC POSTGRES")
+        .options(options)
+        .build()
+        .init();
 
     ledger.printHistoryLog();
   }*/
 
   @Test(expected = IllegalArgumentException.class)
   public void buildChartOfAccountsWhenHavingNoAccounts() {
-    ChartOfAccountsBuilder.create().build();
+    new ChartOfAccountsBuilder().build();
   }
 
   @Test(expected = InfrastructureException.class)

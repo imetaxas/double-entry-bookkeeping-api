@@ -29,67 +29,103 @@ API
 ----
 **Using embedded H2**
 ```
-ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-              .account("CASH_ACCOUNT_1", "1000.00", "EUR")
-              .account("REVENUE_ACCOUNT_1", "0.00", "EUR")
-              .build();
+ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create("CASH_ACCOUNT_1", "1000.00", "EUR")
+        .create("REVENUE_ACCOUNT_1", "0.00", "EUR")
+        .build();
 
-Ledger ledger = new Ledger("My embedded H2 ledger", chartOfAccounts);
+Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("My Embedded H2 ledger")
+        .build()
+        .init();
 ```
 
 **Using Embedded HSQL**
 ```
-ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account("CASH_ACCOUNT_1", "1000.00", "EUR")
-        .account("REVENUE_ACCOUNT_1", "0.00", "EUR")
+ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create("CASH_ACCOUNT_1", "1000.00", "EUR")
+        .create("REVENUE_ACCOUNT_1", "0.00", "EUR")
         .build();
 
-Ledger ledger = new Ledger("My embedded HSQL ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_HSQL_CONNECTION);
+Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("My Embedded HSQL ledger")
+        .options(ConnectionOptions.EMBEDDED_HSQL_CONNECTION)
+        .build()
+        .init();
 ```
 
 **Using Embedded Derby**
 ```
-ChartOfAccounts chartOfAccounts = ChartOfAccountsBuilder.create()
-        .account("CASH_ACCOUNT_1", "1000.00", "EUR")
-        .account("REVENUE_ACCOUNT_1", "0.00", "EUR")
+ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+        .create("CASH_ACCOUNT_1", "1000.00", "EUR")
+        .create("REVENUE_ACCOUNT_1", "0.00", "EUR")
         .build();
 
-Ledger ledger = new Ledger("My embedded Derby ledger", chartOfAccounts, ConnectionOptions.EMBEDDED_DERBY_CONNECTION);
+Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("My Embedded Derby ledger")
+        .options(ConnectionOptions.EMBEDDED_DERBY_CONNECTION)
+        .build()
+        .init();
 ```
 
 **Using JDBC H2**
-```                        
-ConnectionOptions options = new ConnectionOptions(
-        DataSourceDriver.JDBC_H2,
-        "URL",
-        "USERNAME",
-        "PASSWORD");
-
-Ledger ledger = new Ledger("My JDBC H2 ledger", chartOfAccounts, options);
+```
+ConnectionOptions options = new ConnectionOptions(DataSourceDriver.JDBC_H2)
+        .url("URL")
+        .username("USERNAME")
+        .password("PASSWORD");
+        
+Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("My JDBC H2 ledger")
+        .options(options)
+        .build()
+        .init();
 ``` 
 
 **Using JDBC MySQL**
 ```                        
-ConnectionOptions options = new ConnectionOptions(
-        DataSourceDriver.JDBC_MYSQL,
-        "URL",
-        "USERNAME",
-        "PASSWORD");
+ConnectionOptions options = new ConnectionOptions(DataSourceDriver.JDBC_MYSQL)
+          .url("URL")
+          .username("USERNAME")
+          .password("PASSWORD");
 
-Ledger ledger = new Ledger("My JDBC MySQL ledger", chartOfAccounts, options);
+Ledger ledger = new LedgerBuilder(chartOfAccounts)
+          .name("My JDBC MYSQL ledger")
+          .options(options)
+          .build()
+          .init();
 ``` 
 
 **Using JDBC Postgres**
 ```                        
-ConnectionOptions options = new ConnectionOptions(
-        DataSourceDriver.JDBC_POSTGRES,
-        "URL",
-        "USERNAME",
-        "PASSWORD");
+ConnectionOptions options = new ConnectionOptions(DataSourceDriver.JDBC_POSTGRES)
+        .url("URL")
+        .username("USERNAME")
+        .password("PASSWORD");
 
-Ledger ledger = new Ledger("My JDBC Postgres ledger", chartOfAccounts, options);
+Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("My JDBC POSTGRES ledger")
+        .options(options)
+        .build()
+        .init();
 ``` 
 
+**Create new accounts and include already created ones in the ledger**
+```
+ChartOfAccounts chartOfAccounts = new ChartOfAccountsBuilder()
+          .create("CASH_ACCOUNT_1", "1000.00", "EUR")
+          .create("REVENUE_ACCOUNT_1", "0.00", "EUR")
+          .includeExisted("ACCOUNT_1")
+          .includeExisted("ACCOUNT_2")
+          .build();
+          
+Ledger ledger = new LedgerBuilder(chartOfAccounts)
+        .name("Ledger with both new and already created accounts")
+        .options(options)
+        .build()
+        .init();
+```
+          
 **Commit Transfer Requests**
 ``` 
 TransferRequest transferRequest1 = ledger.createTransferRequest()
@@ -110,6 +146,7 @@ TransferRequest transferRequest2 = ledger.createTransferRequest()
   
 ledger.commit(transferRequest2);
 ```
+
 **Search the Ledger for committed Transactions**
 ```
 List<Transaction> cashAccountTransactionList = ledger.findTransactions("CASH_ACCOUNT_1");
@@ -118,6 +155,7 @@ List<Transaction> revenueAccountTransactionList = ledger.findTransactions("REVEN
 Transaction transaction1 = ledger.getTransactionByRef("T1");
 Transaction transaction2 = ledger.getTransactionByRef("T2");
 ```
+
 **Print the Ledger's history of operations**
 ```
 ledger.printHistoryLog();

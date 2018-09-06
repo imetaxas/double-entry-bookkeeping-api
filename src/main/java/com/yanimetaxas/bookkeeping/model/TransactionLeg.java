@@ -1,4 +1,4 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.model;
 
 import com.yanimetaxas.bookkeeping.validation.TransferValidationException;
 import java.io.Serializable;

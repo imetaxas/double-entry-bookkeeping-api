@@ -1,8 +1,8 @@
 package com.yanimetaxas.bookkeeping.dao;
 
-import com.yanimetaxas.bookkeeping.Money;
-import com.yanimetaxas.bookkeeping.TransactionLeg;
 import com.yanimetaxas.bookkeeping.model.Account;
+import com.yanimetaxas.bookkeeping.model.Money;
+import com.yanimetaxas.bookkeeping.model.TransactionLeg;
 
 /**
  * @author yanimetaxas

@@ -1,6 +1,6 @@
 package com.yanimetaxas.bookkeeping.dao;
 
-import com.yanimetaxas.bookkeeping.Transaction;
+import com.yanimetaxas.bookkeeping.model.Transaction;
 import java.util.List;
 import java.util.Set;
 

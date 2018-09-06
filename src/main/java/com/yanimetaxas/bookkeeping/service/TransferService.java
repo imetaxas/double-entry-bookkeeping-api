@@ -1,5 +1,11 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.service;
 
+import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
+import com.yanimetaxas.bookkeeping.exception.InsufficientFundsException;
+import com.yanimetaxas.bookkeeping.exception.UnbalancedLegsException;
+import com.yanimetaxas.bookkeeping.model.Transaction;
+import com.yanimetaxas.bookkeeping.model.TransferRequest;
 import java.util.List;
 
 /**

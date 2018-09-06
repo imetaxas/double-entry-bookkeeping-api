@@ -2,9 +2,9 @@ package com.yanimetaxas.bookkeeping.dao;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.yanimetaxas.bookkeeping.Money;
-import com.yanimetaxas.bookkeeping.Transaction;
-import com.yanimetaxas.bookkeeping.TransactionLeg;
+import com.yanimetaxas.bookkeeping.model.Money;
+import com.yanimetaxas.bookkeeping.model.Transaction;
+import com.yanimetaxas.bookkeeping.model.TransactionLeg;
 import com.yanimetaxas.bookkeeping.util.DbUtil;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;

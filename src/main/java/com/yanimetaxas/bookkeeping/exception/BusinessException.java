@@ -1,4 +1,4 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.exception;
 
 /**
  * Base type for recoverable business exceptions.

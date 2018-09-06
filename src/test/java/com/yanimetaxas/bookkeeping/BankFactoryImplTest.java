@@ -1,6 +1,6 @@
 package com.yanimetaxas.bookkeeping;
 
-import com.yanimetaxas.bookkeeping.model.ConnectionOptions;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
 import org.junit.Test;
 
 /**
@@ -13,8 +13,12 @@ public class BankFactoryImplTest {
   public void testConfigureDataSourceWhenDriverIsIllegal() throws Exception {
     BankFactory bankFactory = new BankFactoryImpl();
 
-    ConnectionOptions options = new ConnectionOptions("myDriver", "myUrl", "myUsername",
-        "myPassword", "myschema");
+    ConnectionOptions options = new ConnectionOptions("myDriver")
+        .url("myUrl")
+        .username("myUsername")
+        .password("myPassword")
+        .schema("mySchema");
+
     bankFactory.configureDataSource(options);
   }
 

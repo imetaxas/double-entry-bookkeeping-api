@@ -1,10 +1,10 @@
 package com.yanimetaxas.bookkeeping.validation;
 
-import com.yanimetaxas.bookkeeping.AccountNotFoundException;
-import com.yanimetaxas.bookkeeping.InsufficientFundsException;
-import com.yanimetaxas.bookkeeping.TransactionLeg;
-import com.yanimetaxas.bookkeeping.TransferRequest;
-import com.yanimetaxas.bookkeeping.UnbalancedLegsException;
+import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
+import com.yanimetaxas.bookkeeping.exception.InsufficientFundsException;
+import com.yanimetaxas.bookkeeping.exception.UnbalancedLegsException;
+import com.yanimetaxas.bookkeeping.model.TransactionLeg;
+import com.yanimetaxas.bookkeeping.model.TransferRequest;
 
 /**
  * @author yanimetaxas

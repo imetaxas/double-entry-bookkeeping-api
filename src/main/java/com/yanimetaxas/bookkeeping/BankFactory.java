@@ -1,6 +1,7 @@
 package com.yanimetaxas.bookkeeping;
 
-import com.yanimetaxas.bookkeeping.model.ConnectionOptions;
+import com.yanimetaxas.bookkeeping.service.AccountService;
+import com.yanimetaxas.bookkeeping.service.TransferService;
 
 /**
  * Factory interface for creating instances of central business services.

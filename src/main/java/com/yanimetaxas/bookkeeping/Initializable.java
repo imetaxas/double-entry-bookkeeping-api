@@ -1,7 +1,5 @@
 package com.yanimetaxas.bookkeeping;
 
-import com.yanimetaxas.bookkeeping.model.ConnectionOptions;
-
 /**
  * @author yanimetaxas
  * @since 03-Feb-18

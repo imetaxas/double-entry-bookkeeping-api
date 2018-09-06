@@ -1,4 +1,4 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.exception;
 
 /**
  * Exception thrown on usually unrecoverable infrastructure exception.

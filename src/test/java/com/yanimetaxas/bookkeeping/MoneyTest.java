@@ -2,6 +2,7 @@ package com.yanimetaxas.bookkeeping;
 
 import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
+import com.yanimetaxas.bookkeeping.model.Money;
 import org.junit.Test;
 
 /**

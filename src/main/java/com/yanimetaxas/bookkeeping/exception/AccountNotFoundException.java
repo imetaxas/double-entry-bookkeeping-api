@@ -1,4 +1,4 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.exception;
 
 /**
  * Business exception thrown if a referenced account does not exist.

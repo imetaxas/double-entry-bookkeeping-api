@@ -1,4 +1,4 @@
-package com.yanimetaxas.bookkeeping;
+package com.yanimetaxas.bookkeeping.model;
 
 import java.io.Serializable;
 import java.util.Collections;

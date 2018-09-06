@@ -2,7 +2,16 @@ package com.yanimetaxas.bookkeeping;
 
 import static com.yanimetaxas.realitycheck.Reality.checkThat;
 
-import com.yanimetaxas.bookkeeping.model.ConnectionOptions;
+import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
+import com.yanimetaxas.bookkeeping.exception.InsufficientFundsException;
+import com.yanimetaxas.bookkeeping.exception.TransferRequestExistsException;
+import com.yanimetaxas.bookkeeping.exception.UnbalancedLegsException;
+import com.yanimetaxas.bookkeeping.model.Money;
+import com.yanimetaxas.bookkeeping.model.Transaction;
+import com.yanimetaxas.bookkeeping.model.TransferRequest;
+import com.yanimetaxas.bookkeeping.service.AccountService;
+import com.yanimetaxas.bookkeeping.service.TransferService;
 import com.yanimetaxas.bookkeeping.tools.CoverageTool;
 import com.yanimetaxas.bookkeeping.util.BankContextUtil;
 import com.yanimetaxas.bookkeeping.validation.TransferValidationException;

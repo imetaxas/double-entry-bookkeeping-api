@@ -1,8 +1,10 @@
 package com.yanimetaxas.bookkeeping;
 
-import static com.yanimetaxas.bookkeeping.model.ConnectionOptions.EMBEDDED_H2_CONNECTION;
+import static com.yanimetaxas.bookkeeping.ConnectionOptions.EMBEDDED_H2_CONNECTION;
 
-import com.yanimetaxas.bookkeeping.model.ConnectionOptions;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
+import com.yanimetaxas.bookkeeping.service.AccountService;
+import com.yanimetaxas.bookkeeping.service.TransferService;
 
 /**
  * @author yanimetaxas

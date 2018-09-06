@@ -1,6 +1,6 @@
 package com.yanimetaxas.bookkeeping.validation;
 
-import com.yanimetaxas.bookkeeping.BusinessException;
+import com.yanimetaxas.bookkeeping.exception.BusinessException;
 
 /**
  * Business exception thrown if a transfer validation is illegal.

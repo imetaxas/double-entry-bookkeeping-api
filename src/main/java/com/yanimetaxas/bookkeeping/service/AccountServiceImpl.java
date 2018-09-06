@@ -1,11 +1,10 @@
 package com.yanimetaxas.bookkeeping.service;
 
-import com.yanimetaxas.bookkeeping.AccountNotFoundException;
-import com.yanimetaxas.bookkeeping.AccountService;
-import com.yanimetaxas.bookkeeping.InfrastructureException;
-import com.yanimetaxas.bookkeeping.Money;
 import com.yanimetaxas.bookkeeping.dao.AccountDao;
+import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;
+import com.yanimetaxas.bookkeeping.exception.InfrastructureException;
 import com.yanimetaxas.bookkeeping.model.Account;
+import com.yanimetaxas.bookkeeping.model.Money;
 
 /**
  * Implements the methods of the account service.
