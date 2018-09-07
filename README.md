@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/imetaxas/double-entry-bookkeeping-api.svg?branch=master)](https://travis-ci.org/imetaxas/double-entry-bookkeeping-api)
 [![codecov](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-api/branch/master/graph/badge.svg)](https://codecov.io/gh/imetaxas/double-entry-bookkeeping-api)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/970cf46c3cf84ed281f62a60ca465d5b)](https://www.codacy.com/app/imetaxas/double-entry-bookkeeping-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imetaxas/double-entry-bookkeeping-api&amp;utm_campaign=Badge_Grade)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.yanimetaxas/bookkeeping/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.yanimetaxas/bookkeeping/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.yanimetaxas/bookkeeping/badge.svg?fix=caching)](https://maven-badges.herokuapp.com/maven-central/com.yanimetaxas/bookkeeping/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](http://makeapullrequest.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
