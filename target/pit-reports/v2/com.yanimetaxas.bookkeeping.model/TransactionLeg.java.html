@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=windows-1252">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>TransactionLeg.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.yanimetaxas.bookkeeping.model;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.validation.TransferValidationException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.io.Serializable;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Value object representing a single monetary transaction towards an account.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author yanimetaxas</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @see Transaction</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 14-Nov-14</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public final class TransactionLeg implements Serializable {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private static final long serialVersionUID = 1L;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private final String accountRef;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private final Money amount;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  public TransactionLeg(String accountRef, Money amount) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_22'/>
+22
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_22'>3</a>
+<span>
+
+1. &#60;init&#62; : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+2. &#60;init&#62; : negated conditional &rarr; KILLED<br/>
+
+3. &#60;init&#62; : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    if (accountRef == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_23'/>
+23
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_23'>1</a>
+<span>
+
+1. &#60;init&#62; : removed call to com/yanimetaxas/bookkeeping/validation/TransferValidationException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      throw new TransferValidationException(&#34;accountRef is null&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_25'/>
+25
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_25'>3</a>
+<span>
+
+1. &#60;init&#62; : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+2. &#60;init&#62; : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+3. &#60;init&#62; : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    if (amount == null) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_26'/>
+26
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_26'>1</a>
+<span>
+
+1. &#60;init&#62; : removed call to com/yanimetaxas/bookkeeping/validation/TransferValidationException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      throw new TransferValidationException(&#34;amount is null&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_28'/>
+28
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_28'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable accountRef &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    this.accountRef = accountRef;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_29'/>
+29
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_29'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable amount &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    this.amount = amount;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public Money getAmount() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_33'/>
+33
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_33'>1</a>
+<span>
+
+1. getAmount : replaced return value with null for com/yanimetaxas/bookkeeping/model/TransactionLeg::getAmount &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return amount;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public String getAccountRef() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_37'/>
+37
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_37'>1</a>
+<span>
+
+1. getAccountRef : replaced return value with &#34;&#34; for com/yanimetaxas/bookkeeping/model/TransactionLeg::getAccountRef &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return accountRef;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@8aedeb4_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_22'>22</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_22'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAccountReference(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_23'>23</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_23'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAccountReference(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/validation/TransferValidationException::&#60;init&#62; &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_25'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegStoresAccountReferenceAndAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_26'>26</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_26'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/validation/TransferValidationException::&#60;init&#62; &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_28'>28</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_28'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegStoresAccountReferenceAndAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> Removed assignment to member variable accountRef &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_29'>29</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_29'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegStoresAccountReferenceAndAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> Removed assignment to member variable amount &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_33'>33</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_33'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getAmount<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegStoresAccountReferenceAndAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> replaced return value with null for com/yanimetaxas/bookkeeping/model/TransactionLeg::getAmount &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@8aedeb4_37'>37</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@8aedeb4_37'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegStoresAccountReferenceAndAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest)</span></span> replaced return value with &#34;&#34; for com/yanimetaxas/bookkeeping/model/TransactionLeg::getAccountRef &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>CONSTRUCTOR_CALLS</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>EXPERIMENTAL_ARGUMENT_PROPAGATION</li>
+
+<li class='mutator'>EXPERIMENTAL_BIG_DECIMAL</li>
+
+<li class='mutator'>EXPERIMENTAL_BIG_INTEGER</li>
+
+<li class='mutator'>EXPERIMENTAL_MEMBER_VARIABLE</li>
+
+<li class='mutator'>EXPERIMENTAL_NAKED_RECEIVER</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_[0-99]</li>
+
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INLINE_CONSTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NON_VOID_METHOD_CALLS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+
+<li class='mutator'>REMOVE_INCREMENTS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.transactionLegShouldRejectNullAmount(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegStoresAccountReferenceAndAmount(com.yanimetaxas.bookkeeping.ai.MoneyAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests.transactionLegsCannotBeModifiedFromOutside(com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegAllowsEmptyAccountReference(com.yanimetaxas.bookkeeping.ai.MoneyAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.transactionLegShouldAllowEmptyAccountReference(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.currenciesMatchShouldPropagateNullAccountDaoResult(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests.amountClearsAccountRefAfterAddingLeg(com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.transactionLegShouldStoreAccountAndAmount(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.transferRequestExistsShouldThrowWhenPresent(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests.creditClearsAccountRefAfterAddingLeg(com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests.debitClearsAccountRefAfterAddingLeg(com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validBalanceShouldPropagateNullAccountDaoResult(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.currenciesMatchShouldRejectMissingAccount(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldAllowNullReferenceAndType(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldAcceptMoneyAmountDirectly(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.getLegsShouldReturnUnmodifiableList(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.r2_missingReferenceRejected(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.currenciesMatchShouldStopAfterFirstMismatch(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validateTransferRequestShouldRejectSingleLeg(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.r4_singleLegRejected(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldAllowEmptyReferenceAndType(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.debitShouldPreserveNegativeZeroWhenAmountIsZero(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.getLegsShouldReflectSubsequentBuilderChanges(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.accountsEndingExactlyAtZeroAreAccepted(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldResetAccountAfterAddingAmount(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validBalanceShouldStopAfterFirstOverdrawnAccount(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.currenciesMatchShouldRejectCurrencyMismatch(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validateTransferRequestShouldRejectNullReference(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validBalanceShouldTreatZeroBalanceAsNotOverdrawn(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validBalanceShouldAcceptNonOverdrawnAccounts(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validBalanceShouldCheckEachUniqueAccountOnlyOnce(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldSetTransactionReferenceAndType(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.overdrawnSecondAccountIsDetected(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldSupportMultipleLegsAndCurrencies(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validBalanceShouldRejectOverdrawnAccount(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest.r1_eachCurrencyBalancedIsAccepted(com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest.r2_currenciesMustNotNetAgainstEachOther(com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests.legsThatOnlyCancelAcrossDifferentCurrenciesAreUnbalanced(com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validateTransferRequestShouldAcceptEmptyStrings(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldCreateCreditAndDebitLegs(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.isTransactionBalancedShouldAcceptSeveralBalancedCurrencies(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validateTransferRequestShouldAcceptCompleteRequest(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest.r3_usdBalancedEurNotIsRejected(com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.validateTransferRequestShouldRejectNullType(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.currenciesMatchShouldAcceptMatchingAccountCurrencies(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.r1_completeRequestWithExactlyTwoLegsIsAccepted(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.builderShouldNotEnforceBalance(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.eachCurrencyBalancedIsAccepted(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest.r4_eurBalancedUsdNotIsRejected(com.yanimetaxas.bookkeeping.manual.TransferValidatorCurrencyTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.isTransactionBalancedShouldRejectUnbalancedCurrencyGroup(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.r3_missingTypeRejected(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest.oneCurrencyUnbalancedIsRejectedEvenIfOtherBalanced(com.yanimetaxas.bookkeeping.manual.TransferValidatorDecisionTableTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.isTransactionBalancedShouldAcceptMultipleLegsSummingToZero(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.isTransactionBalancedShouldRejectSingleNonzeroLeg(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.isTransactionBalancedShouldRejectUnbalancedLegs(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.currenciesMatchShouldAcceptDifferentMatchingCurrencies(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (4 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_singleValidationFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_existingTransactionFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_unbalancedRequestFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_currencyMismatchFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_updatesBalancesInRequestOrder(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.insufficientFundsPreventsStoringTheTransaction(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.accountWithTransactionsReturnsDaoResult(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (6 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.buildShouldReturnSameRequestInstanceOnRepeatedCalls(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (9 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_transactionStorageFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_balanceUpdateFailureStopsProcessing(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (3 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_validRequest_updatesBalancesValidatesAndStoresTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_insufficientFundsDoesNotStoreTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (4 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.transferUpdatesEveryLegThenChecksBalanceThenStores(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (10 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest.isTransactionBalancedShouldAcceptBalancedUsdLegs(com.yanimetaxas.bookkeeping.ai.TransferValidatorImplAiTest) (21 ms)</li><li>com.yanimetaxas.bookkeeping.ai.MoneyAiTest.transactionLegRejectsNullAccountReference(com.yanimetaxas.bookkeeping.ai.MoneyAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest.transactionLegShouldRejectNullAccountReference(com.yanimetaxas.bookkeeping.ai.TransferRequestAiTest) (0 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.15.3
+
+</body>
+</html>

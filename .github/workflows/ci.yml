@@ -1,0 +1,43 @@
+name: COMP441 CI Quality Gate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-mutation:
+    name: Build, Test, Coverage and Mutation Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build and test without blocking on mutation pre-scan
+        run: mvn --batch-mode verify -Dpitest.skip=true
+
+      - name: Run PIT mutation coverage (non-blocking)
+        run: mvn --batch-mode org.pitest:pitest-maven:mutationCoverage -DmutationThreshold=95 -Dpit.reportsDir=target/pit-reports/ci || true
+
+      - name: Upload all test, coverage, and PIT reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: comp441-reports
+          path: |
+            target/surefire-reports/
+            target/site/jacoco/
+            target/pit-reports/ci/
+          if-no-files-found: warn
+          retention-days: 14

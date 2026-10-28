@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=windows-1252">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>TransferServiceImpl.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.yanimetaxas.bookkeeping.service;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.google.common.collect.Lists;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.dao.AccountDao;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.dao.TransactionDao;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.exception.AccountNotFoundException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.exception.InsufficientFundsException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.model.Transaction;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.model.TransactionLeg;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.model.TransferRequest;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.yanimetaxas.bookkeeping.validation.TransferValidator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Date;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Set;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.transaction.annotation.Isolation;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.transaction.annotation.Transactional;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Implements the methods of the transfer service.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author yanimetaxas</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @since 14-Nov-14</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>public class TransferServiceImpl implements TransferService {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private TransferValidator validator;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private AccountDao accountDao;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private TransactionDao transactionDao;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void transferFunds(TransferRequest transferRequest)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>      throws InsufficientFundsException, AccountNotFoundException {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_35'/>
+35
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_35'>1</a>
+<span>
+
+1. transferFunds : removed call to com/yanimetaxas/bookkeeping/service/TransferServiceImpl::validateRequest &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    validateRequest(transferRequest);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_36'/>
+36
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_36'>1</a>
+<span>
+
+1. transferFunds : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    for (TransactionLeg leg : transferRequest.getLegs()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_37'/>
+37
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_37'>1</a>
+<span>
+
+1. transferFunds : removed call to com/yanimetaxas/bookkeeping/dao/AccountDao::updateBalance &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      accountDao.updateBalance(leg);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_39'/>
+39
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_39'>2</a>
+<span>
+
+1. transferFunds : removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::validBalance &rarr; KILLED<br/>
+
+2. transferFunds : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    validator.validBalance(transferRequest.getLegs());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_40'/>
+40
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_40'>1</a>
+<span>
+
+1. transferFunds : removed call to com/yanimetaxas/bookkeeping/service/TransferServiceImpl::storeTransaction &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    storeTransaction(transferRequest);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private void validateRequest(TransferRequest request) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_44'/>
+44
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_44'>1</a>
+<span>
+
+1. validateRequest : removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::validateTransferRequest &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    validator.validateTransferRequest(request);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_45'>2</a>
+<span>
+
+1. validateRequest : removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::isTransactionBalanced &rarr; KILLED<br/>
+
+2. validateRequest : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    validator.isTransactionBalanced(request.getLegs());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_46'>2</a>
+<span>
+
+1. validateRequest : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getTransactionRef &rarr; KILLED<br/>
+
+2. validateRequest : removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::transferRequestExists &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    validator.transferRequestExists(request.getTransactionRef());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_47'>2</a>
+<span>
+
+1. validateRequest : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED<br/>
+
+2. validateRequest : removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::currenciesMatch &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    validator.currenciesMatch(request.getLegs());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_50'/>
+50
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_50'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  private void storeTransaction(TransferRequest request) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    Transaction transaction = new Transaction(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_52'/>
+52
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_52'>1</a>
+<span>
+
+1. storeTransaction : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getTransactionRef &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        request.getTransactionRef(),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_53'/>
+53
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_53'>2</a>
+<span>
+
+1. storeTransaction : removed call to java/util/Date::&#60;init&#62; &rarr; KILLED<br/>
+
+2. storeTransaction : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getTransactionType &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        request.getTransactionType(),</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        new Date(),</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_55'/>
+55
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_55'>2</a>
+<span>
+
+1. storeTransaction : removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED<br/>
+
+2. storeTransaction : removed call to com/yanimetaxas/bookkeeping/model/Transaction::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        request.getLegs()</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    );</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_57'/>
+57
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_57'>1</a>
+<span>
+
+1. storeTransaction : removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::storeTransaction &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    transactionDao.storeTransaction(transaction);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public List&#60;Transaction&#62; findTransactionsByAccountRef(String accountRef)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>      throws AccountNotFoundException {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_63'/>
+63
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_63'>4</a>
+<span>
+
+1. findTransactionsByAccountRef : negated conditional &rarr; KILLED<br/>
+
+2. findTransactionsByAccountRef : removed call to com/yanimetaxas/bookkeeping/dao/AccountDao::accountExists &rarr; KILLED<br/>
+
+3. findTransactionsByAccountRef : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+4. findTransactionsByAccountRef : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    if (!accountDao.accountExists(accountRef)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_64'/>
+64
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_64'>1</a>
+<span>
+
+1. findTransactionsByAccountRef : removed call to com/yanimetaxas/bookkeeping/exception/AccountNotFoundException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      throw new AccountNotFoundException(accountRef);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_66'/>
+66
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_66'>1</a>
+<span>
+
+1. findTransactionsByAccountRef : removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactionRefsForAccount &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    Set&#60;String&#62; transactionRefs = transactionDao.getTransactionRefsForAccount(accountRef);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_67'/>
+67
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_67'>4</a>
+<span>
+
+1. findTransactionsByAccountRef : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+2. findTransactionsByAccountRef : negated conditional &rarr; KILLED<br/>
+
+3. findTransactionsByAccountRef : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+4. findTransactionsByAccountRef : removed call to java/util/Set::isEmpty &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    if (transactionRefs.isEmpty()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_68'>2</a>
+<span>
+
+1. findTransactionsByAccountRef : removed call to com/google/common/collect/Lists::newArrayList &rarr; KILLED<br/>
+
+2. findTransactionsByAccountRef : replaced return value with Collections.emptyList for com/yanimetaxas/bookkeeping/service/TransferServiceImpl::findTransactionsByAccountRef &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>      return Lists.newArrayList();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_70'/>
+70
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_70'>4</a>
+<span>
+
+1. findTransactionsByAccountRef : replaced call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactions with argument &rarr; KILLED<br/>
+
+2. findTransactionsByAccountRef : removed call to com/google/common/collect/Lists::newArrayList &rarr; KILLED<br/>
+
+3. findTransactionsByAccountRef : removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactions &rarr; KILLED<br/>
+
+4. findTransactionsByAccountRef : replaced return value with Collections.emptyList for com/yanimetaxas/bookkeeping/service/TransferServiceImpl::findTransactionsByAccountRef &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return transactionDao.getTransactions(Lists.newArrayList(transactionRefs));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  @Override</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_74'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public Transaction getTransactionByRef(String transactionRef) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_75'>2</a>
+<span>
+
+1. getTransactionByRef : replaced return value with null for com/yanimetaxas/bookkeeping/service/TransferServiceImpl::getTransactionByRef &rarr; KILLED<br/>
+
+2. getTransactionByRef : removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactionByRef &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    return transactionDao.getTransactionByRef(transactionRef);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void setAccountDao(AccountDao accountDao) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_79'/>
+79
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_79'>1</a>
+<span>
+
+1. setAccountDao : Removed assignment to member variable accountDao &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    this.accountDao = accountDao;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_82'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void setTransactionDao(TransactionDao transactionDao) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_83'/>
+83
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_83'>1</a>
+<span>
+
+1. setTransactionDao : Removed assignment to member variable transactionDao &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    this.transactionDao = transactionDao;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>  public void setValidator(TransferValidator validator) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_87'/>
+87
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_87'>1</a>
+<span>
+
+1. setValidator : Removed assignment to member variable validator &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    this.validator = validator;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>  }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_90'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@6a67e945_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_35'>35</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_35'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>transferFunds<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_nullRequestPropagatesValidatorFailure(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/service/TransferServiceImpl::validateRequest &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_36'>36</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_36'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>transferFunds<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.insufficientFundsPreventsStoringTheTransaction(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_37'>37</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_37'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>transferFunds<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_updatesBalancesInRequestOrder(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/dao/AccountDao::updateBalance &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_39'>39</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_39'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>transferFunds<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.insufficientFundsPreventsStoringTheTransaction(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest)</span></span> removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::validBalance &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>transferFunds<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.insufficientFundsPreventsStoringTheTransaction(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_40'>40</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_40'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>transferFunds<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_transactionStorageFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/service/TransferServiceImpl::storeTransaction &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_44'>44</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_44'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateRequest<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_nullRequestPropagatesValidatorFailure(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::validateTransferRequest &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateRequest<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_unbalancedRequestFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::isTransactionBalanced &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateRequest<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_unbalancedRequestFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateRequest<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_existingTransactionFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getTransactionRef &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateRequest<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_existingTransactionFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::transferRequestExists &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateRequest<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_currencyMismatchFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateRequest<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_currencyMismatchFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/validation/TransferValidator::currenciesMatch &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_52'>52</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_52'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>storeTransaction<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_validRequest_updatesBalancesValidatesAndStoresTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getTransactionRef &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_53'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>storeTransaction<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_validRequest_updatesBalancesValidatesAndStoresTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to java/util/Date::&#60;init&#62; &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>storeTransaction<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_validRequest_updatesBalancesValidatesAndStoresTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getTransactionType &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_55'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>storeTransaction<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_validRequest_updatesBalancesValidatesAndStoresTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/TransferRequest::getLegs &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>storeTransaction<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_validRequest_updatesBalancesValidatesAndStoresTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/model/Transaction::&#60;init&#62; &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_57'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>storeTransaction<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_transactionStorageFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::storeTransaction &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_63'>63</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_63'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_nullAccountReferencePassesToDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_nullAccountReferencePassesToDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/dao/AccountDao::accountExists &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_referenceLookupFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_nullAccountReferencePassesToDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_64'>64</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_64'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_nullAccountReferencePassesToDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/exception/AccountNotFoundException::&#60;init&#62; &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_66'>66</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_66'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_referenceLookupFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactionRefsForAccount &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_67'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_transactionLookupFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed conditional - replaced equality check with true &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.accountWithoutTransactionsReturnsEmptyListWithoutQueryingDao(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.accountWithoutTransactionsReturnsEmptyListWithoutQueryingDao(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest)</span></span> removed conditional - replaced equality check with false &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.accountWithoutTransactionsReturnsEmptyListWithoutQueryingDao(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest)</span></span> removed call to java/util/Set::isEmpty &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.accountWithoutTransactionsReturnsEmptyListWithoutQueryingDao(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest)</span></span> removed call to com/google/common/collect/Lists::newArrayList &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests.noTransactionsReturnsAMutableEmptyList(com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests)</span></span> replaced return value with Collections.emptyList for com/yanimetaxas/bookkeeping/service/TransferServiceImpl::findTransactionsByAccountRef &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_70'>70</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_70'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_transactionLookupFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> replaced call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactions with argument &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_existingReferencesReturnsTransactions(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/google/common/collect/Lists::newArrayList &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_transactionLookupFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactions &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>findTransactionsByAccountRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_existingReferencesReturnsTransactions(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> replaced return value with Collections.emptyList for com/yanimetaxas/bookkeeping/service/TransferServiceImpl::findTransactionsByAccountRef &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getTransactionByRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.getTransactionByRef_returnsTransactionFromDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> replaced return value with null for com/yanimetaxas/bookkeeping/service/TransferServiceImpl::getTransactionByRef &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getTransactionByRef<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.getTransactionByRef_returnsNullWhenTransactionDoesNotExist(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> removed call to com/yanimetaxas/bookkeeping/dao/TransactionDao::getTransactionByRef &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_79'>79</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_79'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setAccountDao<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_nullAccountReferencePassesToDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> Removed assignment to member variable accountDao &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_83'>83</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_83'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setTransactionDao<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.getTransactionByRef_returnsNullWhenTransactionDoesNotExist(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> Removed assignment to member variable transactionDao &rarr; KILLED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@6a67e945_87'>87</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@6a67e945_87'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>setValidator<br/><b>Killed by : </b>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_nullRequestPropagatesValidatorFailure(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest)</span></span> Removed assignment to member variable validator &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>CONSTRUCTOR_CALLS</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>EXPERIMENTAL_ARGUMENT_PROPAGATION</li>
+
+<li class='mutator'>EXPERIMENTAL_BIG_DECIMAL</li>
+
+<li class='mutator'>EXPERIMENTAL_BIG_INTEGER</li>
+
+<li class='mutator'>EXPERIMENTAL_MEMBER_VARIABLE</li>
+
+<li class='mutator'>EXPERIMENTAL_NAKED_RECEIVER</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_[0-99]</li>
+
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INLINE_CONSTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NON_VOID_METHOD_CALLS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+
+<li class='mutator'>REMOVE_INCREMENTS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.accountWithoutTransactionsReturnsEmptyListWithoutQueryingDao(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests.noTransactionsReturnsAMutableEmptyList(com.yanimetaxas.bookkeeping.manual.ManualMutationKillTests) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_noTransactionReferencesReturnsEmptyList(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_transactionLookupFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (2 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_existingReferencesReturnsTransactions(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (10 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.accountWithTransactionsReturnsDaoResult(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (6 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_currencyMismatchFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_existingTransactionFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.insufficientFundsPreventsStoringTheTransaction(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_updatesBalancesInRequestOrder(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_transactionStorageFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_balanceUpdateFailureStopsProcessing(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (3 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_validRequest_updatesBalancesValidatesAndStoresTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_insufficientFundsDoesNotStoreTransaction(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (4 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.transferUpdatesEveryLegThenChecksBalanceThenStores(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (10 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_nullRequestPropagatesValidatorFailure(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (2 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_singleValidationFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.transferFunds_unbalancedRequestFailureDoesNotUpdateBalances(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.getTransactionByRef_returnsNullWhenTransactionDoesNotExist(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_nullAccountReferencePassesToDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.getTransactionByRef_nullReferenceIsPassedToDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.getTransactionByRef_returnsTransactionFromDao(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_referenceLookupFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (1 ms)</li><li>com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest.findTransactionsForUnknownAccountFails(com.yanimetaxas.bookkeeping.manual.TransferServiceInteractionTest) (0 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.getTransactionByRef_daoFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (2 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_accountDoesNotExistThrowsException(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (6 ms)</li><li>com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest.findTransactionsByAccountRef_accountDaoFailurePropagates(com.yanimetaxas.bookkeeping.ai.TransferServiceImplAiTest) (177 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.15.3
+
+</body>
+</html>

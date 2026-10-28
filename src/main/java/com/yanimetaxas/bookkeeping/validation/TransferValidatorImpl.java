@@ -84,7 +84,7 @@ public class TransferValidatorImpl implements TransferValidator {
     for (TransactionLeg leg : legs) {
       sum = sum.add(leg.getAmount().getAmount());
     }
-    if (!sum.equals(new BigDecimal("0.00"))) {
+    if (sum.compareTo(BigDecimal.ZERO) != 0) {
       throw new UnbalancedLegsException("Transaction legs not balanced");
     }
   }

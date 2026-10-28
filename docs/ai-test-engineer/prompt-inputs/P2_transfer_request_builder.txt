@@ -1,0 +1,306 @@
+You are a Java 8 test engineer. Write a JUnit 4.12 unit test class for the code below. Use only JUnit 4.12 and Mockito 1.10.19 (mockito-all). Package: com.yanimetaxas.bookkeeping.ai. Name each class <ClassUnderTest>AiTest. Cover normal, edge and error paths. Return compilable Java only.
+
+// ===== model/TransferRequest.java =====
+package com.yanimetaxas.bookkeeping.model;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Request object describing a balanced, multi-legged monetary transaction between two
+ * or more accounts. A request must have at least two legs. Different money currencies
+ * are allowed as long as the total balance for the legs with the same currency is zero.
+ * <p>
+ * This class uses a nested builder state machine to provide a clear building path with
+ * compile-time safety and coding guidance.
+ *
+ * @author yanimetaxas
+ * @since 14-Nov-14
+ */
+public final class TransferRequest implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
+  private String transactionRef;
+
+  private String transactionType;
+
+  private final List<TransactionLeg> legs = new ArrayList<>();
+
+  private TransferRequest() {
+  }
+
+  /**
+   * Returns a new builder for creating a transfer request.
+   *
+   * @return the first build step
+   */
+  public static ReferenceStep builder() {
+    return new Builder();
+  }
+
+  @FunctionalInterface
+  public interface ReferenceStep {
+
+    /**
+     * @param transactionRef client defined transaction reference
+     * @return the next build step
+     */
+    TypeStep reference(String transactionRef);
+  }
+
+  @FunctionalInterface
+  public interface TypeStep {
+
+    /**
+     * @param transactionType the transaction type for grouping transactions or other purposes
+     * @return the next build step
+     */
+    AccountStep type(String transactionType);
+  }
+
+  @FunctionalInterface
+  public interface AccountStep {
+
+    /**
+     * @param accountRef the client defined account reference
+     * @return the next build step
+     */
+    AmountStep account(String accountRef);
+  }
+
+  public interface AmountStep {
+
+    /**
+     * @param money the transfer amount for the account
+     * @return the final build step
+     */
+    BuildStep amount(Money money);
+
+    BuildStep debit(String amount, String currency);
+
+    BuildStep credit(String amount, String currency);
+  }
+
+  public interface BuildStep {
+
+    AmountStep account(String accountRef);
+
+    TransferRequest build();
+  }
+
+  private static final class Builder implements ReferenceStep, TypeStep, AccountStep, AmountStep,
+      BuildStep {
+
+    private final TransferRequest request = new TransferRequest();
+
+    private String accountRef;
+
+    @Override
+    public TypeStep reference(String transactionRef) {
+      request.transactionRef = transactionRef;
+      return this;
+    }
+
+    @Override
+    public AccountStep type(String transactionType) {
+      request.transactionType = transactionType;
+      return this;
+    }
+
+    @Override
+    public AmountStep account(String accountRef) {
+      this.accountRef = accountRef;
+      return this;
+    }
+
+    @Override
+    public BuildStep amount(Money money) {
+      request.legs.add(new TransactionLeg(accountRef, money));
+      accountRef = null;
+      return this;
+    }
+
+    @Override
+    public BuildStep debit(String amount, String currency) {
+      String debitAmount = "-" + amount;
+      request.legs.add(new TransactionLeg(accountRef, Money.toMoney(debitAmount, currency)));
+      accountRef = null;
+      return this;
+    }
+
+    @Override
+    public BuildStep credit(String amount, String currency) {
+      request.legs.add(new TransactionLeg(accountRef, Money.toMoney(amount, currency)));
+      accountRef = null;
+      return this;
+    }
+
+    @Override
+    public TransferRequest build() {
+      return request;
+    }
+  }
+
+  public List<TransactionLeg> getLegs() {
+    return Collections.unmodifiableList(legs);
+  }
+
+  public String getTransactionRef() {
+    return transactionRef;
+  }
+
+  public String getTransactionType() {
+    return transactionType;
+  }
+}
+
+
+// ===== model/TransactionLeg.java =====
+package com.yanimetaxas.bookkeeping.model;
+
+import com.yanimetaxas.bookkeeping.validation.TransferValidationException;
+import java.io.Serializable;
+
+/**
+ * Value object representing a single monetary transaction towards an account.
+ *
+ * @author yanimetaxas
+ * @see Transaction
+ * @since 14-Nov-14
+ */
+public final class TransactionLeg implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
+  private final String accountRef;
+
+  private final Money amount;
+
+  public TransactionLeg(String accountRef, Money amount) {
+    if (accountRef == null) {
+      throw new TransferValidationException("accountRef is null");
+    }
+    if (amount == null) {
+      throw new TransferValidationException("amount is null");
+    }
+    this.accountRef = accountRef;
+    this.amount = amount;
+  }
+
+  public Money getAmount() {
+    return amount;
+  }
+
+  public String getAccountRef() {
+    return accountRef;
+  }
+}
+
+
+
+// ===== model/Money.java =====
+package com.yanimetaxas.bookkeeping.model;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Currency;
+import javax.annotation.Nonnull;
+
+/**
+ * Immutable monetary money class that couples an amount with a currency.
+ * The amount value is represented by {@code java.math.BigDecimal} and the currency
+ * by {@code java.util.Currency}.
+ */
+public final class Money implements Serializable, Comparable<Money> {
+
+  private static final long serialVersionUID = 1L;
+
+  public static final Money NULL_MONEY = new Money(new BigDecimal("0.00"),
+      Currency.getInstance("XXX"));
+
+  /**
+   * The monetary amount.
+   */
+  private BigDecimal amount;
+
+  /**
+   * ISO-4701 currency code.
+   */
+  private Currency currency;
+
+  /**
+   * Creates a new Money object but not intended to be used directly.
+   *
+   * @param amount the decimal amount
+   * @param currency the currency
+   * @throws IllegalArgumentException if value or currency are null
+   */
+  public Money(BigDecimal amount, Currency currency) {
+    if (amount == null) {
+      throw new IllegalArgumentException("Amount is null");
+    }
+    if (currency == null) {
+      throw new IllegalArgumentException("Currency is null");
+    }
+    this.amount = amount;
+    this.currency = currency;
+  }
+
+  public Currency getCurrency() {
+    return currency;
+  }
+
+  public BigDecimal getAmount() {
+    return amount;
+  }
+
+  public static Money toMoney(String amount, String currency) {
+    return new Money(new BigDecimal(amount), Currency.getInstance(currency));
+  }
+
+  public boolean isNullMoney() {
+    return this.equals(NULL_MONEY);
+  }
+
+  /**
+   * Compares this money object with another instance. The money objects are
+   * compared by their underlying long value.
+   * <p>
+   * {@inheritDoc}
+   */
+  @Override
+  public int compareTo(@Nonnull Money obj) {
+    return getAmount().compareTo(obj.getAmount());
+  }
+
+  /**
+   * Compares two money objects for equality. The money objects are
+   * compared by their underlying bigDecimal value and currency ISO code.
+   * <p>
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Money money = (Money) o;
+
+    return amount.equals(money.amount) && currency.equals(money.currency);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = amount.hashCode();
+    result = 31 * result + currency.hashCode();
+    return result;
+  }
+}
+
+

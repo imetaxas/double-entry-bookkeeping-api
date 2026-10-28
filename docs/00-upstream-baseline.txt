@@ -1,0 +1,60 @@
+Ledger: Embedded HSQL
+
+             Account                    |     Amount               |   Currency       |
+------------------------------------------------------------------------------------------
+       revenue_1_EUR                    |       0.00               |        EUR       |
+          cash_1_EUR                    |    1000.00               |        EUR       |
+
+             Account                    |     Transaction          |       Type       |       Date
+-------------------------------------------------------------------------------------------------------------------------
+       revenue_1_EUR                    |        N/A               |        N/A       |        N/A |
+          cash_1_EUR                    |        N/A               |        N/A       |        N/A |
+
+
+Ledger: JDBC H2
+
+             Account                    |     Amount               |   Currency       |
+------------------------------------------------------------------------------------------
+       revenue_1_EUR                    |      15.50               |        EUR       |
+          cash_1_EUR                    |     984.50               |        EUR       |
+
+             Account                    |     Transaction          |       Type       |       Date
+-------------------------------------------------------------------------------------------------------------------------
+       revenue_1_EUR                    |         T1               |   testing1       | Mon Oct 26 00:00:00 CAT 2026 |
+       revenue_1_EUR                    |         T2               |   testing2       | Mon Oct 26 00:00:00 CAT 2026 |
+          cash_1_EUR                    |         T1               |   testing1       | Mon Oct 26 00:00:00 CAT 2026 |
+          cash_1_EUR                    |         T2               |   testing2       | Mon Oct 26 00:00:00 CAT 2026 |
+
+             Account                    | Transaction Leg Ref    |     Amount     |        Currency     |
+-------------------------------------------------------------------------------------------------------------------------
+       revenue_1_EUR                    | cash_1_EUR          |      -5.00  |        EUR          |
+       revenue_1_EUR                    | revenue_1_EUR          |       5.00     |        EUR          |
+       revenue_1_EUR                    | cash_1_EUR          |     -10.50  |        EUR          |
+       revenue_1_EUR                    | revenue_1_EUR          |      10.50     |        EUR          |
+
+             Account                    | Transaction Leg Ref    |     Amount     |        Currency     |
+-------------------------------------------------------------------------------------------------------------------------
+          cash_1_EUR                    | cash_1_EUR          |      -5.00  |        EUR          |
+          cash_1_EUR                    | revenue_1_EUR          |       5.00     |        EUR          |
+          cash_1_EUR                    | cash_1_EUR          |     -10.50  |        EUR          |
+          cash_1_EUR                    | revenue_1_EUR          |      10.50     |        EUR          |
+
+
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.913 s --in com.yanimetaxas.bookkeeping.model.LedgerTest
+[INFO] Running com.yanimetaxas.bookkeeping.MoneyTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.yanimetaxas.bookkeeping.MoneyTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.8:report (report) @ bookkeeping ---
+[INFO] Loading execution data file C:\Users\user\Downloads\bookkeeping-repo-with-ai-test-engineer\double-entry-bookkeeping-api-Comp-441-group-Project-\target\jacoco.exec
+[INFO] Analyzed bundle 'Double-Entry Bookkeeping API' with 36 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.418 s
+[INFO] Finished at: 2026-10-26T10:48:53+02:00
+[INFO] ------------------------------------------------------------------------
