@@ -1,4 +1,5 @@
-/bin/
-/target/
-/*.iml
-/.idea/
+bin/
+target/
+*.iml
+.idea/
+.DS_Store

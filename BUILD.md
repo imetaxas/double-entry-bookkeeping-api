@@ -1,35 +1,46 @@
-Build
--------
-mvn package
+# Build
 
-Deploy to Sonatype
--------------------
-mvn deploy -P sign,release [--settings ../../.m2/settings2.xml]
+## Build from Source
 
-Release to Maven Central
--------------------------
-**Prepare:**
+```bash
+mvn -T 1C verify
+```
 
-mvn release:clean release:prepare
+Assertions use RealityCheck 1.1.0. JUnit Jupiter runs the tests. The full build uses one Maven thread per core and starts the MySQL and PostgreSQL integration tests together.
 
-**If it fails because it cannot push:**
+## Run Unit Tests Only
 
-Go to 'Prepare the bundle manually'
+```bash
+mvn test
+```
 
-**Else If it fails for other reason:**
+## Validate without Docker
 
-mvn release:rollback
+```bash
+mvn -T 1C verify -DskipITs
+```
 
-mvn release:clean
+## Run Integration Tests (requires Docker)
 
-**Else Perform:**
+```bash
+mvn -T 1C verify
+```
 
-mvn release:perform
+## Run a documented example
 
-**Prepare the bundle manually**
-https://stackoverflow.com/questions/28846802/how-to-manually-publish-jar-to-maven-central
+```bash
+mvn -pl bookkeeping-examples -am compile -Prun-example \
+  -Dexec.mainClass=com.yanimetaxas.bookkeeping.examples.ECommerceLedgerExample
+```
 
-cd target
-jar -cvf bundle.jar bookkeeping-*
-Upload to https://oss.sonatype.org/#staging-upload
-Release from https://oss.sonatype.org/#stagingRepositories
+The same command runs the other classes in `bookkeeping-examples`. `SupportedDatabasesExample` posts to embedded H2, HSQLDB, and Derby on every run. Add `-Dbookkeeping.example.mysql.url` or `-Dbookkeeping.example.postgres.url` to post to those servers as well.
+
+## Package without Tests
+
+```bash
+mvn package -DskipTests
+```
+
+## Release to Maven Central
+
+See [RELEASE.md](RELEASE.md) for the full Maven Central publishing workflow.

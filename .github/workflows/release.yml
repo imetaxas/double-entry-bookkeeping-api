@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+          server-id: central
+          server-username: MAVEN_CENTRAL_USERNAME
+          server-password: MAVEN_CENTRAL_TOKEN
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Set release version from the tag
+        id: release-version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          mvn --batch-mode org.codehaus.mojo:versions-maven-plugin:2.18.0:set \
+            -DnewVersion="${version}" -DgenerateBackupPoms=false
+
+      - name: Publish to Maven Central
+        env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        run: mvn --batch-mode deploy -P sign,release --no-transfer-progress
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            bookkeeping-core/target/bookkeeping-core-${{ steps.release-version.outputs.version }}.jar
+            bookkeeping-jdbc/target/bookkeeping-jdbc-${{ steps.release-version.outputs.version }}.jar
+            bookkeeping-spring-boot-starter/target/bookkeeping-spring-boot-starter-${{ steps.release-version.outputs.version }}.jar
+          body: |
+            Published `bookkeeping-core`, `bookkeeping-jdbc`, and `bookkeeping-spring-boot-starter` to Maven Central.
+            See CHANGELOG.md for the release notes.
